@@ -13,4 +13,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="lastname">LastName</string>
+    <string name="firstname">FirstName</string>
+    <string name="mean">Mean</string>
+    <string name="corsodilaurea">CorsoDiLaurea</string>
 </resources>
