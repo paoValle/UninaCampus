@@ -6,33 +6,36 @@
     android:layout_height="match_parent"
     tools:context="paovalle.uninacampus.UI.HomePage">
 
-    <LinearLayout
-        android:id="@+id/linearfrag"
-        android:layout_width="match_parent"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragcontainer"
+        android:layout_width="410dp"
         android:layout_height="match_parent"
-        android:backgroundTint="@android:color/background_light"
-        android:backgroundTintMode="add"
-        android:orientation="horizontal"
-        android:translationZ="1000dp"
-        android:visibility="visible">
+        android:orientation="vertical"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteY="290dp">
+
+        <!--<FrameLayout
+            android:id="@+id/your_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:accessibilityTraversalAfter="@+id/editText"></FrameLayout>-->
 
         <fragment
-            android:id="@+id/menufragid"
-            android:name="paovalle.uninacampus.UI.MenuGraf"
-            android:layout_width="301dp"
-            android:layout_height="659dp"
-            android:layout_weight="1"
-            tools:layout="@layout/menuitemfrag"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            android:id="@+id/fragment_place"
+            android:name="paovalle.uninacampus.UI.FooFragment"
+            android:layout_width="283dp"
+            android:layout_height="match_parent" />
+
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/homelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="378dp">
+        tools:layout_editor_absoluteY="16dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar2"
@@ -133,7 +136,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="323dp">
+            android:layout_height="297dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
