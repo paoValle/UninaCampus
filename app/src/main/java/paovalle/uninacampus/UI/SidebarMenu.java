@@ -3,16 +3,13 @@ package paovalle.uninacampus.UI;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import paovalle.uninacampus.R;
 
-public class FooFragment extends Fragment {
+public class SidebarMenu extends Fragment {
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation. 
