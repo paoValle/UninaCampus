@@ -6,12 +6,26 @@
     android:layout_height="match_parent"
     tools:context="paovalle.uninacampus.UI.HomePage">
 
-    <fragment
-        android:id="@+id/menu_item_fragment"
-        android:name="paovalle.uninacampus.MenuItemFragment"
-        android:layout_width="295dp"
+    <LinearLayout
+        android:id="@+id/linearfrag"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:backgroundTint="@android:color/background_light"
+        android:backgroundTintMode="add"
+        android:orientation="horizontal"
+        android:translationZ="1000dp"
+        android:visibility="visible">
+
+        <fragment
+            android:id="@+id/menufragid"
+            android:name="paovalle.uninacampus.UI.MenuGraf"
+            android:layout_width="301dp"
+            android:layout_height="659dp"
+            android:layout_weight="1"
+            tools:layout="@layout/menuitemfrag"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
