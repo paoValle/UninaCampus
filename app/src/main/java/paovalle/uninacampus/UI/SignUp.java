@@ -12,6 +12,7 @@ import paovalle.uninacampus.R;
 public class SignUp extends AppCompatActivity {
 
     private Button confBtn;
+    private Button indietroBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,15 @@ public class SignUp extends AppCompatActivity {
         confBtn=(Button)findViewById(R.id.confirmButton);
 
         confBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptSignUp();
+            }
+        });
+
+        indietroBtn=(Button) findViewById(R.id.buttomBack);
+
+        indietroBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptSignUp();

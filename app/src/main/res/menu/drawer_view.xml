@@ -3,27 +3,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_first_fragment"
-            android:icon="@drawable/ic_one"
+            android:icon="@drawable/qrreader"
             android:title="ScannerQR" />
         <item
             android:id="@+id/nav_second_fragment"
-            android:icon="@drawable/ic_one"
+            android:icon="@drawable/downloadorari"
             android:title="Scarica Orari" />
         <item
             android:id="@+id/nav_third_fragment"
-            android:icon="@drawable/ic_one"
+            android:icon="@drawable/gpsaule"
             android:title="GPS Aule" />
         <item
             android:id="@+id/nav_forth_fragment"
-            android:icon="@drawable/ic_one"
+            android:icon="@drawable/notes"
             android:title="Condiv. Appunti e Registrazioni" />
         <item
             android:id="@+id/nav_fifth_fragment"
-            android:icon="@drawable/ic_one"
+            android:icon="@drawable/mail"
             android:title="Mail@Prof" />
         <item
             android:id="@+id/nav_sixth_fragment"
-            android:icon="@drawable/ic_one"
+            android:icon="@drawable/libretto"
             android:title="Libretto" />
     </group>
 </menu>

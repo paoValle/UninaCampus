@@ -54,7 +54,7 @@ public class HomePage extends AppCompatActivity {
          drawerToggle = setupDrawerToggle();
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
-
+        ((NavigationView)findViewById(R.id.nvView)).setItemIconTintList(null);
 
     }
 
