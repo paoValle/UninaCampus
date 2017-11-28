@@ -83,6 +83,19 @@
                 android:textStyle="bold"
                 tools:text="Sign In" />
 
+            <Button
+                android:id="@+id/bottone_reg"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="@string/action_sign_in"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="Registrati" />
+
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

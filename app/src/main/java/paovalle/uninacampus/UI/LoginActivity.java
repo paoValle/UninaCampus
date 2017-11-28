@@ -63,6 +63,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Button signUpBtn;
+    private Button signInBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +87,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+
+        signInBtn = (Button) findViewById(R.id.email_sign_in_button);
+        signInBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+        signUpBtn = (Button) findViewById(R.id.bottone_reg);
+        signUpBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToSignUp();
+
+
             }
         });
 
@@ -97,6 +110,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    private void goToSignUp() {
+        Intent intent = new Intent(this,SignUp.class);
+        startActivity(intent);
+    }
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
