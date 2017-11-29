@@ -7,7 +7,7 @@ public class Corso {
 	private String Codice;
 	private String nome;
 	private int CFU;
-	private boolean semestre; //0 primo semestre 1 secondo semestre
+	private String semestre;
 	private ArrayList<Dettagli> dettagli;
 	private Professore p;
 
@@ -16,7 +16,7 @@ public class Corso {
 		this.dettagli=new ArrayList<Dettagli>();
 	}
 
-	public Corso(String codice, String nome, int cFU, boolean semestre, ArrayList<Dettagli> dettagli,Professore p) {
+	public Corso(String codice, String nome, int cFU, String semestre, ArrayList<Dettagli> dettagli,Professore p) {
 		super();
 		Codice = codice;
 		this.nome = nome;
@@ -50,11 +50,19 @@ public class Corso {
 		CFU = cFU;
 	}
 
-	public boolean isSemestre() {
+	public Professore getProfessore() {
+		return p;
+	}
+
+	public void setProfessore(Professore p) {
+		this.p = p;
+	}
+
+	public String getSemestre() {
 		return semestre;
 	}
 
-	public void setSemestre(boolean semestre) {
+	public void setSemestre(String semestre) {
 		this.semestre = semestre;
 	}
 

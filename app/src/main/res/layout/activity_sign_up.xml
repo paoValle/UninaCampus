@@ -45,24 +45,26 @@
                     android:layout_height="match_parent">
 
                     <AutoCompleteTextView
-                        android:id="@+id/CognomeText"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Cognome" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <AutoCompleteTextView
                         android:id="@+id/TextNome"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Nome" />
+                        android:hint="Nome"
+                        android:textSize="30sp" />
 
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Cognome">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/CognomeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="30sp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -74,26 +76,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Matricola" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="6"
-                        android:imeActionLabel="@string/action_sign_in_short"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:singleLine="true"
+                        android:hint="Matricola"
                         android:textSize="30sp" />
-
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -108,26 +92,62 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true"
+                        android:text="user@studenti.unina.it"
                         android:textSize="30sp" />
 
                 </android.support.design.widget.TextInputLayout>
 
-                <Spinner
-                    android:id="@+id/spinnerfacolta"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="Password"
+                        android:hint="Password"
+                        android:imeActionId="6"
+                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="30sp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/textViewCDL"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:editable="false"
+                        android:hint="Nome"
+                        android:text="ING-INF-LM"
+                        android:textSize="30sp" />
+
+                </android.support.design.widget.TextInputLayout>
 
                 <Button
                     android:id="@+id/confirmButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Conferma" />
+                    android:elevation="0dp"
+                    android:text="Conferma"
+                    android:textSize="30sp" />
 
                 <Button
                     android:id="@+id/buttomBack"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Indietro" />
+                    android:text="Indietro"
+                    android:textSize="30sp" />
 
             </LinearLayout>
         </ScrollView>

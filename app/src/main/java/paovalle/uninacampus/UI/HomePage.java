@@ -13,13 +13,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import entity.Corso;
+import entity.UtenteRegistrato;
 import paovalle.uninacampus.R;
 
 public class HomePage extends AppCompatActivity {
@@ -27,11 +35,30 @@ public class HomePage extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+    private UtenteRegistrato user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        //setting up user data
+        Intent i = getIntent();
+        user = UtenteRegistrato.getIstanza();
+        ((TextView)findViewById(R.id.textFName)).setText(user.getNome());
+        ((TextView)findViewById(R.id.textLName)).setText(user.getCognome());
+        ((TextView)findViewById(R.id.textMean)).setText(new Double(user.getMedia()).toString());
+        ((TextView)findViewById(R.id.textCDL)).setText(user.getCorso().getNome());
+
+        //mostro elenco corsi seguiti
+        ListView lv = (ListView) findViewById(R.id.elencoCorsiSeguiti);
+
+        List<String> corsi = new LinkedList<>();
+        for (Corso c : user.getCorsiScelti()) {
+            corsi.add(c.getNome());
+        }
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,corsi);
+        lv.setAdapter(adapter);
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -47,13 +74,14 @@ public class HomePage extends AppCompatActivity {
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
 
-// Find our drawer view
+        // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
         //if not null, this will turn menu icon to grey
         ((NavigationView)findViewById(R.id.nvView)).setItemIconTintList(null);
+
 
     }
 

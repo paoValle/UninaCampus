@@ -23,17 +23,16 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,16 +42,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import entity.Aula;
+import entity.Corso;
+import entity.CorsoDiLaurea;
+import entity.Dettagli;
+import entity.Professore;
+import entity.UtenteRegistrato;
 import paovalle.uninacampus.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -62,7 +62,6 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    private StorageReference mStorageRef;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -97,7 +96,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -188,6 +186,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+        final Toast loginT = Toast.makeText(getApplicationContext(), "Login in corso...", Toast.LENGTH_LONG);
+        loginT.show();
         String email = ((TextView)findViewById(R.id.email)).getText().toString();
         String pwd = ((TextView)findViewById(R.id.password)).getText().toString();
         mAuth = FirebaseAuth.getInstance();
@@ -201,16 +201,50 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             FirebaseUser user = mAuth.getCurrentUser();
                             final String UID = user.getUid();
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference dbRef = database.getReference("utente");
+                            DatabaseReference dbRef = database.getReference();
                             dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    DataSnapshot user = dataSnapshot.child(UID);
-                                    String fname = user.child("fname").getValue().toString();
-                                    String lname = user.child("lname").getValue().toString();
-                                    String mean = user.child("mean").getValue().toString();
-                                    String corsoDiLaurea = user.child("cdl").getValue().toString();
-                                    goToLogin(lname, fname, mean, corsoDiLaurea);
+                                    DataSnapshot userDB = dataSnapshot.child("utente").child(UID);
+                                    UtenteRegistrato user = UtenteRegistrato.getIstanza();
+                                    user.setCognome(userDB.child("lname").getValue().toString());
+                                    user.setNome(userDB.child("fname").getValue().toString());
+                                    user.setEmail(userDB.child("email").getValue().toString());
+                                    user.setMatricola(userDB.child("matr").getValue().toString());
+                                    user.setMedia(Double.parseDouble(userDB.child("mean").getValue().toString()));
+                                    String corsoDiLaurea = userDB.child("corsoDiLaurea").getValue().toString();
+                                    //scarico il corso di laurea
+                                    CorsoDiLaurea cdl = new CorsoDiLaurea();
+                                    cdl.setId(corsoDiLaurea);
+                                    cdl.setNome(dataSnapshot.child("CorsoDiLaurea").child(corsoDiLaurea).child("Nome").getValue().toString());
+                                    //scarico corsi
+                                    for (DataSnapshot s : dataSnapshot.child("CorsoDiLaurea").child(corsoDiLaurea).child("Corso").getChildren()) {
+                                        Corso c = new Corso();
+                                        c.setCFU(new Integer(s.child("Cfu").getValue().toString()));
+                                        c.setCodice(s.child("Id").getValue().toString());
+                                        c.setNome(s.child("Nome").getValue().toString());
+                                        c.setSemestre(s.child("Semestre").getValue().toString());
+                                        //professore
+                                        String idProf = s.child("Professore").getValue().toString();
+                                        Professore p = dataSnapshot.child("Professore").child(idProf).getValue(Professore.class);
+                                        c.setProfessore(p);
+                                        //dettagli
+                                        for (DataSnapshot dettagli : s.child("dettagli").getChildren()) {
+                                            Dettagli d = new Dettagli();
+                                            d.setGiorno(s.child("Giorno").getValue().toString());
+                                            d.setOraInizio(s.child("Ora inizio").getValue().toString());
+                                            d.setOrafine(s.child("Ora fine").getValue().toString());
+                                            //aula
+                                            String idAula = s.child("Aula").getValue().toString();
+                                            Aula a = dataSnapshot.child("Aula").child(idAula).getValue(Aula.class);
+                                            d.setAula(a);
+                                            c.getDettagli().add(d);
+                                        }
+                                        cdl.getCorsi().add(c);
+                                    }
+                                    user.setCorso(cdl);
+                                    loginT.cancel();
+                                    goToLogin();
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) { }
@@ -224,14 +258,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         }
                     }
                 });
+        showProgress(false);
     }
 
-    private void goToLogin(String lname, String fname, String mean, String cdl) {
+    private void goToLogin() {
         Intent intent = new Intent(this, HomePage.class);
-        intent.putExtra("lname", lname);
-        intent.putExtra("fname", fname);
-        intent.putExtra("cdl", cdl);
-        intent.putExtra("mean", mean);
         startActivity(intent);
     }
 
@@ -391,5 +422,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
 }
 
