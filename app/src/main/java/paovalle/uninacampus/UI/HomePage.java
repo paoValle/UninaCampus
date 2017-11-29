@@ -1,5 +1,6 @@
 package paovalle.uninacampus.UI;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -45,6 +47,11 @@ public class HomePage extends AppCompatActivity {
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
 
+// Find our drawer view
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        // Setup drawer view
+        setupDrawerContent(nvDrawer);
+
         //if not null, this will turn menu icon to grey
         ((NavigationView)findViewById(R.id.nvView)).setItemIconTintList(null);
 
@@ -71,39 +78,39 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        /*// Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-        Class fragmentClass;
+        // Create a new fragment and specify the fragment to show based on nav item clicked
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                fragmentClass = FirstFragment.class;
+
                 break;
             case R.id.nav_second_fragment:
-                fragmentClass = SecondFragment.class;
+
                 break;
             case R.id.nav_third_fragment:
-                fragmentClass = ThirdFragment.class;
+
+                break;
+            case R.id.nav_fifth_fragment:
+                Log.d("prova","Sto clickando msg" );
+                attemptSendMail();
                 break;
             default:
-                fragmentClass = FirstFragment.class;
-        }
 
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-        */
+        }
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
         // Set action bar title
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawer.closeDrawers();
+    }
+
+    private void attemptSendMail(){
+        //TODO: PAOLO DEVE FARE LA LOGICA!!!!
+        Log.d("prova","Sono nella funzione" );
+        Intent intent = new Intent(this,MailProf.class);
+        startActivity(intent);
+
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="paovalle.uninacampus.UI.MailProf">
+
+    <LinearLayout
+        android:id="@+id/formMail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/id_to_const"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/to"
+            android:textColor="@android:color/black"
+            android:textStyle="bold|italic"
+            android:visibility="visible" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/IdTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                android:typeface="serif"
+                tools:text="To:" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/id_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/subject"
+            android:textColor="@android:color/black"
+            android:textStyle="bold|italic"
+            android:visibility="visible"
+            tools:text="Subject:" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/idsubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:singleLine="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@android:color/black"
+                android:textStyle="bold|italic"
+                android:visibility="visible"
+                tools:text="Subject:" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/idbackfrommail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/back" />
+
+                <Button
+                    android:id="@+id/Sendbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/send"
+                    tools:text="Send" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/idCordoMail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none|text|textMultiLine|textImeMultiLine" />
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

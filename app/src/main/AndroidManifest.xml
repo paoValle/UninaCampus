@@ -24,7 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".UI.HomePage" />
-        <activity android:name=".UI.SignUp"></activity>
+        <activity android:name=".UI.SignUp" />
+        <activity android:name=".UI.MailProf" />
+        <activity android:name=".UI.LibrettoActivity"></activity>
     </application>
 
 </manifest>

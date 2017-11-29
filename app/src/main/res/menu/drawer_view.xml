@@ -1,29 +1,38 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_first_fragment"
+            android:checkable="true"
             android:icon="@drawable/qrreader"
             android:title="ScannerQR" />
         <item
             android:id="@+id/nav_second_fragment"
+            android:checkable="true"
             android:icon="@drawable/downloadorari"
             android:title="Scarica Orari" />
         <item
             android:id="@+id/nav_third_fragment"
+            android:checkable="true"
             android:icon="@drawable/gpsaule"
             android:title="GPS Aule" />
         <item
             android:id="@+id/nav_forth_fragment"
+            android:checkable="true"
             android:icon="@drawable/notes"
             android:title="Condiv. Appunti e Registrazioni" />
         <item
-            android:id="@+id/nav_fifth_fragment"
-            android:icon="@drawable/mail"
-            android:title="Mail@Prof" />
-        <item
             android:id="@+id/nav_sixth_fragment"
+            android:checkable="true"
             android:icon="@drawable/libretto"
             android:title="Libretto" />
+        <item
+            android:id="@+id/nav_fifth_fragment"
+            android:checkable="true"
+            android:enabled="true"
+            android:icon="@drawable/mail"
+            android:title="Mail@Prof"
+            android:visible="true" />
     </group>
 </menu>
