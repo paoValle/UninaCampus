@@ -35,16 +35,6 @@ public class HomePage extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*
-        // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        // Find our drawer view
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
-        // Setup drawer view
-        setupDrawerContent(nvDrawer);
-        */
-
         // Set a Toolbar to replace the ActionBar.
                 toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,6 +44,8 @@ public class HomePage extends AppCompatActivity {
          drawerToggle = setupDrawerToggle();
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
+
+        //if not null, this will turn menu icon to grey
         ((NavigationView)findViewById(R.id.nvView)).setItemIconTintList(null);
 
     }
