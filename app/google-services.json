@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "182852936186",
+    "firebase_url": "https://uninacampus.firebaseio.com",
+    "project_id": "uninacampus",
+    "storage_bucket": "uninacampus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182852936186:android:cd4edc5ef221bb96",
+        "android_client_info": {
+          "package_name": "paovalle.uninacampus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182852936186-mjvs9n4cqrgil7t78ocll3gckf5dktt9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "paovalle.uninacampus",
+            "certificate_hash": "5063c563ff61e5e47eecabcd80ff1ee8a472b8e8"
+          }
+        },
+        {
+          "client_id": "182852936186-7of34ceiesr2kk534unjcgqkf8vijhf4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "paovalle.uninacampus",
+            "certificate_hash": "3bb506646bfbb46df243d31900b8145f7b3f124e"
+          }
+        },
+        {
+          "client_id": "182852936186-ohusid31um4c88j7vop90ec19mhbm55f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5CM-DZY9X1gueHwJIBjMm_mse1c-45OE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182852936186-ohusid31um4c88j7vop90ec19mhbm55f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

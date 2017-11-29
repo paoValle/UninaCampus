@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +29,27 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import org.w3c.dom.Text;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +62,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    private StorageReference mStorageRef;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -57,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    private FirebaseAuth mAuth;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -74,6 +97,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -164,8 +188,50 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        //TODO: implement real login task
+        String email = ((TextView)findViewById(R.id.email)).getText().toString();
+        String pwd = ((TextView)findViewById(R.id.password)).getText().toString();
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword(email, pwd)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("DEBUG", "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            final String UID = user.getUid();
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference dbRef = database.getReference("utente");
+                            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    DataSnapshot user = dataSnapshot.child(UID);
+                                    String fname = user.child("fname").getValue().toString();
+                                    String lname = user.child("lname").getValue().toString();
+                                    String mean = user.child("mean").getValue().toString();
+                                    String corsoDiLaurea = user.child("cdl").getValue().toString();
+                                    goToLogin(lname, fname, mean, corsoDiLaurea);
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) { }
+                            });
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast t = Toast.makeText(getApplicationContext(), "Login fallito: dati errati!", Toast.LENGTH_SHORT);
+                            t.show();
+                            Log.w("STATUS", "signInWithEmail:failure", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void goToLogin(String lname, String fname, String mean, String cdl) {
         Intent intent = new Intent(this, HomePage.class);
+        intent.putExtra("lname", lname);
+        intent.putExtra("fname", fname);
+        intent.putExtra("cdl", cdl);
+        intent.putExtra("mean", mean);
         startActivity(intent);
     }
 

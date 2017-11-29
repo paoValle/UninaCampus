@@ -23,6 +23,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="208dp"
+        android:focusedByDefault="true"
         app:srcCompat="@drawable/logo" />
 
     <ScrollView
@@ -48,6 +49,7 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
+                    android:text="utente@studenti.unina.it"
                     android:textSize="30sp" />
 
             </android.support.design.widget.TextInputLayout>
@@ -67,6 +69,7 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
+                    android:text="utente"
                     android:textSize="30sp" />
 
             </android.support.design.widget.TextInputLayout>
