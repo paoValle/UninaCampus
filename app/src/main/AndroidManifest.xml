@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -28,7 +29,9 @@
         <activity android:name=".UI.HomePage" />
         <activity android:name=".UI.SignUp" />
         <activity android:name=".UI.MailProf" />
-        <activity android:name=".UI.LibrettoActivity"></activity>
+        <activity android:name=".UI.LibrettoActivity"/>
+        <activity android:name=".UI.RecorderActivity">
+        </activity>
     </application>
 
 </manifest>
