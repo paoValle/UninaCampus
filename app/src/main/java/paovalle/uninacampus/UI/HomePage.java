@@ -163,12 +163,9 @@ public class HomePage extends AppCompatActivity {
 
                 break;
             case R.id.nav_fifth_fragment:
-<<<<<<< refs/remotes/origin/master
                 attemptSendMail();
-=======
                 Log.d("prova","Sto clickando msg" );
                 goToMail();
->>>>>>> Fix elenco corsi seguiti
                 break;
             case R.id.nav_sixth_fragment:
                 Log.d("prova","HocliccatoLibrettooooo" );
