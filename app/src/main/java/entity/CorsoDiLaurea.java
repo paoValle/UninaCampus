@@ -1,23 +1,24 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CorsoDiLaurea {
 
 	private String id;
 	private String nome;
-	private ArrayList<Corso> corsi;
+	private HashMap<String, Corso> corsi;
 
 	public CorsoDiLaurea() {
 		// TODO Auto-generated constructor stub
-		this.corsi=new ArrayList<Corso>();
+		this.corsi=new HashMap<>();
 	}
 
-	public CorsoDiLaurea(String id, String nome, ArrayList<Corso> corsi) {
+	public CorsoDiLaurea(String id, String nome, HashMap corsi) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.corsi=new ArrayList<Corso>();
+		this.corsi=new HashMap();
 		this.corsi = corsi;
 	}
 
@@ -37,11 +38,11 @@ public class CorsoDiLaurea {
 		this.nome = nome;
 	}
 
-	public ArrayList<Corso> getCorsi() {
+	public HashMap getCorsi() {
 		return corsi;
 	}
 
-	public void setCorsi(ArrayList<Corso> corsi) {
+	public void setCorsi(HashMap corsi) {
 		this.corsi = corsi;
 	}
 

@@ -22,9 +22,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import entity.Corso;
 import entity.UtenteRegistrato;
@@ -54,9 +57,13 @@ public class HomePage extends AppCompatActivity {
         ListView lv = (ListView) findViewById(R.id.elencoCorsiSeguiti);
 
         List<String> corsi = new LinkedList<>();
-        for (Corso c : user.getCorsiScelti()) {
-            corsi.add(c.getNome());
+        Iterator it = user.getCorsiScelti().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            corsi.add(((Corso) pair.getValue()).getNome());
+            it.remove(); // avoids a ConcurrentModificationException
         }
+
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,corsi);
         lv.setAdapter(adapter);
 

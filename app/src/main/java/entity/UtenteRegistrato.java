@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UtenteRegistrato {
 
@@ -11,8 +12,8 @@ public class UtenteRegistrato {
 	private String email;
 	private double media;
 	private CorsoDiLaurea corso;
-	private ArrayList<Esame> libretto;
-	private ArrayList<Corso> corsiScelti;
+	private HashMap<String, Esame> libretto;
+	private HashMap<String, Corso> corsiScelti;
 	
 	
 	private static UtenteRegistrato istanza;
@@ -26,8 +27,8 @@ public class UtenteRegistrato {
 	
 	private UtenteRegistrato() {
 		// TODO Auto-generated constructor stub
-		this.libretto=new ArrayList<Esame>();
-		this.corsiScelti=new ArrayList<Corso>();
+		this.libretto=new HashMap<>();
+		this.corsiScelti=new HashMap<>();
 	}
 
 
@@ -81,21 +82,21 @@ public class UtenteRegistrato {
 	}
 
 
-	public ArrayList<Esame> getLibretto() {
+	public HashMap getLibretto() {
 		return libretto;
 	}
 
 
-	public void setLibretto(ArrayList<Esame> libretto) {
+	public void setLibretto(HashMap libretto) {
 		this.libretto = libretto;
 	}
 
-	public ArrayList<Corso> getCorsiScelti() {
+	public HashMap getCorsiScelti() {
 		return corsiScelti;
 	}
 
 
-	public void setCorsiScelti(ArrayList<Corso> corsiScelti) {
+	public void setCorsiScelti(HashMap corsiScelti) {
 		this.corsiScelti = corsiScelti;
 	}
 
@@ -125,6 +126,7 @@ public class UtenteRegistrato {
 			return false;
 		return true;
 	}
+
 	
 
 }

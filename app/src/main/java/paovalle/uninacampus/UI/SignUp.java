@@ -70,7 +70,6 @@ public class SignUp extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             Log.w("AUTHRESULT", task.getException().getMessage());
-                            Toast.makeText(SignUp.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                             if (!task.isSuccessful()) {
                                 Toast.makeText(SignUp.this, "Registrazione fallita!" + task.getException(),
                                         Toast.LENGTH_SHORT).show();
