@@ -46,6 +46,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import entity.Aula;
 import entity.Corso;
@@ -220,7 +221,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     //scarico corsi
                                     for (DataSnapshot s : dataSnapshot.child("CorsoDiLaurea").child(corsoDiLaurea).child("Corso").getChildren()) {
                                         Corso c = new Corso();
-                                        c.setCFU(new Integer(s.child("Cfu").getValue().toString()));
+                                        c.setCodice(s.child("Id").getValue().toString());
+                                        c.setCFU(Integer.valueOf(s.child("Cfu").getValue().toString()));
                                         c.setCodice(s.child("Id").getValue().toString());
                                         c.setNome(s.child("Nome").getValue().toString());
                                         c.setSemestre(s.child("Semestre").getValue().toString());
@@ -240,7 +242,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                             d.setAula(a);
                                             c.getDettagli().add(d);
                                         }
-                                        cdl.getCorsi().add(c);
+                                        cdl.getCorsi().put(c.getCodice(), c);
+                                    }
+                                    //carico corsi scelti
+                                    for (DataSnapshot corsoScelto : userDB.child("corsiScelti").getChildren()) {
+                                        //aggiungo oggetto corso dal corso di laurea gia creato
+                                        String idCorso = corsoScelto.getValue().toString();
+                                        Corso c = (Corso)cdl.getCorsi().get(idCorso);
+                                        user.getCorsiScelti().put(idCorso, c);
+                                    }
+                                    //carico libretto
+                                    for (DataSnapshot libretto : userDB.child("libretto").getChildren()) {
+                                        //aggiungo oggetto corso dal corso di laurea gia creato
+                                        String idCorso = libretto.child("corso").getValue().toString();
+                                        Corso c = (Corso)cdl.getCorsi().get(idCorso);
+                                        user.getLibretto().put(idCorso, c);
                                     }
                                     user.setCorso(cdl);
                                     loginT.cancel();
