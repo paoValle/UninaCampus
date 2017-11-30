@@ -38,8 +38,8 @@
 
                     <ImageView
                         android:id="@+id/imageView"
-                        android:layout_width="326dp"
-                        android:layout_height="178dp"
+                        android:layout_width="267dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/defaultuser" />
@@ -57,7 +57,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/firstname"
                             android:textColor="@android:color/black"
-                            android:textSize="30sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/textLName"
@@ -65,7 +65,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/lastname"
                             android:textColor="@android:color/black"
-                            android:textSize="30sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/textMean"
@@ -73,7 +73,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/mean"
                             android:textColor="@android:color/black"
-                            android:textSize="30sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/textCDL"
@@ -81,7 +81,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/corsodilaurea"
                             android:textColor="@android:color/black"
-                            android:textSize="30sp" />
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 
@@ -89,14 +89,16 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:layout_height="350dp">
 
                     <ListView
                         android:id="@+id/elencoCorsiSeguiti"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="match_parent"
+                        android:choiceMode="singleChoice"
                         android:divider="#005b00"
                         android:dividerHeight="1dp"
+                        android:listSelector="@android:color/darker_gray"
                         android:scrollbarAlwaysDrawVerticalTrack="true"
                         android:scrollbarStyle="insideOverlay" />
 
@@ -109,26 +111,26 @@
                     android:textAlignment="center">
 
                     <Button
-                        android:id="@+id/button4"
+                        android:id="@+id/mailBtn"
                         android:layout_width="10dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/holo_blue_dark"
                         android:text="Mail"
                         android:textColor="@android:color/background_light"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/button6"
+                        android:id="@+id/recorderBtn"
                         android:layout_width="10dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/holo_blue_dark"
                         android:text="Registra"
                         android:textColor="@android:color/background_light"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
                 </LinearLayout>
 
             </LinearLayout>
