@@ -118,9 +118,13 @@ public class HomePage extends AppCompatActivity {
 
                 break;
             case R.id.nav_fifth_fragment:
-                Log.d("prova","Sto clickando msg" );
                 attemptSendMail();
                 break;
+            case R.id.nav_sixth_fragment:
+                Log.d("prova","HocliccatoLibrettooooo" );
+                vediLibretto();
+                break;
+
             default:
 
 
@@ -137,6 +141,14 @@ public class HomePage extends AppCompatActivity {
         //TODO: PAOLO DEVE FARE LA LOGICA!!!!
         Log.d("prova","Sono nella funzione" );
         Intent intent = new Intent(this,MailProf.class);
+        startActivity(intent);
+
+    }
+
+    private void vediLibretto(){
+        //TODO: PAOLO DEVE FARE LA LOGICA!!!!
+        Log.d("prova","Sono nella funzione" );
+        Intent intent = new Intent(this,LibrettoActivity.class);
         startActivity(intent);
 
     }
