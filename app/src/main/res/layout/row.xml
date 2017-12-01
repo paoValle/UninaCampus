@@ -3,8 +3,16 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="1dip"
     android:textColor="@android:color/black"
+<<<<<<< HEAD
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
     android:textSize="18sp" />
 =======
     android:textSize="36sp" />
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
+=======
+<<<<<<< HEAD
+    android:textSize="36sp" />
+=======
+    android:textSize="18sp" />
+>>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+>>>>>>> master

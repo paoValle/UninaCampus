@@ -60,8 +60,12 @@ public class HomePage extends AppCompatActivity {
         ((TextView)findViewById(R.id.textMean)).setText(new Double(user.getMedia()).toString());
         ((TextView)findViewById(R.id.textCDL)).setText(user.getCorso().getNome());
 
+<<<<<<< HEAD
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
 =======
+=======
+<<<<<<< HEAD
+>>>>>>> master
         //mostro elenco corsi seguiti
         ListView lv = (ListView) findViewById(R.id.elencoCorsiSeguiti);
 
@@ -76,7 +80,12 @@ public class HomePage extends AppCompatActivity {
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,corsi);
         lv.setAdapter(adapter);
 
+<<<<<<< HEAD
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
+=======
+=======
+>>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+>>>>>>> master
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -180,9 +189,12 @@ public class HomePage extends AppCompatActivity {
 
                 break;
             case R.id.nav_fifth_fragment:
+<<<<<<< refs/remotes/origin/master
                 attemptSendMail();
+=======
                 Log.d("prova","Sto clickando msg" );
                 goToMail();
+>>>>>>> Fix elenco corsi seguiti
                 break;
             case R.id.nav_sixth_fragment:
                 Log.d("prova","HocliccatoLibrettooooo" );

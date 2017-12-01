@@ -89,26 +89,46 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+<<<<<<< HEAD
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
                     android:layout_height="350dp">
 =======
                     android:layout_height="300dp">
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
+=======
+<<<<<<< HEAD
+                    android:layout_height="300dp">
+=======
+                    android:layout_height="350dp">
+>>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+>>>>>>> master
 
                     <ListView
                         android:id="@+id/elencoCorsiSeguiti"
                         android:layout_width="match_parent"
+<<<<<<< HEAD
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+=======
+<<<<<<< HEAD
+                        android:layout_height="300dp"
+                        android:divider="#005b00"
+                        android:dividerHeight="1dp"
+=======
+>>>>>>> master
                         android:layout_height="match_parent"
                         android:choiceMode="singleChoice"
                         android:divider="#005b00"
                         android:dividerHeight="1dp"
                         android:listSelector="@android:color/darker_gray"
+<<<<<<< HEAD
 =======
                         android:layout_height="300dp"
                         android:divider="#005b00"
                         android:dividerHeight="1dp"
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
+=======
+>>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+>>>>>>> master
                         android:scrollbarAlwaysDrawVerticalTrack="true"
                         android:scrollbarStyle="insideOverlay" />
 
@@ -123,11 +143,19 @@
                     <Button
                         android:id="@+id/mailBtn"
                         android:layout_width="10dp"
+<<<<<<< HEAD
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
                         android:layout_height="80dp"
 =======
                         android:layout_height="match_parent"
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
+=======
+<<<<<<< HEAD
+                        android:layout_height="match_parent"
+=======
+                        android:layout_height="80dp"
+>>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+>>>>>>> master
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/holo_blue_dark"
@@ -138,11 +166,19 @@
                     <Button
                         android:id="@+id/recorderBtn"
                         android:layout_width="10dp"
+<<<<<<< HEAD
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
                         android:layout_height="80dp"
 =======
                         android:layout_height="match_parent"
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
+=======
+<<<<<<< HEAD
+                        android:layout_height="match_parent"
+=======
+                        android:layout_height="80dp"
+>>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+>>>>>>> master
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/holo_blue_dark"
