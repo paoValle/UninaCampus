@@ -60,6 +60,23 @@ public class HomePage extends AppCompatActivity {
         ((TextView)findViewById(R.id.textMean)).setText(new Double(user.getMedia()).toString());
         ((TextView)findViewById(R.id.textCDL)).setText(user.getCorso().getNome());
 
+<<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+=======
+        //mostro elenco corsi seguiti
+        ListView lv = (ListView) findViewById(R.id.elencoCorsiSeguiti);
+
+        List<String> corsi = new LinkedList<>();
+        Iterator it = user.getCorsiScelti().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            corsi.add(((Corso) pair.getValue()).getNome());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,corsi);
+        lv.setAdapter(adapter);
+
+>>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
