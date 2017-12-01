@@ -30,7 +30,9 @@
             android:id="@+id/idListaEsami"
             android:layout_width="match_parent"
             android:layout_height="480dp"
-            android:numColumns="4">
+            android:nestedScrollingEnabled="false"
+            android:numColumns="4"
+            android:textFilterEnabled="true">
 
         </GridView>
 

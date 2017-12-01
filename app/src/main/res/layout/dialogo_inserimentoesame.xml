@@ -10,40 +10,51 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/idesamidainiserire"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/voto" />
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/idinserimentovoto"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="@string/voto" />
-        </android.support.design.widget.TextInputLayout>
+                android:orientation="vertical">
 
-        <CalendarView
-            android:id="@+id/idCalendar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                <Spinner
+                    android:id="@+id/idaggiungiesame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:dropDownWidth="match_parent"
+                    android:scrollIndicators="top"
+                    android:scrollbars="vertical"
+                    android:visibility="visible" />
 
-        <Button
-            android:id="@+id/idDoneEsame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/done" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/idinserimentovoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/voto"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+                <DatePicker
+                    android:id="@+id/idprendidata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/idDoneEsame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/done" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

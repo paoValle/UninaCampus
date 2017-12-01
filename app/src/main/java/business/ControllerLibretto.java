@@ -1,5 +1,6 @@
 package business;
 
+import android.util.Log;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -38,17 +39,36 @@ public class ControllerLibretto {
         return new ArrayList<Esame>(ControllerUtente.getInstance().getCurrentUser().getLibretto().values());
     }
 
-    public String[] getArrayNomeEsamiDaSvolgere() {
+    public HashMap<String, Corso> getArrayNomeEsamiDaSvolgere() {
         HashMap<String, Corso> rimanenti = cUser.getCurrentUser().getCorso().getCorsi();
+        HashMap<String, Esame> esamih=cUser.getCurrentUser().getLibretto();
+
+        for(Map.Entry<String, Esame> entry: esamih.entrySet()){
+            rimanenti.remove(entry.getKey());
+        }
+
+        /*
         Collection<Esame> esami = cUser.getCurrentUser().getLibretto().values();
         for(Esame e: esami){
             rimanenti.remove(e.getCorso().getCodice());
         }
+
         String[] out = new String[rimanenti.size()];
         int i = 0;
         for (Corso e : rimanenti.values()) {
             out[i++] = e.getNome();
-        }
-        return out;
+        }*/
+        return rimanenti;
+    }
+
+    public void addEsame(int Voto, String Data,HashMap<String,Corso> esaminonfatti, int indiceSelezionato,String[]codici){
+
+        Esame e= new Esame();
+        e.setData(Data);
+        e.setVoto(Voto);
+        e.setCorso(esaminonfatti.get(codici[indiceSelezionato]));
+        cUser.getCurrentUser().getLibretto().put(codici[indiceSelezionato],e);
+
+        Log.d("prova", "voto "+Voto+" data "+Data+ " esame "+ esaminonfatti.get(codici[indiceSelezionato]).getNome());
     }
 }
