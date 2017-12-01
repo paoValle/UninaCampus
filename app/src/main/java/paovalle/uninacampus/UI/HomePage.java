@@ -60,32 +60,6 @@ public class HomePage extends AppCompatActivity {
         ((TextView)findViewById(R.id.textMean)).setText(new Double(user.getMedia()).toString());
         ((TextView)findViewById(R.id.textCDL)).setText(user.getCorso().getNome());
 
-<<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
-<<<<<<< HEAD
-=======
-<<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-=======
->>>>>>> no message
-        //mostro elenco corsi seguiti
-        ListView lv = (ListView) findViewById(R.id.elencoCorsiSeguiti);
-
-        List<String> corsi = new LinkedList<>();
-        Iterator it = user.getCorsiScelti().entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            corsi.add(((Corso) pair.getValue()).getNome());
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,corsi);
-        lv.setAdapter(adapter);
-
-<<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
-=======
->>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-=======
->>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
->>>>>>> no message
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -189,12 +163,8 @@ public class HomePage extends AppCompatActivity {
 
                 break;
             case R.id.nav_fifth_fragment:
-<<<<<<< refs/remotes/origin/master
-                attemptSendMail();
-=======
                 Log.d("prova","Sto clickando msg" );
-                goToMail();
->>>>>>> Fix elenco corsi seguiti
+                goToMailDirect();
                 break;
             case R.id.nav_sixth_fragment:
                 Log.d("prova","HocliccatoLibrettooooo" );
@@ -225,6 +195,12 @@ public class HomePage extends AppCompatActivity {
             startActivity(intent);
         }
 
+    }
+
+    private void goToMailDirect(){
+
+            Intent intent = new Intent(this, MailProf.class);
+            startActivity(intent);
     }
 
     private void goToRecorder(){

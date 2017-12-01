@@ -12,10 +12,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/idLatuaCarriera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/la_tua_carriera"
+            android:textColor="@android:color/black"
+            android:textSize="26sp" />
+
+        <GridView
+            android:id="@+id/idhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="4" />
+
         <GridView
             android:id="@+id/idListaEsami"
             android:layout_width="match_parent"
-            android:layout_height="580dp"
+            android:layout_height="480dp"
             android:numColumns="4">
 
         </GridView>
@@ -28,7 +42,7 @@
             <Button
                 android:id="@+id/indietrofromLibretto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/holo_blue_dark"
@@ -40,14 +54,23 @@
             <Button
                 android:id="@+id/idaggiorna"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/holo_blue_dark"
                 android:text="@string/aggiorna"
                 android:textColor="@android:color/background_light"
                 android:textSize="24sp"
-                tools:text="Aggiorna" />
+                tools:text="+" />
+
+            <Button
+                android:id="@+id/idElimina"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/holo_blue_dark"
+                android:text="@string/elimina"
+                tools:text="-" />
         </LinearLayout>
 
     </LinearLayout>

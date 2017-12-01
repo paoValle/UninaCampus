@@ -11,36 +11,45 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ArrayAdapter;
 
+import entity.Corso;
 import entity.UtenteRegistrato;
 import paovalle.uninacampus.R;
 import entity.Esame;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import android.widget.Button;
+import android.widget.Spinner;
 
 
 public class LibrettoActivity extends AppCompatActivity {
-    private UtenteRegistrato user;
-    Button btnback;
-    Button btnaggiorna;
-    Button btndone;
-    AlertDialog inserimentoEsame;
+    private UtenteRegistrato user = UtenteRegistrato.getIstanza();
+    private Button btnback;
+    private Button btnaggiorna;
+    private Button btnelimina;
+    private Button btndone;
+    private AlertDialog inserimentoEsame;
+    private GridView lv;
+    private GridView lv2;
+    private String[] esami;
+    private ArrayList<Esame> es;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-      //  Log.d("prova","sono nell'activity del libretto" );
+        //  Log.d("prova","sono nell'activity del libretto" );
         super.onCreate(savedInstanceState);
-       // Log.d("prova","sono nell'activity del libretto22" );
+        // Log.d("prova","sono nell'activity del libretto22" );
         setContentView(R.layout.activity_libretto);
 
-        Log.d("prova","---------------------ho superato on create" );
 
-        ArrayList<Esame> es=new ArrayList<Esame>(user.getIstanza().getLibretto());
-        String[] esami;
-        if(es==null|| es.size()==0){
-            Log.d("prova","NIENTE LIBRETTO" );
-            esami = new String[]{"ciao", "esmae","bello", "is2", "tutti","bocciati","yyy","si"};
+        es = new ArrayList<Esame>(user.getLibretto());
+
+        if (es == null || es.size() == 0) {
+
+            esami = new String[]{"Non", "ci", "sono", "esami"};
         } else {
-             esami = new String[es.size()];
+            esami = new String[es.size() * 4];
             int iterator = 0;
             for (Esame e : es) {
                 esami[iterator++] = e.getCorso().getNome();
@@ -50,56 +59,69 @@ public class LibrettoActivity extends AppCompatActivity {
             }
         }
 
-      //  Log.d("prova","sto creando la giglia" );
+        lv = (GridView) findViewById(R.id.idListaEsami);
+        lv2 = (GridView) findViewById(R.id.idhead);
+        String[] header = new String[]{"Esame", "CFU", "DATA", "VOTO"};
 
-
-        GridView lv = (GridView) findViewById(R.id.idListaEsami);
-
-        //Log.d("prova","griglia apposto" );
-
-       ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,esami);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row, esami);
         lv.setAdapter(adapter);
-        Log.d("prova","bottone apposto" );
-        btnback=(Button)findViewById(R.id.indietrofromLibretto);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.rowheader, header);
+        lv2.setAdapter(adapter2);
+
+        btnback = (Button) findViewById(R.id.indietrofromLibretto);
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToHome();
             }
         });
-        btnaggiorna=(Button)findViewById(R.id.idaggiorna);
+        btnaggiorna = (Button) findViewById(R.id.idaggiorna);
         btnaggiorna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              prova();
+                AggiungiEsame();
 
             }
         });
+        btnelimina = btnback = (Button) findViewById(R.id.idElimina);
     }
 
-    private void goToHome(){
+    private void goToHome() {
         //TODO: PAOLO DEVE FARE LA LOGICA!!!!
-        Log.w("prova","Sto clickando conferma" );
-        Intent intent = new Intent(this,HomePage.class);
+        Log.w("prova", "Sto clickando conferma");
+        Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
     }
-    private void prova(){
-        //TODO: PAOLO DEVE FARE LA LOGICA!!!!
-       // AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        //inserimentoEsame=builder.create();
-        Dialog d=new Dialog(this);
-        d.setTitle("prova pezzotta");
-        d.setCancelable(false);
+
+    private void AggiungiEsame() {
+        //TODO: FINIRE
+
+        Dialog d = new Dialog(this);
+        d.setTitle("Inserimento nuovo esame");
+        Log.d("prova","sono nella funzione aggiungi esame");
+        d.setCancelable(true);
         d.setContentView(R.layout.dialogo_inserimentoesame);
-      //  btnback=(Button)findViewById(R.id.idDoneEsame);
-        //btnback.setOnClickListener(new View.OnClickListener() {
-            //@Override
-          //  public void onClick(View view) {
-            //    goToHome();
-            //}
-        //});
+        HashMap<String, Corso> rimanenti = new HashMap<>(user.getCorso().getCorsi());
+
+        Log.d("prova","prima di rimuovere gli esami "+ rimanenti.size() );
+       for(Esame e: user.getLibretto()){
+           Log.d("prova","vedo il libretto "+ user.getLibretto().size() );
+           rimanenti.remove(e.getCorso().getCodice());
+       }
+        Log.d("prova","ho rimosso gli esami dimensione dell'array rimanenti "+ rimanenti.size() );
+
+        String[] exam=new String[rimanenti.size()];
+        int iterator=0;
+
+        //for (Map.Entry<String, Corso> entry : rimanenti.entrySet()) {
+          //  exam[iterator++]=entry.getValue().getNome();
+        //}
+
+
+        Spinner s=(Spinner) findViewById(R.id.idesamidainiserire);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row, new String[]{"ciao", "wau"});
+        s.setAdapter(adapter);
+
         d.show();
     }
-
-
-}
+    }
