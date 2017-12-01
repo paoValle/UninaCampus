@@ -17,6 +17,7 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -39,6 +40,12 @@ public class HomePage extends AppCompatActivity {
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     private UtenteRegistrato user;
+    //la usero per ricavare l'id del corso selezionato
+    LinkedList<String> idCorsiSeguiti = new LinkedList<>();
+    int item_selected = -1;
+
+    private Button recBtn;
+    private Button mailBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +60,7 @@ public class HomePage extends AppCompatActivity {
         ((TextView)findViewById(R.id.textMean)).setText(new Double(user.getMedia()).toString());
         ((TextView)findViewById(R.id.textCDL)).setText(user.getCorso().getNome());
 
+<<<<<<< HEAD
         //mostro elenco corsi seguiti
         ListView lv = (ListView) findViewById(R.id.elencoCorsiSeguiti);
 
@@ -67,6 +75,8 @@ public class HomePage extends AppCompatActivity {
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,corsi);
         lv.setAdapter(adapter);
 
+=======
+>>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,7 +99,52 @@ public class HomePage extends AppCompatActivity {
         //if not null, this will turn menu icon to grey
         ((NavigationView)findViewById(R.id.nvView)).setItemIconTintList(null);
 
+        recBtn = (Button) findViewById(R.id.recorderBtn);
+        recBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToRecorder();
+            }
+        });
 
+        mailBtn = (Button) findViewById(R.id.mailBtn);
+        mailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToMail();
+            }
+        });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //mostro elenco corsi seguiti
+        ListView lv = (ListView) findViewById(R.id.elencoCorsiSeguiti);
+        lv.setAdapter(null);
+        List<String> corsi = new LinkedList<>();
+        Iterator it = user.getCorsiScelti().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            corsi.add(((Corso) pair.getValue()).getNome());
+            idCorsiSeguiti.add((String)pair.getKey());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        System.out.println("RESUMED!");
+
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,corsi);
+        lv.setAdapter(adapter);
+
+        //aggiungo listener on item selected
+        lv.setClickable(true);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                item_selected = i;
+                System.out.println(i);
+            }
+        });
     }
 
 
@@ -125,9 +180,18 @@ public class HomePage extends AppCompatActivity {
 
                 break;
             case R.id.nav_fifth_fragment:
-                Log.d("prova","Sto clickando msg" );
+<<<<<<< refs/remotes/origin/master
                 attemptSendMail();
+=======
+                Log.d("prova","Sto clickando msg" );
+                goToMail();
+>>>>>>> Fix elenco corsi seguiti
                 break;
+            case R.id.nav_sixth_fragment:
+                Log.d("prova","HocliccatoLibrettooooo" );
+                vediLibretto();
+                break;
+
             default:
 
 
@@ -140,10 +204,31 @@ public class HomePage extends AppCompatActivity {
         mDrawer.closeDrawers();
     }
 
-    private void attemptSendMail(){
+    private void goToMail(){
+        ///prendo corso selezionato
+        String sel = (String)((ListView)findViewById(R.id.elencoCorsiSeguiti)).getSelectedItem();
+        System.out.println(sel);
+        if (item_selected==-1) {
+            Toast.makeText(getApplicationContext(), "Selezionare prima un corso!", Toast.LENGTH_SHORT).show();
+        } else {
+            System.out.println("Hai cliccato su: " + idCorsiSeguiti.get(item_selected));
+            Intent intent = new Intent(this, MailProf.class);
+            startActivity(intent);
+        }
+
+    }
+
+    private void goToRecorder(){
+        //TODO: PAOLO DEVE FARE LA LOGICA!!!!
+        /*Intent intent = new Intent(this,RecorderActivity.class);
+        startActivity(intent);*/
+
+    }
+
+    private void vediLibretto(){
         //TODO: PAOLO DEVE FARE LA LOGICA!!!!
         Log.d("prova","Sono nella funzione" );
-        Intent intent = new Intent(this,MailProf.class);
+        Intent intent = new Intent(this,LibrettoActivity.class);
         startActivity(intent);
 
     }
