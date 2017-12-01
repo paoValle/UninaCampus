@@ -62,10 +62,18 @@ public class HomePage extends AppCompatActivity {
 
 <<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
 =======
 >>>>>>> no message
+=======
+<<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> master
+>>>>>>> dbfa4caa03d5be546572aae763edc722dc323d66
         //mostro elenco corsi seguiti
         ListView lv = (ListView) findViewById(R.id.elencoCorsiSeguiti);
 
@@ -80,12 +88,21 @@ public class HomePage extends AppCompatActivity {
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,corsi);
         lv.setAdapter(adapter);
 
+<<<<<<< HEAD
 <<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
 =======
 >>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
 =======
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
 >>>>>>> no message
+=======
+<<<<<<< HEAD
+>>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
+=======
+=======
+>>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
+>>>>>>> master
+>>>>>>> dbfa4caa03d5be546572aae763edc722dc323d66
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
