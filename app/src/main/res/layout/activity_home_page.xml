@@ -91,18 +91,10 @@
                     android:layout_width="match_parent"
 <<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
 <<<<<<< HEAD
-<<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-                    android:layout_height="350dp">
-=======
-                    android:layout_height="300dp">
->>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
-=======
-<<<<<<< HEAD
                     android:layout_height="300dp">
 =======
                     android:layout_height="350dp">
 >>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-<<<<<<< HEAD
 =======
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
                     android:layout_height="350dp">
@@ -110,35 +102,24 @@
                     android:layout_height="300dp">
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
 >>>>>>> no message
-=======
->>>>>>> master
->>>>>>> dbfa4caa03d5be546572aae763edc722dc323d66
 
                     <ListView
                         android:id="@+id/elencoCorsiSeguiti"
                         android:layout_width="match_parent"
 <<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
 <<<<<<< HEAD
-<<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-=======
-<<<<<<< HEAD
                         android:layout_height="300dp"
                         android:divider="#005b00"
                         android:dividerHeight="1dp"
 =======
-<<<<<<< HEAD
 =======
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
 >>>>>>> no message
-=======
->>>>>>> master
->>>>>>> dbfa4caa03d5be546572aae763edc722dc323d66
                         android:layout_height="match_parent"
                         android:choiceMode="singleChoice"
                         android:divider="#005b00"
                         android:dividerHeight="1dp"
                         android:listSelector="@android:color/darker_gray"
-<<<<<<< HEAD
 <<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
 >>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
 =======
@@ -148,17 +129,6 @@
                         android:dividerHeight="1dp"
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
 >>>>>>> no message
-=======
-<<<<<<< HEAD
-=======
-                        android:layout_height="300dp"
-                        android:divider="#005b00"
-                        android:dividerHeight="1dp"
->>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
-=======
->>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
->>>>>>> master
->>>>>>> dbfa4caa03d5be546572aae763edc722dc323d66
                         android:scrollbarAlwaysDrawVerticalTrack="true"
                         android:scrollbarStyle="insideOverlay" />
 
@@ -175,18 +145,10 @@
                         android:layout_width="10dp"
 <<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
 <<<<<<< HEAD
-<<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-                        android:layout_height="80dp"
-=======
-                        android:layout_height="match_parent"
->>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
-=======
-<<<<<<< HEAD
                         android:layout_height="match_parent"
 =======
                         android:layout_height="80dp"
 >>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-<<<<<<< HEAD
 =======
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
                         android:layout_height="80dp"
@@ -194,9 +156,6 @@
                         android:layout_height="match_parent"
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
 >>>>>>> no message
-=======
->>>>>>> master
->>>>>>> dbfa4caa03d5be546572aae763edc722dc323d66
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/holo_blue_dark"
@@ -209,18 +168,10 @@
                         android:layout_width="10dp"
 <<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
 <<<<<<< HEAD
-<<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-                        android:layout_height="80dp"
-=======
-                        android:layout_height="match_parent"
->>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
-=======
-<<<<<<< HEAD
                         android:layout_height="match_parent"
 =======
                         android:layout_height="80dp"
 >>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-<<<<<<< HEAD
 =======
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
                         android:layout_height="80dp"
@@ -228,9 +179,6 @@
                         android:layout_height="match_parent"
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
 >>>>>>> no message
-=======
->>>>>>> master
->>>>>>> dbfa4caa03d5be546572aae763edc722dc323d66
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/holo_blue_dark"

@@ -5,18 +5,10 @@
     android:textColor="@android:color/black"
 <<<<<<< da3b8f07bba78e83936b1462c39dd0ecfeef128f
 <<<<<<< HEAD
-<<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-    android:textSize="18sp" />
-=======
-    android:textSize="36sp" />
->>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
-=======
-<<<<<<< HEAD
     android:textSize="36sp" />
 =======
     android:textSize="18sp" />
 >>>>>>> f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
-<<<<<<< HEAD
 =======
 <<<<<<< f6ed437b1e12b426fa4e80d8e40ee9758122c1b6
     android:textSize="18sp" />
@@ -24,6 +16,3 @@
     android:textSize="36sp" />
 >>>>>>> Refactor entity. Aggiunto elenco corsi seguiti.
 >>>>>>> no message
-=======
->>>>>>> master
->>>>>>> dbfa4caa03d5be546572aae763edc722dc323d66
