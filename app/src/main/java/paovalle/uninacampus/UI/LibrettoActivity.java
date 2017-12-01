@@ -18,6 +18,7 @@ import entity.Esame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import android.widget.Button;
 import android.widget.Spinner;
@@ -43,7 +44,7 @@ public class LibrettoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_libretto);
 
 
-        es = new ArrayList<Esame>(user.getLibretto());
+        es = new ArrayList<Esame>();
 
         if (es == null || es.size() == 0) {
 
@@ -104,7 +105,8 @@ public class LibrettoActivity extends AppCompatActivity {
         HashMap<String, Corso> rimanenti = new HashMap<>(user.getCorso().getCorsi());
 
         Log.d("prova","prima di rimuovere gli esami "+ rimanenti.size() );
-       for(Esame e: user.getLibretto()){
+        Set<Esame> esami = user.getLibretto().entrySet();
+        for(Esame e: esami){
            Log.d("prova","vedo il libretto "+ user.getLibretto().size() );
            rimanenti.remove(e.getCorso().getCodice());
        }

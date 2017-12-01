@@ -10,6 +10,8 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="la_tua_carriera">Questo è il tuo libretto di esami:</string>
+    <string name="elimina">Elimina</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
