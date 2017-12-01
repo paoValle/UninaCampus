@@ -64,33 +64,37 @@ public class SignUp extends AppCompatActivity {
             if (pwd.length()<6) {
                 Toast.makeText(SignUp.this, "La password deve essere di almeno 6 caratteri!", Toast.LENGTH_SHORT).show();
             } else {
-                //create user
-                auth.createUserWithEmailAndPassword(email, pwd)
-                    .addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.w("AUTHRESULT", task.getException().getMessage());
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(SignUp.this, "Registrazione fallita!" + task.getException(),
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(SignUp.this, "Utente registrato!" + task.getException(),
-                                        Toast.LENGTH_SHORT).show();
-                                //creo record in db
-                                String UID = task.getResult().getUser().getUid();
+                if (!isValidEmail(email)) {
+                    Toast.makeText(SignUp.this, "Email non valida!", Toast.LENGTH_SHORT).show();
+                } else {
+                    //create user
+                    auth.createUserWithEmailAndPassword(email, pwd)
+                            .addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    Log.w("AUTHRESULT", task.getException().getMessage());
+                                    if (!task.isSuccessful()) {
+                                        Toast.makeText(SignUp.this, "Registrazione fallita!" + task.getException(),
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(SignUp.this, "Utente registrato!" + task.getException(),
+                                                Toast.LENGTH_SHORT).show();
+                                        //creo record in db
+                                        String UID = task.getResult().getUser().getUid();
 
-                                FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-                                DatabaseReference dbRef = mDatabase.getReference();
-                                dbRef.child("utente").child(UID).child("email").setValue(((TextView) findViewById(R.id.email)).getText().toString());
-                                dbRef.child("utente").child(UID).child("fname").setValue(fname);
-                                dbRef.child("utente").child(UID).child("lname").setValue(lname);
-                                dbRef.child("utente").child(UID).child("matr").setValue(matr);
-                                dbRef.child("utente").child(UID).child("mean").setValue(0);
-                                dbRef.child("utente").child(UID).child("corsoDiLaurea").setValue(cdl);
-                                goToLogin();
-                            }
-                        }
-                    });
+                                        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+                                        DatabaseReference dbRef = mDatabase.getReference();
+                                        dbRef.child("utente").child(UID).child("email").setValue(((TextView) findViewById(R.id.email)).getText().toString());
+                                        dbRef.child("utente").child(UID).child("fname").setValue(fname);
+                                        dbRef.child("utente").child(UID).child("lname").setValue(lname);
+                                        dbRef.child("utente").child(UID).child("matr").setValue(matr);
+                                        dbRef.child("utente").child(UID).child("mean").setValue(0);
+                                        dbRef.child("utente").child(UID).child("corsoDiLaurea").setValue(cdl);
+                                        goToLogin();
+                                    }
+                                }
+                            });
+                }
             }
         }
 
@@ -100,6 +104,10 @@ public class SignUp extends AppCompatActivity {
     private void goToLogin() {
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
+    }
+
+    private boolean isValidEmail(String e) {
+        return e.contains("@studenti.unina.it");
     }
 
 }

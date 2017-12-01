@@ -12,13 +12,6 @@
     tools:context="paovalle.uninacampus.UI.LoginActivity">
 
     <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -69,7 +62,7 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="utente"
+                    android:text="utenteutente"
                     android:textSize="30sp" />
 
             </android.support.design.widget.TextInputLayout>

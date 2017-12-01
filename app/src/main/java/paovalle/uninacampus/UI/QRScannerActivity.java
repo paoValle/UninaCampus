@@ -3,8 +3,8 @@ package paovalle.uninacampus.UI;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import business.HTMLPageDownloader;
-import paovalle.uninacampus.R;
+/*import business.HTMLPageDownloader;
+import paovalle.uninacampus.R;*/
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -17,10 +17,10 @@ import android.view.SurfaceView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.CameraSource;
+/*import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.android.gms.vision.barcode.BarcodeDetector;*/
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 public class QRScannerActivity extends AppCompatActivity {
-
+/*
     SurfaceView cameraPreview;
     TextView txtResult;
     BarcodeDetector barcodeDetector;
@@ -111,27 +111,6 @@ public class QRScannerActivity extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> qrcodes = detections.getDetectedItems();
                 if (qrcodes.size() != 0) {
-                    /*final String scanned = qrcodes.valueAt(0).displayValue;
-                    Toast.makeText(getApplicationContext(), "Scan completato: " + scanned, Toast.LENGTH_LONG).show();
-                    DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
-                    dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            //TODO: implementare giorno della settimana
-                            //scarico giorno della settimana
-                            String orarioStr = dataSnapshot.child("Aula").child(scanned).child("orarioSettimana").child("lun").getValue().toString();
-                            String[] orario = orarioStr.split(";");
-                            for (String o : orario) {
-                                Log.w("ORARIO", o);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });*/
-
-
                     txtResult.post(new Runnable() {
                         @Override
                         public void run() {
@@ -145,5 +124,5 @@ public class QRScannerActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 }

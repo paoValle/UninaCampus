@@ -16,14 +16,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <!--<TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="@string/qrscannerdesc"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="24sp" />
+            android:textSize="24sp" />-->
 
         <SurfaceView
             android:id="@+id/cameraPreview"
@@ -32,7 +32,7 @@
             android:layout_centerInParent="true" />
 
     </LinearLayout>
-
+<!--
     <TextView
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
@@ -43,5 +43,5 @@
         android:text="Scanned"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
+-->
 </RelativeLayout>

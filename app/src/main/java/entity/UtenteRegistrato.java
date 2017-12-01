@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class UtenteRegistrato {
 
 	private String nome;
+	private String UID;
 	private String cognome;
 	private String matricola;
 	private String email;
@@ -15,18 +16,13 @@ public class UtenteRegistrato {
 	private HashMap<String, Esame> libretto;
 	private HashMap<String, Corso> corsiScelti;
 	
-	
-	private static UtenteRegistrato istanza;
-	
-	public static synchronized UtenteRegistrato getIstanza() {
-		if(istanza==null) {
-			istanza=new UtenteRegistrato();
-		}
-		return istanza;
+	public UtenteRegistrato() {
+		this.libretto=new HashMap<>();
+		this.corsiScelti=new HashMap<>();
 	}
-	
-	private UtenteRegistrato() {
-		// TODO Auto-generated constructor stub
+
+	public UtenteRegistrato(String UID) {
+		this.UID = UID;
 		this.libretto=new HashMap<>();
 		this.corsiScelti=new HashMap<>();
 	}
@@ -38,6 +34,14 @@ public class UtenteRegistrato {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getUID() {
+		return UID;
+	}
+
+	public void setUID(String UID) {
+		this.UID = UID;
 	}
 
 	public String getCognome() {
