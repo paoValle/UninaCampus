@@ -1,0 +1,36 @@
+From dbfa4caa03d5be546572aae763edc722dc323d66 Mon Sep 17 00:00:00 2001
+From: Paolo Valletta <paovalletta@hotmail.it>
+Date: Thu, 30 Nov 2017 11:14:49 +0100
+Subject: [PATCH] Refactor entity. Aggiunto elenco corsi seguiti.
+
+---
+ app/src/main/AndroidManifest.xml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+index 99ec7d4..cc95dd3 100644
+--- a/app/src/main/AndroidManifest.xml
++++ b/app/src/main/AndroidManifest.xml
+@@ -8,6 +8,7 @@
+     <uses-permission android:name="android.permission.READ_CONTACTS" />
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
++    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+ 
+     <application
+         android:allowBackup="true"
+@@ -28,7 +29,9 @@
+         <activity android:name=".UI.HomePage" />
+         <activity android:name=".UI.SignUp" />
+         <activity android:name=".UI.MailProf" />
+-        <activity android:name=".UI.LibrettoActivity"></activity>
++        <activity android:name=".UI.LibrettoActivity"/>
++        <activity android:name=".UI.RecorderActivity">
++        </activity>
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
+-- 
+2.7.1.windows.2
+
