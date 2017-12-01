@@ -6,6 +6,7 @@ public class Professore {
 	private String Cognome;
 	private String email;
 	private String telefono;
+	private String id;
 
 	public Professore() {
 		// TODO Auto-generated constructor stub
@@ -17,6 +18,14 @@ public class Professore {
 		Cognome = cognome;
 		this.email = email;
 		this.telefono = telefono;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getNome() {

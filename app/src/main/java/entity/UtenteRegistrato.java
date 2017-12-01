@@ -86,7 +86,7 @@ public class UtenteRegistrato {
 	}
 
 
-	public HashMap getLibretto() {
+	public HashMap<String, Esame> getLibretto() {
 		return libretto;
 	}
 

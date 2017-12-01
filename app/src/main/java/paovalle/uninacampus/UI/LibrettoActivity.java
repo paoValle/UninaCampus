@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 import business.ControllerLibretto;
+import business.ControllerUtente;
 import entity.Esame;
 import paovalle.uninacampus.R;
 
@@ -34,7 +35,7 @@ public class LibrettoActivity extends AppCompatActivity {
 
         cLibretto = ControllerLibretto.getInstance();
 
-        es = new ArrayList<>();
+        es = cLibretto.getArrayListEsamiSvolti();
 
         if (es == null || es.size() == 0) {
 
@@ -92,7 +93,7 @@ public class LibrettoActivity extends AppCompatActivity {
         d.setCancelable(true);
         d.setContentView(R.layout.dialogo_inserimentoesame);
         String[] exam;
-        exam = cLibretto.getSArrayEsamiSvolti();
+        exam = cLibretto.getArrayNomeEsamiDaSvolgere();
 
         Spinner s = findViewById(R.id.idesamidainiserire);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row, exam);

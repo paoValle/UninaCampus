@@ -31,6 +31,8 @@ import entity.Aula;
 import entity.Corso;
 import entity.CorsoDiLaurea;
 import entity.Dettagli;
+import entity.Edificio;
+import entity.Esame;
 import entity.Professore;
 import entity.UtenteRegistrato;
 import paovalle.uninacampus.R;
@@ -136,7 +138,13 @@ public class LoginActivity extends AppCompatActivity {
                                             c.setSemestre(s.child("Semestre").getValue().toString());
                                             //professore
                                             String idProf = s.child("Professore").getValue().toString();
-                                            Professore p = dataSnapshot.child("Professore").child(idProf).getValue(Professore.class);
+                                            Professore p = new Professore();
+                                            p.setCognome(dataSnapshot.child("Professore").child(idProf).child("Cognome").getValue().toString());
+                                            p.setNome(dataSnapshot.child("Professore").child(idProf).child("Nome").getValue().toString());
+                                            p.setTelefono(dataSnapshot.child("Professore").child(idProf).child("Tel").getValue().toString());
+                                            p.setEmail(dataSnapshot.child("Professore").child(idProf).child("Email").getValue().toString());
+                                            p.setId(idProf);
+                                            System.out.println("mail: "+p.getEmail());
                                             c.setProfessore(p);
                                             //dettagli
                                             for (DataSnapshot dettagli : s.child("dettagli").getChildren()) {
@@ -146,7 +154,16 @@ public class LoginActivity extends AppCompatActivity {
                                                 d.setOrafine(s.child("Ora fine").getValue().toString());
                                                 //aula
                                                 String idAula = s.child("Aula").getValue().toString();
-                                                Aula a = dataSnapshot.child("Aula").child(idAula).getValue(Aula.class);
+                                                Aula a = new Aula();
+                                                a.setCapienza(Integer.parseInt(dataSnapshot.child("Aula").child(idAula).child("Capienza").getValue().toString()));
+                                                a.setId(idAula);
+                                                a.setPiano(dataSnapshot.child("Aula").child(idAula).child("Piano").getValue().toString());
+                                                //edificio
+                                                String idEdificio = dataSnapshot.child("Aula").child(idAula).child("Edificio").getValue().toString();
+                                                Edificio e = new Edificio();
+                                                e.setId(idEdificio);
+                                                e.setIndirizzo(dataSnapshot.child("Edificio").child(idEdificio).child("Indirizzo").getValue().toString());
+                                                a.setEd(e);
                                                 d.setAula(a);
                                                 c.getDettagli().add(d);
                                             }
@@ -164,7 +181,11 @@ public class LoginActivity extends AppCompatActivity {
                                             //aggiungo oggetto corso dal corso di laurea gia creato
                                             String idCorso = libretto.child("corso").getValue().toString();
                                             Corso c = (Corso) cdl.getCorsi().get(idCorso);
-                                            user.getLibretto().put(idCorso, c);
+                                            Esame e = new Esame();
+                                            e.setCorso(c);
+                                            e.setData(libretto.child("data").getValue().toString());
+                                            e.setVoto(Integer.parseInt(libretto.child("voto").getValue().toString()));
+                                            user.getLibretto().put(idCorso, e);
                                         }
                                         user.setCorso(cdl);
                                         loginT.cancel();

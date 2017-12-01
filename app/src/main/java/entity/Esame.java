@@ -5,14 +5,14 @@ import java.util.GregorianCalendar;
 public class Esame {
 
 	private Corso corso;
-	private GregorianCalendar Data;
+	private String Data;
 	private int voto;
 
 	public Esame() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Esame(Corso corso, GregorianCalendar data, int voto) {
+	public Esame(Corso corso, String data, int voto) {
 		super();
 		this.corso = corso;
 		this.Data = data;
@@ -27,11 +27,11 @@ public class Esame {
 		this.corso = corso;
 	}
 
-	public GregorianCalendar getData() {
+	public String getData() {
 		return Data;
 	}
 
-	public void setData(GregorianCalendar data) {
+	public void setData(String data) {
 		Data = data;
 	}
 

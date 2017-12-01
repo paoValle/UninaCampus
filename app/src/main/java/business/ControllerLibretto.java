@@ -2,6 +2,8 @@ package business;
 
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,20 +34,21 @@ public class ControllerLibretto {
         cUser = ControllerUtente.getInstance();
     }
 
+    public ArrayList<Esame> getArrayListEsamiSvolti() {
+        return new ArrayList<Esame>(ControllerUtente.getInstance().getCurrentUser().getLibretto().values());
+    }
 
-    public String[] getSArrayEsamiSvolti() {
-        HashMap<String, Corso> rimanenti = new HashMap<>(cUser.getCurrentUserCorsi());
-
-        Set<Esame> esami = cUser.getCurrentUserEsami().entrySet();
-        for (Esame e : esami) {
+    public String[] getArrayNomeEsamiDaSvolgere() {
+        HashMap<String, Corso> rimanenti = cUser.getCurrentUser().getCorso().getCorsi();
+        Collection<Esame> esami = cUser.getCurrentUser().getLibretto().values();
+        for(Esame e: esami){
             rimanenti.remove(e.getCorso().getCodice());
         }
-
-        String[] exam = new String[rimanenti.size()];
-        for (Map.Entry<String, Corso> c : rimanenti.entrySet()) {
-            exam[exam.length] = c.getValue().getNome();
+        String[] out = new String[rimanenti.size()];
+        int i = 0;
+        for (Corso e : rimanenti.values()) {
+            out[i++] = e.getNome();
         }
-
-        return exam;
+        return out;
     }
 }
