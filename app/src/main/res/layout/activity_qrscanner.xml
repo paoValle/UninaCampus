@@ -16,32 +16,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--<TextView
+        <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="@string/qrscannerdesc"
+            android:text="Inquadra un QR Code fuori un'aula per vederne l'orario odierno!"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="24sp" />-->
+            android:textSize="24sp" />
 
         <SurfaceView
             android:id="@+id/cameraPreview"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="371dp"
             android:layout_centerInParent="true" />
 
+        <TextView
+            android:id="@+id/txtResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cameraPreview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:visibility="invisible" />
+
     </LinearLayout>
-<!--
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
-        android:textSize="20sp"
-        android:layout_below="@+id/cameraPreview"
-        android:id="@+id/txtResult"
-        android:layout_marginTop="20dp"
-        android:text="Scanned"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
--->
+
 </RelativeLayout>
