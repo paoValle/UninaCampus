@@ -7,16 +7,18 @@ public class Esame {
 	private Corso corso;
 	private String Data;
 	private int voto;
+	private String UID;
 
 	public Esame() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Esame(Corso corso, String data, int voto) {
+	public Esame(Corso corso, String data, int voto, String UID) {
 		super();
 		this.corso = corso;
 		this.Data = data;
 		this.voto = voto;
+		this.UID=UID;
 	}
 
 	public Corso getCorso() {
@@ -41,6 +43,14 @@ public class Esame {
 
 	public void setVoto(int voto) {
 		this.voto = voto;
+	}
+
+	public String getUID() {
+		return Data;
+	}
+
+	public void setUID(String data) {
+		Data = data;
 	}
 
 	@Override

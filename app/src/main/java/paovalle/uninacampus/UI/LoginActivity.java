@@ -185,7 +185,8 @@ public class LoginActivity extends AppCompatActivity {
                                             e.setCorso(c);
                                             e.setData(libretto.child("data").getValue().toString());
                                             e.setVoto(Integer.parseInt(libretto.child("voto").getValue().toString()));
-                                            user.getLibretto().put(idCorso, e);
+                                            String codice=libretto.child("codice").getValue().toString();
+                                            user.getLibretto().put(codice, e);
                                         }
                                         user.setCorso(cdl);
                                         loginT.cancel();

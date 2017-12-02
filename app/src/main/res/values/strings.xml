@@ -37,6 +37,10 @@
     <string name="aggiorna">aggiorna</string>
     <string name="voto">Voto:</string>
     <string name="done">Done</string>
+    <string name="lode">Lode</string>
+    <string name="button">Button</string>
+    <string name="sicuro_di_eliminare_esame_selezionato">Sicuro di eliminare esame selezionato?</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

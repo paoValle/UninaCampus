@@ -39,6 +39,15 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/voto"
                     android:inputType="number" />
+
+                <CheckBox
+                    android:id="@+id/idcheckLode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:duplicateParentState="false"
+                    android:text="@string/lode" />
             </android.support.design.widget.TextInputLayout>
 
                 <DatePicker

@@ -2,6 +2,12 @@ package business;
 
 import android.util.Log;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,23 +41,28 @@ public class ControllerLibretto {
         cUser = ControllerUtente.getInstance();
     }
 
-    public ArrayList<Esame> getArrayListEsamiSvolti() {
-        return new ArrayList<Esame>(ControllerUtente.getInstance().getCurrentUser().getLibretto().values());
+    public HashMap<String, Esame> getEsamiSvolti() {
+        return ControllerUtente.getInstance().getCurrentUser().getLibretto();
     }
 
-    public HashMap<String, Corso> getArrayNomeEsamiDaSvolgere() {
+    public HashMap<String, Corso> getNomeEsamiDaSvolgere() {
+
         HashMap<String, Corso> rimanenti = cUser.getCurrentUser().getCorso().getCorsi();
         HashMap<String, Esame> esamih=cUser.getCurrentUser().getLibretto();
 
+        Collection<Esame> esame= esamih.values();
+        for(Esame e: esame){
+            rimanenti.remove(e.getCorso().getCodice());
+        }
+   /*
         for(Map.Entry<String, Esame> entry: esamih.entrySet()){
+
             rimanenti.remove(entry.getKey());
         }
 
-        /*
+
         Collection<Esame> esami = cUser.getCurrentUser().getLibretto().values();
-        for(Esame e: esami){
-            rimanenti.remove(e.getCorso().getCodice());
-        }
+
 
         String[] out = new String[rimanenti.size()];
         int i = 0;
@@ -63,12 +74,43 @@ public class ControllerLibretto {
 
     public void addEsame(int Voto, String Data,HashMap<String,Corso> esaminonfatti, int indiceSelezionato,String[]codici){
 
+
         Esame e= new Esame();
         e.setData(Data);
         e.setVoto(Voto);
         e.setCorso(esaminonfatti.get(codici[indiceSelezionato]));
-        cUser.getCurrentUser().getLibretto().put(codici[indiceSelezionato],e);
 
-        Log.d("prova", "voto "+Voto+" data "+Data+ " esame "+ esaminonfatti.get(codici[indiceSelezionato]).getNome());
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = mDatabase.getReference();
+
+        String UID = cUser.getCurrentUser().getUID();
+        String element= dbRef.child("utente").child(UID).child("libretto").push().getKey();
+        dbRef.child("utente").child(UID).child("libretto").child(element).child("corso").setValue(e.getCorso().getCodice());
+        dbRef.child("utente").child(UID).child("libretto").child(element).child("voto").setValue(e.getVoto());
+        dbRef.child("utente").child(UID).child("libretto").child(element).child("data").setValue(e.getData());
+        dbRef.child("utente").child(UID).child("libretto").child(element).child("codice").setValue(element);
+        e.setUID(element);
+        cUser.getCurrentUser().getLibretto().put(element,e); //esame creato in locale
+        cUser.calcolaMedia();
+    }
+
+    public void deleteExam(int pos,String codice ){
+        cUser.getCurrentUser().getLibretto().remove(codice);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = mDatabase.getReference();
+
+        String UID = cUser.getCurrentUser().getUID();
+        Log.d("prova", UID + " "+ codice);
+
+        dbRef.child("utente").child(UID).child("libretto").child(codice).child("data").removeValue();
+        dbRef.child("utente").child(UID).child("libretto").child(codice).child("corso").removeValue();
+        dbRef.child("utente").child(UID).child("libretto").child(codice).child("voto").removeValue();
+        dbRef.child("utente").child(UID).child("libretto").child(codice).child("codice").removeValue();
+        dbRef.child("utente").child(UID).child("libretto").child(codice).removeValue();
+        cUser.calcolaMedia();
     }
 }

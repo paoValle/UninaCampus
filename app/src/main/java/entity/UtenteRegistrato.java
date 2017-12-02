@@ -28,6 +28,7 @@ public class UtenteRegistrato {
 	}
 
 
+
 	public String getNome() {
 		return nome;
 	}
