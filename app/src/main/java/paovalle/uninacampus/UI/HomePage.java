@@ -1,5 +1,6 @@
 package paovalle.uninacampus.UI;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -9,8 +10,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +26,15 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import business.ControllerLibretto;
 import business.ControllerUtente;
+import entity.Corso;
 import paovalle.uninacampus.R;
 
 public class HomePage extends AppCompatActivity {
@@ -36,10 +42,14 @@ public class HomePage extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
 
+    private Dialog dialogCorsiSeguiti;
     //la usero per ricavare l'id del corso selezionato
-    List idCorsiSeguiti = new LinkedList<>();
+    private List idCorsiSeguiti = new LinkedList<>();
+    private String[] idSceltaCorsi;
+    private List<Integer> posIdCorsiScelti;
 
-    ControllerUtente cUser;
+    private ControllerUtente cUser;
+    private ControllerLibretto cLibretto;
     int item_selected = -1;
 
     @Override
@@ -48,7 +58,9 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         cUser = ControllerUtente.getInstance();
+        cLibretto = ControllerLibretto.getInstance();
 
+        posIdCorsiScelti = new LinkedList<>();
         //setting up current user infos
         ((TextView)findViewById(R.id.textFName)).setText(cUser.getCurrentUser().getNome());
         ((TextView)findViewById(R.id.textLName)).setText(cUser.getCurrentUser().getCognome());
@@ -89,6 +101,75 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        Button modificaElencoCorsi = findViewById(R.id.modificaElencoCorsi);
+        modificaElencoCorsi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogSceltaCorsiSeguiti();
+            }
+        });
+
+    }
+
+    private void showDialogSceltaCorsiSeguiti() {
+        //mostro dialog con possibili corsi da scegliere
+        dialogCorsiSeguiti = new Dialog(this);
+        dialogCorsiSeguiti.setTitle("Quali corsi segui?");
+        dialogCorsiSeguiti.setCancelable(false);
+        dialogCorsiSeguiti.setContentView(R.layout.dialog_sceltacorsiseguiti);
+
+        Button dismissDialog = (Button)dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiCancel);
+        dismissDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogCorsiSeguiti.dismiss();
+            }
+        });
+        Button okDialog = (Button)dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiOk);
+        okDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: salvare corsi da seguire!
+                System.out.println("Corsi da salvare come scelti:");
+                for (Integer pos : posIdCorsiScelti) {
+                    System.out.println(idSceltaCorsi[pos]);
+                }
+            }
+        });
+
+        //GridView headerGridView = d.findViewById(R.id.dialogOrariGridHeader);
+        ListView lvSceltaCorsi = dialogCorsiSeguiti.findViewById(R.id.listaSceltaCorsi);
+        //preparo contenuto tabella
+        HashMap<String, Corso> exam = cLibretto.getArrayNomeEsamiDaSvolgere();
+        String[] esaminomi=new String[exam.size()];
+        idSceltaCorsi = new String[exam.size()];
+        int i = 0;
+        for (Map.Entry<String, Corso> entry: exam.entrySet()) {
+            esaminomi[i] = entry.getValue().getNome();
+            idSceltaCorsi[i++]=entry.getKey();
+        }
+        //resetto corsi scelti
+        posIdCorsiScelti = new ArrayList<>();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, esaminomi);
+        lvSceltaCorsi.setAdapter(adapter);
+
+        lvSceltaCorsi.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        lvSceltaCorsi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapter, View arg1, int arg2, long arg3)
+            {
+                AppCompatCheckedTextView checkBox = (AppCompatCheckedTextView) arg1;
+                Log.i("CHECK",checkBox.isChecked()+""+checkBox.getText().toString()+ " (pos:"+arg2+")");
+                if (checkBox.isChecked()) {
+                    posIdCorsiScelti.add(arg2);
+                } else {
+                    posIdCorsiScelti.remove(arg2);
+                }
+            }
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {  }
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+        dialogCorsiSeguiti.show();
     }
 
     @Override
@@ -109,9 +190,13 @@ public class HomePage extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                item_selected = i;
-                System.out.println("selected=>"+i);
-                Log.w("selected", Integer.valueOf(i).toString());
+                //vuole deselezionare?
+                if (item_selected == i) {
+                    item_selected = -1;
+                    ((ListView)findViewById(R.id.elencoCorsiSeguiti)).clearChoices();
+                } else {
+                    item_selected = i;
+                }
             }
         });
     }
@@ -137,7 +222,7 @@ public class HomePage extends AppCompatActivity {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-
+                goToQRScanner();
                 break;
             case R.id.nav_second_fragment:
 
@@ -165,10 +250,16 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void goToMail(){
-        //se item non selezionato, sel="" altrimenti sara il codice del corso
-        System.out.println("Gli passero => " +idCorsiSeguiti.get(item_selected) );
+        //gli passo id del corso (se selezionato)
         Intent intent = new Intent(this, MailProf.class);
         intent.putExtra("IDCORSO", (String)idCorsiSeguiti.get(item_selected));
+        startActivity(intent);
+
+    }
+
+    private void goToQRScanner(){
+        //se item non selezionato, sel="" altrimenti sara il codice del corso
+        Intent intent = new Intent(this, QRScannerActivity.class);
         startActivity(intent);
 
     }
