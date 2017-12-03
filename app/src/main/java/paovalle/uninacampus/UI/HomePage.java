@@ -140,7 +140,7 @@ public class HomePage extends AppCompatActivity {
         //GridView headerGridView = d.findViewById(R.id.dialogOrariGridHeader);
         ListView lvSceltaCorsi = dialogCorsiSeguiti.findViewById(R.id.listaSceltaCorsi);
         //preparo contenuto tabella
-        HashMap<String, Corso> exam = cLibretto.getArrayNomeEsamiDaSvolgere();
+        HashMap<String, Corso> exam = cLibretto.getNomeEsamiDaSvolgere();
         String[] esaminomi=new String[exam.size()];
         idSceltaCorsi = new String[exam.size()];
         int i = 0;

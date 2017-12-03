@@ -183,6 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                                             Corso c = (Corso) cdl.getCorsi().get(idCorso);
                                             Esame e = new Esame();
                                             e.setCorso(c);
+
                                             e.setData(libretto.child("data").getValue().toString());
                                             e.setVoto(Integer.parseInt(libretto.child("voto").getValue().toString()));
                                             String codice=libretto.child("codice").getValue().toString();

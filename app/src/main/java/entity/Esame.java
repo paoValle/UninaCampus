@@ -49,8 +49,8 @@ public class Esame {
 		return Data;
 	}
 
-	public void setUID(String data) {
-		Data = data;
+	public void setUID(String ID) {
+		UID = ID;
 	}
 
 	@Override

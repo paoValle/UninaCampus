@@ -76,7 +76,9 @@ public class ControllerLibretto {
 
 
         Esame e= new Esame();
+        Log.d("addesame", "Devo inserire la data "+ Data );
         e.setData(Data);
+        Log.d("addesame", "data settata "+ e.getData() );
         e.setVoto(Voto);
         e.setCorso(esaminonfatti.get(codici[indiceSelezionato]));
 
@@ -87,12 +89,14 @@ public class ControllerLibretto {
         DatabaseReference dbRef = mDatabase.getReference();
 
         String UID = cUser.getCurrentUser().getUID();
+
         String element= dbRef.child("utente").child(UID).child("libretto").push().getKey();
         dbRef.child("utente").child(UID).child("libretto").child(element).child("corso").setValue(e.getCorso().getCodice());
         dbRef.child("utente").child(UID).child("libretto").child(element).child("voto").setValue(e.getVoto());
         dbRef.child("utente").child(UID).child("libretto").child(element).child("data").setValue(e.getData());
         dbRef.child("utente").child(UID).child("libretto").child(element).child("codice").setValue(element);
         e.setUID(element);
+        Log.d("addesame", "esameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: data "+ e.getData()+ " codice "+ e.getUID() +" corso " + e.getCorso().getCodice());
         cUser.getCurrentUser().getLibretto().put(element,e); //esame creato in locale
         cUser.calcolaMedia();
     }

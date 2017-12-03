@@ -174,7 +174,7 @@ public class LibrettoActivity extends AppCompatActivity {
             for (Esame e : es) {
                 esami[iterator++] = e.getCorso().getNome();
                 esami[iterator++] = Integer.toString(e.getCorso().getCFU());
-                esami[iterator++] = e.getData().toString();
+                esami[iterator++] = e.getData();
 
                 if(e.getVoto()==31){
                     esami[iterator++] ="30 e lode" ;
@@ -231,7 +231,6 @@ public class LibrettoActivity extends AppCompatActivity {
                                        int pos, long arg3) {
                 selezionato=arg.getSelectedItem().toString();
                 selectIndex=pos;
-               Log.d("prova", selezionato +"pos" + pos);
 
 
             }
@@ -272,7 +271,6 @@ public class LibrettoActivity extends AppCompatActivity {
                             }
                             String data=Integer.toString(day)+"/"+Integer.toString(month)+"/"+Integer.toString(year);
                             cLibretto.addEsame(score,data,exam,selectIndex,codici);
-                            Log.d("prova", selezionato +" con voto " + voto );
                             d.cancel();
                             mostraElementi();
                         }
