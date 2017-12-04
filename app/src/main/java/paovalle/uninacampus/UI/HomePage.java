@@ -13,8 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.SparseBooleanArray;
-import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import business.ControllerAule;
 import business.ControllerLibretto;
 import business.ControllerUtente;
 import entity.Corso;
@@ -53,6 +52,7 @@ public class HomePage extends AppCompatActivity {
 
     private ControllerUtente cUser;
     private ControllerLibretto cLibretto;
+    private ControllerAule cAule;
     int item_selected = -1;
 
     @Override
@@ -62,6 +62,7 @@ public class HomePage extends AppCompatActivity {
 
         cUser = ControllerUtente.getInstance();
         cLibretto = ControllerLibretto.getInstance();
+        cAule = ControllerAule.getInstance();
 
         posIdCorsiScelti = new LinkedList<>();
         //setting up current user infos
@@ -114,7 +115,7 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void goToMaps(String id) {
-        String[] pos = cUser.getLatLngByIdAula(id);
+        String[] pos = cAule.getLatLngByIdAula(id);
         if (pos==null) {
             Toast.makeText(getApplicationContext(), "Lat. e long. sconosciute!", Toast.LENGTH_LONG).show();
         } else {
@@ -122,6 +123,7 @@ public class HomePage extends AppCompatActivity {
             intent.putExtra("IDAULA", id);
             intent.putExtra("LAT", pos[0]);
             intent.putExtra("LNG", pos[1]);
+            intent.putExtra("PIANO", cAule.getPianoByIdAula(id));
             startActivity(intent);
         }
     }
@@ -132,14 +134,14 @@ public class HomePage extends AppCompatActivity {
         dialogCorsiSeguiti.setTitle("Quali corsi segui?");
         dialogCorsiSeguiti.setContentView(R.layout.dialog_sceltacorsiseguiti);
 
-        Button dismissDialog = (Button)dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiCancel);
+        Button dismissDialog = dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiCancel);
         dismissDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogCorsiSeguiti.dismiss();
             }
         });
-        final Button okDialog = (Button)dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiOk);
+        final Button okDialog = dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiOk);
         okDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,7 +170,7 @@ public class HomePage extends AppCompatActivity {
         //resetto corsi scelti
         posIdCorsiScelti = new ArrayList<>();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, esaminomi);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, esaminomi);
         lvSceltaCorsi.setAdapter(adapter);
 
         lvSceltaCorsi.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -178,10 +180,10 @@ public class HomePage extends AppCompatActivity {
                 AppCompatCheckedTextView checkBox = (AppCompatCheckedTextView) arg1;
                 Log.i("CHECK",checkBox.isChecked()+""+checkBox.getText().toString()+ " (pos:"+arg2+")");
                 if (checkBox.isChecked()) {
-                    posIdCorsiScelti.add(new Integer(arg2));
+                    posIdCorsiScelti.add(Integer.valueOf(arg2));
                 } else {
 
-                    posIdCorsiScelti.remove(new Integer(arg2));
+                    posIdCorsiScelti.remove(Integer.valueOf(arg2));
                 }
             }
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {  }
@@ -201,11 +203,10 @@ public class HomePage extends AppCompatActivity {
         //mostro elenco corsi seguiti
         ListView lv = findViewById(R.id.elencoCorsiSeguiti);
         lv.setAdapter(null);
-        List<String> corsi = new LinkedList<>();
-        corsi = cUser.getListCorsiSeguitiCurrentUser();
+        List<String> corsi = cUser.getListCorsiSeguitiCurrentUser();
         idCorsiSeguiti = cUser.getListIdCorsiSeguitiCurrentUser();
 
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.row,corsi);
+        ArrayAdapter<String> adapter= new ArrayAdapter<>(this, R.layout.row, corsi);
         lv.setAdapter(adapter);
 
         //aggiungo listener on item selected
@@ -362,7 +363,7 @@ public class HomePage extends AppCompatActivity {
         dialogGoToAule.setContentView(R.layout.dialogo_aula_gps);
         dialogGoToAule.setTitle("A quale aula vuoi andare?");
 
-        String[] elencoAule = cUser.getElencoAule();
+        String[] elencoAule = cAule.getElencoAule();
         Spinner s= dialogGoToAule.findViewById(R.id.elencoAule);
 
         for (String es : elencoAule) {

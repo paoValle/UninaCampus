@@ -122,30 +122,4 @@ public class ControllerUtente {
         dbRef.child("utente").child(user.getUID()).child("corsiScelti").child(key).setValue(s);
     }
 
-    public String[] getElencoAule() {
-        HashSet<String> elencoAule = new HashSet<>();
-        Collection<Corso> corsi = user.getCorso().getCorsi().values();
-        for (Corso c : corsi) {
-            for (Dettagli d: c.getDettagli()) {
-                elencoAule.add(d.getAula().getId());
-            }
-        }
-        return elencoAule.toArray(new String[elencoAule.size()]);
-    }
-
-    public String[] getLatLngByIdAula(String idaula) {
-        String[] out = new String[2];
-        //trovo lat e long aula dal suo codice
-        Collection<Corso> corsi = user.getCorso().getCorsi().values();
-        for (Corso c : corsi) {
-            for (Dettagli d: c.getDettagli()) {
-                if (d.getAula().getId().equals(idaula)) {
-                    out[0] = d.getAula().getLat();
-                    out[1] = d.getAula().getLng();
-                    return out;
-                }
-            }
-        }
-        return null;
-    }
 }
