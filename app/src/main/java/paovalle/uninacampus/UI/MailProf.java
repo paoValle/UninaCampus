@@ -47,7 +47,7 @@ public class MailProf extends AppCompatActivity {
         String idCorso = i.getExtras().getString("IDCORSO");
         Log.w("IDCORSO", idCorso);
         System.out.println("IDCORSO=>"+idCorso);
-        if (idCorso!="") {//ho un id corso, cerco mail prof associato
+        if (idCorso!=null && idCorso!="") {//ho un id corso, cerco mail prof associato
             String mail = cMail.getMailByIdCorso(idCorso);
             ((TextView)findViewById(R.id.IdTo)).setText(mail);
         }

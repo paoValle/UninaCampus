@@ -4,6 +4,8 @@ public class Aula {
 	
 	private String id;
 	private String piano;
+	private String lat;
+	private String lng;
 	private int capienza;
 	private Edificio ed;
 	
@@ -24,8 +26,24 @@ public class Aula {
 		return id;
 	}
 
+	public String getLat() {
+		return lat;
+	}
+
+	public String getLng() {
+		return lng;
+	}
+
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public void setLng(String lng) {
+		this.lng = lng;
 	}
 
 	public String getPiano() {

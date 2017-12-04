@@ -14,6 +14,7 @@ import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class HomePage extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
 
     private Dialog dialogCorsiSeguiti;
+    private Dialog dialogGoToAule;
     //la usero per ricavare l'id del corso selezionato
     private List idCorsiSeguiti = new LinkedList<>();
     private String[] idSceltaCorsi;
@@ -108,14 +111,25 @@ public class HomePage extends AppCompatActivity {
                 showDialogSceltaCorsiSeguiti();
             }
         });
+    }
 
+    private void goToMaps(String id) {
+        String[] pos = cUser.getLatLngByIdAula(id);
+        if (pos==null) {
+            Toast.makeText(getApplicationContext(), "Lat. e long. sconosciute!", Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(this, MapsMarkerActivity.class);
+            intent.putExtra("IDAULA", id);
+            intent.putExtra("LAT", pos[0]);
+            intent.putExtra("LNG", pos[1]);
+            startActivity(intent);
+        }
     }
 
     private void showDialogSceltaCorsiSeguiti() {
         //mostro dialog con possibili corsi da scegliere
         dialogCorsiSeguiti = new Dialog(this);
         dialogCorsiSeguiti.setTitle("Quali corsi segui?");
-        dialogCorsiSeguiti.setCancelable(false);
         dialogCorsiSeguiti.setContentView(R.layout.dialog_sceltacorsiseguiti);
 
         Button dismissDialog = (Button)dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiCancel);
@@ -125,15 +139,18 @@ public class HomePage extends AppCompatActivity {
                 dialogCorsiSeguiti.dismiss();
             }
         });
-        Button okDialog = (Button)dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiOk);
+        final Button okDialog = (Button)dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiOk);
         okDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: salvare corsi da seguire!
+                //rimuovo attuali corsi seguiti
+                cUser.deleteTuttiCorsiSeguiti();
                 System.out.println("Corsi da salvare come scelti:");
                 for (Integer pos : posIdCorsiScelti) {
-                    System.out.println(idSceltaCorsi[pos]);
+                    cUser.addCorsoSeguitoById(idSceltaCorsi[pos]);
                 }
+                dialogCorsiSeguiti.dismiss();
+                showCorsiSeguiti();
             }
         });
 
@@ -161,9 +178,10 @@ public class HomePage extends AppCompatActivity {
                 AppCompatCheckedTextView checkBox = (AppCompatCheckedTextView) arg1;
                 Log.i("CHECK",checkBox.isChecked()+""+checkBox.getText().toString()+ " (pos:"+arg2+")");
                 if (checkBox.isChecked()) {
-                    posIdCorsiScelti.add(arg2);
+                    posIdCorsiScelti.add(new Integer(arg2));
                 } else {
-                    posIdCorsiScelti.remove(arg2);
+
+                    posIdCorsiScelti.remove(new Integer(arg2));
                 }
             }
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {  }
@@ -175,6 +193,11 @@ public class HomePage extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        showCorsiSeguiti();
+    }
+
+    private void showCorsiSeguiti() {
+        item_selected = -1;
         //mostro elenco corsi seguiti
         ListView lv = findViewById(R.id.elencoCorsiSeguiti);
         lv.setAdapter(null);
@@ -228,7 +251,7 @@ public class HomePage extends AppCompatActivity {
 
                 break;
             case R.id.nav_third_fragment:
-
+                showGoToAule();
                 break;
             case R.id.nav_fifth_fragment:
                 goToMail();
@@ -252,13 +275,17 @@ public class HomePage extends AppCompatActivity {
     private void goToMail(){
         //gli passo id del corso (se selezionato)
         Intent intent = new Intent(this, MailProf.class);
-        intent.putExtra("IDCORSO", (String)idCorsiSeguiti.get(item_selected));
+        try {
+            intent.putExtra("IDCORSO", (String) idCorsiSeguiti.get(item_selected));
+        } catch (Exception ex) {
+            //la lista è vuota
+            intent.putExtra("IDCORSO", "");
+        }
         startActivity(intent);
 
     }
 
     private void goToQRScanner(){
-        //se item non selezionato, sel="" altrimenti sara il codice del corso
         Intent intent = new Intent(this, QRScannerActivity.class);
         startActivity(intent);
 
@@ -328,6 +355,35 @@ public class HomePage extends AppCompatActivity {
     private void goToLogin() {
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(i);
+    }
+
+    private void showGoToAule() {
+        dialogGoToAule = new Dialog(this);
+        dialogGoToAule.setContentView(R.layout.dialogo_aula_gps);
+        dialogGoToAule.setTitle("A quale aula vuoi andare?");
+
+        String[] elencoAule = cUser.getElencoAule();
+        Spinner s= dialogGoToAule.findViewById(R.id.elencoAule);
+
+        for (String es : elencoAule) {
+            System.out.println(es);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row, elencoAule);
+
+        s.setAdapter(adapter);
+
+        dialogGoToAule.show();
+
+        //mappa aule
+        Button btnGoToAula = dialogGoToAule.findViewById(R.id.idGoToAula);
+        btnGoToAula.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                goToMaps(((Spinner)dialogGoToAule.findViewById(R.id.elencoAule)).getSelectedItem().toString());
+                dialogGoToAule.dismiss();
+            }
+        });
     }
 
 }

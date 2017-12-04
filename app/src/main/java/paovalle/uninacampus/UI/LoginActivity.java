@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,12 +44,15 @@ import paovalle.uninacampus.R;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private ProgressBar pbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+
+        pbar = findViewById(R.id.loginprogressbar);
 
         EditText mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -96,8 +100,9 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        final Toast loginT = Toast.makeText(getApplicationContext(), "Login in corso...", Toast.LENGTH_LONG);
-        loginT.show();
+        /*final Toast loginT = Toast.makeText(getApplicationContext(), "Login in corso...", Toast.LENGTH_LONG);
+        loginT.show();*/
+        pbar.setVisibility(View.VISIBLE);
         String email = ((TextView)findViewById(R.id.email)).getText().toString();
         String pwd = ((TextView)findViewById(R.id.password)).getText().toString();
         if (isEmailValid(email) && isPasswordValid(pwd)) {
@@ -147,21 +152,24 @@ public class LoginActivity extends AppCompatActivity {
                                             System.out.println("mail: "+p.getEmail());
                                             c.setProfessore(p);
                                             //dettagli
-                                            for (DataSnapshot dettagli : s.child("dettagli").getChildren()) {
+                                            for (DataSnapshot dettagli : s.child("Dettagli").getChildren()) {
                                                 Dettagli d = new Dettagli();
-                                                d.setGiorno(s.child("Giorno").getValue().toString());
-                                                d.setOraInizio(s.child("Ora inizio").getValue().toString());
-                                                d.setOrafine(s.child("Ora fine").getValue().toString());
+                                                d.setGiorno(dettagli.child("Giorno").getValue().toString());
+                                                d.setOraInizio(dettagli.child("Ora inizio").getValue().toString());
+                                                d.setOrafine(dettagli.child("Ora fine").getValue().toString());
                                                 //aula
-                                                String idAula = s.child("Aula").getValue().toString();
+                                                String idAula = dettagli.child("Aula").getValue().toString();
                                                 Aula a = new Aula();
                                                 a.setCapienza(Integer.parseInt(dataSnapshot.child("Aula").child(idAula).child("Capienza").getValue().toString()));
                                                 a.setId(idAula);
                                                 a.setPiano(dataSnapshot.child("Aula").child(idAula).child("Piano").getValue().toString());
+                                                a.setLat(dataSnapshot.child("Aula").child(idAula).child("lat").getValue().toString());
+                                                a.setLng(dataSnapshot.child("Aula").child(idAula).child("long").getValue().toString());
                                                 //edificio
                                                 String idEdificio = dataSnapshot.child("Aula").child(idAula).child("Edificio").getValue().toString();
                                                 Edificio e = new Edificio();
                                                 e.setId(idEdificio);
+                                                System.out.println("idEdificio=>"+idEdificio);
                                                 e.setIndirizzo(dataSnapshot.child("Edificio").child(idEdificio).child("Indirizzo").getValue().toString());
                                                 a.setEd(e);
                                                 d.setAula(a);
@@ -190,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                                             user.getLibretto().put(codice, e);
                                         }
                                         user.setCorso(cdl);
-                                        loginT.cancel();
+                                        //loginT.cancel();
                                         goToLogin();
                                     }
 
@@ -202,12 +210,14 @@ public class LoginActivity extends AppCompatActivity {
                                 // If sign in fails, display a message to the user.
                                 Toast t = Toast.makeText(getApplicationContext(), "Login fallito: dati errati!", Toast.LENGTH_LONG);
                                 t.show();
+                                pbar.setVisibility(View.GONE);
                             }
                         }
                     });
         } else {
             Toast t = Toast.makeText(getApplicationContext(), "Email o password non valide!", Toast.LENGTH_LONG);
             t.show();
+            pbar.setVisibility(View.GONE);
         }
     }
 

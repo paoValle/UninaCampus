@@ -1,17 +1,22 @@
 package business;
 
+import android.provider.ContactsContract;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import entity.Corso;
+import entity.Dettagli;
 import entity.Esame;
 import entity.UtenteRegistrato;
 
@@ -96,5 +101,51 @@ public class ControllerUtente {
         else{
             user.setMedia(0);
         }
+    }
+
+    public void deleteTuttiCorsiSeguiti() {
+        //locale
+        user.getCorsiScelti().clear();
+        //online
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = mDatabase.getReference();
+        dbRef.child("utente").child(user.getUID()).child("corsiScelti").removeValue();
+    }
+
+    public void addCorsoSeguitoById(String s) {
+        //locale
+        user.getCorsiScelti().put(s, user.getCorso().getCorsi().get(s));
+        //online
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = mDatabase.getReference();
+        String key = dbRef.child("utente").child(user.getUID()).child("corsiScelti").push().getKey();
+        dbRef.child("utente").child(user.getUID()).child("corsiScelti").child(key).setValue(s);
+    }
+
+    public String[] getElencoAule() {
+        HashSet<String> elencoAule = new HashSet<>();
+        Collection<Corso> corsi = user.getCorso().getCorsi().values();
+        for (Corso c : corsi) {
+            for (Dettagli d: c.getDettagli()) {
+                elencoAule.add(d.getAula().getId());
+            }
+        }
+        return elencoAule.toArray(new String[elencoAule.size()]);
+    }
+
+    public String[] getLatLngByIdAula(String idaula) {
+        String[] out = new String[2];
+        //trovo lat e long aula dal suo codice
+        Collection<Corso> corsi = user.getCorso().getCorsi().values();
+        for (Corso c : corsi) {
+            for (Dettagli d: c.getDettagli()) {
+                if (d.getAula().getId().equals(idaula)) {
+                    out[0] = d.getAula().getLat();
+                    out[1] = d.getAula().getLng();
+                    return out;
+                }
+            }
+        }
+        return null;
     }
 }

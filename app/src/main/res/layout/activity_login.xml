@@ -91,6 +91,14 @@
                 android:textStyle="bold"
                 tools:text="Registrati" />
 
+            <ProgressBar
+                android:id="@+id/loginprogressbar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </ScrollView>
