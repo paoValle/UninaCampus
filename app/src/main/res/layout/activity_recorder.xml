@@ -13,74 +13,25 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="187dp">
 
-        <TableLayout
-            android:id="@+id/tblData"
+        <TextView
+            android:id="@+id/txtCorso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="2">
+            android:textSize="30sp" />
 
-            <TableRow
-                android:id="@+id/rwDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txtTitolo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:autoText="false"
+            android:textSize="30sp" />
 
-                <TextView
-                    android:id="@+id/lblDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Data"
-                    android:textSize="30sp" />
-
-                <EditText
-                    android:id="@+id/txtDate"
-                    android:layout_width="275dp"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="date" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/rwCorso"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible">
-
-                <TextView
-                    android:id="@+id/lblCorso"
-                    android:layout_width="136dp"
-                    android:layout_height="wrap_content"
-                    android:text="Corso"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/txtCorso"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="30sp" />
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/rwTitolo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/lblTitolo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Titolo"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/txtTitolo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="titolo lezione"
-                    android:textSize="30sp" />
-            </TableRow>
-
-        </TableLayout>
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp" />
 
         <ImageView
             android:id="@+id/imgRecorder"
@@ -135,10 +86,17 @@
             android:layout_width="match_parent"
             android:layout_height="7dp"
             android:layout_weight="1"
+            android:format=" Time:     %s"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="449dp" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

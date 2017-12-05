@@ -1,19 +1,28 @@
 package paovalle.uninacampus.UI;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import paovalle.uninacampus.Manifest;
@@ -30,6 +39,11 @@ public class RecorderActivity extends AppCompatActivity {
 
     Button btnRecorder;
     Button btnStop;
+    Button btnBack;
+    Chronometer time;
+    TextView txtTitolo;
+    TextView txtDate;
+    TextView txtCorso;
 
     String AudioSavePathInDevice = null;
     MediaRecorder mediaRecorder ;
@@ -45,6 +59,22 @@ public class RecorderActivity extends AppCompatActivity {
 
         btnRecorder=(Button)findViewById(R.id.btnRecorder);
         btnStop=(Button)findViewById(R.id.btnStop);
+        btnBack=(Button)findViewById(R.id.btnBack);
+        time = (Chronometer)findViewById(R.id.time);
+        txtTitolo = (TextView) findViewById(R.id.txtTitolo);
+        txtDate = (TextView) findViewById(R.id.txtDate);
+        txtCorso = (TextView) findViewById(R.id.txtCorso);
+
+        String corso = "DataMining";
+        txtCorso.setText("Corso: " +corso);
+
+        Date curDate = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        String dateToStr = format.format(curDate);
+        txtDate.setText("Data: "+dateToStr);
+
+        String titolo = corso+dateToStr;
+        txtTitolo.setText("Titolo: "+titolo + "abcdefg");
 
         btnStop.setEnabled(false);
 
@@ -55,13 +85,14 @@ public class RecorderActivity extends AppCompatActivity {
                 if(checkPermission()) {
 
                     AudioSavePathInDevice =
-                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +
-                                    CreateRandomAudioFileName(5) + "AudioRecording.3gp";
+                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +""  + "AudioRecording.3gp";
                     MediaRecorderReady();
 
                     try {
                         mediaRecorder.prepare();
                         mediaRecorder.start();
+                        time.setBase(SystemClock.elapsedRealtime());
+                        time.start();
                     } catch (IllegalStateException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -86,6 +117,7 @@ public class RecorderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mediaRecorder.stop();
+                time.stop();
                 btnStop.setEnabled(false);
 
                 btnRecorder.setEnabled(true);
@@ -93,6 +125,19 @@ public class RecorderActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToHome();
+            }
+        });
+    }
+
+
+    private void goToHome(){
+        Intent intent = new Intent(this,HomePage.class);
+        startActivity(intent);
     }
 
     public void MediaRecorderReady(){

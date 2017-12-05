@@ -255,6 +255,9 @@ public class HomePage extends AppCompatActivity {
             case R.id.nav_third_fragment:
                 showGoToAule();
                 break;
+            case R.id.nav_forth_fragment:
+                goToUpload();
+                break;
             case R.id.nav_fifth_fragment:
                 goToMail();
                 break;
@@ -357,6 +360,11 @@ public class HomePage extends AppCompatActivity {
     private void goToLogin() {
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(i);
+    }
+
+    private void goToUpload() {
+        Intent recorderManager = new Intent(getApplicationContext(), RecorderManager.class);
+        startActivity(recorderManager);
     }
 
     private void showGoToAule() {
