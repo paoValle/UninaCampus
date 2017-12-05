@@ -65,11 +65,7 @@ public class HomePage extends AppCompatActivity {
         cAule = ControllerAule.getInstance();
 
         posIdCorsiScelti = new LinkedList<>();
-        //setting up current user infos
-        ((TextView)findViewById(R.id.textFName)).setText(cUser.getCurrentUser().getNome());
-        ((TextView)findViewById(R.id.textLName)).setText(cUser.getCurrentUser().getCognome());
-        ((TextView)findViewById(R.id.textMean)).setText(Double.valueOf(cUser.getCurrentUser().getMedia()).toString());
-        ((TextView)findViewById(R.id.textCDL)).setText(cUser.getCurrentUser().getCorso().getNome());
+
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
@@ -196,6 +192,11 @@ public class HomePage extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         showCorsiSeguiti();
+        //setting up current user infos
+        ((TextView)findViewById(R.id.textFName)).setText(cUser.getCurrentUser().getNome());
+        ((TextView)findViewById(R.id.textLName)).setText(cUser.getCurrentUser().getCognome());
+        ((TextView)findViewById(R.id.textMean)).setText(Double.valueOf(cUser.getCurrentUser().getMedia()).toString());
+        ((TextView)findViewById(R.id.textCDL)).setText(cUser.getCurrentUser().getCorso().getNome());
     }
 
     private void showCorsiSeguiti() {

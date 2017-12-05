@@ -90,7 +90,12 @@ public class LibrettoActivity extends AppCompatActivity {
                 if(vuoto){
                     Toast.makeText(getBaseContext(), "Non hai esami " , Toast.LENGTH_SHORT).show();
                 }else{
-                    DeleteEsame();
+                    if(posizioneEsameselezionata==-1){
+                        Toast.makeText(getBaseContext(), "Per eliminare, seleziona un esame " , Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        DeleteEsame();
+                    }
                 }
 
             }
@@ -99,17 +104,20 @@ public class LibrettoActivity extends AppCompatActivity {
 
         lvlistaesami.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                posizioneEsameselezionata=(position/4);
-                Toast.makeText(getBaseContext(), "esame di indice " + posizioneEsameselezionata, Toast.LENGTH_SHORT).show();
+               if(vuoto){
+                   Toast.makeText(getBaseContext(), "CAPRA! NON HAI ESAMI " , Toast.LENGTH_SHORT).show();
+               }else{
+                   posizioneEsameselezionata=(position/4);
+                   String esame=esami[position];
+                   Toast.makeText(getBaseContext(), "Esame Selezionato " + esame, Toast.LENGTH_SHORT).show();
+               }
+
             }
         });
     }
 
     private void goToHome() {
-        //TODO: PAOLO DEVE FARE LA LOGICA!!!!
-        Log.w("prova", "Sto clickando conferma");
-        Intent intent = new Intent(this, HomePage.class);
-        startActivity(intent);
+        super.onBackPressed();
     }
 
     private void DeleteEsame() {
@@ -126,13 +134,10 @@ public class LibrettoActivity extends AppCompatActivity {
         btnok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (posizioneEsameselezionata != -1) {
                     cLibretto.deleteExam(posizioneEsameselezionata, codiciesamidamostrare[posizioneEsameselezionata]);
                     deliminazione.cancel();
                     mostraElementi();
-                } else {
-                    Toast.makeText(getBaseContext(), "Per eliminare, devi prima selezionare un esame ", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
 

@@ -11,7 +11,7 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="la_tua_carriera">Questo è il tuo libretto di esami:</string>
-    <string name="elimina">Elimina</string>
+    <string name="elimina">-</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -34,7 +34,7 @@
     <string name="to">TO:</string>
     <string name="send">Send</string>
     <string name="back">Back</string>
-    <string name="aggiorna">aggiorna</string>
+    <string name="aggiorna">+</string>
     <string name="voto">Voto:</string>
     <string name="done">Done</string>
     <string name="lode">Lode</string>
