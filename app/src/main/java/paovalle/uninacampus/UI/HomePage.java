@@ -1,11 +1,15 @@
 package paovalle.uninacampus.UI;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +31,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -188,6 +193,69 @@ public class HomePage extends AppCompatActivity {
         dialogCorsiSeguiti.show();
     }
 
+    private void showDialogAulaCalend() {
+        //mostro dialog con possibili corsi da scegliere
+        dialogCorsiSeguiti = new Dialog(this);
+        dialogCorsiSeguiti.setTitle("Quali corsi segui?");
+        dialogCorsiSeguiti.setContentView(R.layout.dialog_sceltacorsiseguiti);
+
+        Button dismissDialog = dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiCancel);
+        dismissDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogCorsiSeguiti.dismiss();
+            }
+        });
+        final Button okDialog = dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiOk);
+        okDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //aggiungo corsi al calendario
+                //TODO: trovare selezionati e metterli in calendario
+                for (Integer pos : posIdCorsiScelti) {
+                    cUser.addCorsoToCalend(HomePage.this, idSceltaCorsi[pos]);
+                }
+
+
+            }
+        });
+
+        //GridView headerGridView = d.findViewById(R.id.dialogOrariGridHeader);
+        ListView lvSceltaCorsi = dialogCorsiSeguiti.findViewById(R.id.listaSceltaCorsi);
+        //preparo contenuto tabella
+        HashMap<String, Corso> exam = cLibretto.getNomeEsamiDaSvolgere();
+        String[] esaminomi=new String[exam.size()];
+        idSceltaCorsi = new String[exam.size()];
+        int i = 0;
+        for (Map.Entry<String, Corso> entry: exam.entrySet()) {
+            esaminomi[i] = entry.getValue().getNome();
+            idSceltaCorsi[i++]=entry.getKey();
+        }
+        //resetto corsi scelti
+        posIdCorsiScelti = new ArrayList<>();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, esaminomi);
+        lvSceltaCorsi.setAdapter(adapter);
+
+        lvSceltaCorsi.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        lvSceltaCorsi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapter, View arg1, int arg2, long arg3)
+            {
+                AppCompatCheckedTextView checkBox = (AppCompatCheckedTextView) arg1;
+                Log.i("CHECK",checkBox.isChecked()+""+checkBox.getText().toString()+ " (pos:"+arg2+")");
+                if (checkBox.isChecked()) {
+                    posIdCorsiScelti.add(Integer.valueOf(arg2));
+                } else {
+
+                    posIdCorsiScelti.remove(Integer.valueOf(arg2));
+                }
+            }
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {  }
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+        dialogCorsiSeguiti.show();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -250,7 +318,7 @@ public class HomePage extends AppCompatActivity {
                 goToQRScanner();
                 break;
             case R.id.nav_second_fragment:
-
+                showDialogAulaCalend();
                 break;
             case R.id.nav_third_fragment:
                 showGoToAule();
@@ -316,6 +384,11 @@ public class HomePage extends AppCompatActivity {
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
 
+    private void goToUpload() {
+        Intent recorderManager = new Intent(getApplicationContext(), RecorderManager.class);
+        startActivity(recorderManager);
+    }
+
     // `onPostCreate` called when activity start-up is complete after `onStart()`
     // NOTE 1: Make sure to override the method with only a single `Bundle` argument
     // Note 2: Make sure you implement the correct `onPostCreate(Bundle savedInstanceState)` method.
@@ -362,11 +435,6 @@ public class HomePage extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void goToUpload() {
-        Intent recorderManager = new Intent(getApplicationContext(), RecorderManager.class);
-        startActivity(recorderManager);
-    }
-
     private void showGoToAule() {
         dialogGoToAule = new Dialog(this);
         dialogGoToAule.setContentView(R.layout.dialogo_aula_gps);
@@ -395,5 +463,7 @@ public class HomePage extends AppCompatActivity {
             }
         });
     }
+
+
 
 }
