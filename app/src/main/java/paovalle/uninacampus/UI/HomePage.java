@@ -94,6 +94,9 @@ public class HomePage extends AppCompatActivity {
         recBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(item_selected != -1){
+
+                }
                 goToRecorder();
             }
         });
@@ -365,9 +368,14 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void goToRecorder(){
-        //TODO: PAOLO DEVE FARE LA LOGICA!!!!
-        Intent intent = new Intent(this,RecorderActivity.class);
-        startActivity(intent);
+        if(item_selected != -1) {
+            Intent intent = new Intent(this, RecorderActivity.class);
+            intent.putExtra("IDCORSO", (String) idCorsiSeguiti.get(item_selected));
+            startActivity(intent);
+        }else{
+            Toast.makeText(getBaseContext(), "Seleziona un corso" , Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 

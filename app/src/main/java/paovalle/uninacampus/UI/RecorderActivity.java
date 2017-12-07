@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import business.ControllerCorso;
 import paovalle.uninacampus.Manifest;
 import paovalle.uninacampus.R;
 
@@ -37,6 +38,8 @@ public class RecorderActivity extends AppCompatActivity {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
 
+    ControllerCorso cCorso;
+
     Button btnRecorder;
     Button btnStop;
     Button btnBack;
@@ -46,6 +49,8 @@ public class RecorderActivity extends AppCompatActivity {
     TextView txtCorso;
 
     String AudioSavePathInDevice = null;
+    String corso = "";
+    String titolo2 = "";
     MediaRecorder mediaRecorder ;
     Random random ;
     String RandomAudioFileName = "ABCDEFGHIJKLMNOP";
@@ -57,6 +62,8 @@ public class RecorderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recorder);
 
+        cCorso = ControllerCorso.getInstance();
+
         btnRecorder=(Button)findViewById(R.id.btnRecorder);
         btnStop=(Button)findViewById(R.id.btnStop);
         btnBack=(Button)findViewById(R.id.btnBack);
@@ -65,7 +72,20 @@ public class RecorderActivity extends AppCompatActivity {
         txtDate = (TextView) findViewById(R.id.txtDate);
         txtCorso = (TextView) findViewById(R.id.txtCorso);
 
-        String corso = "DataMining";
+        Intent i = getIntent();
+        String idCorso = i.getExtras().getString("IDCORSO");
+        if (idCorso!=null) {//ho un id corso, cerco mail prof associato
+            corso = cCorso.getNameByIdCorso(idCorso);
+
+        }
+
+        String titolo ="";
+        for(char s : corso.toCharArray()){
+            if(Character.isUpperCase(s) || !Character.isLetter(s))
+                titolo = titolo.concat(String.valueOf(s));
+        }
+
+        titolo = titolo.replaceAll("\\s+","");
         txtCorso.setText("Corso: " +corso);
 
         Date curDate = new Date();
@@ -73,8 +93,8 @@ public class RecorderActivity extends AppCompatActivity {
         String dateToStr = format.format(curDate);
         txtDate.setText("Data: "+dateToStr);
 
-        String titolo = corso+dateToStr;
-        txtTitolo.setText("Titolo: "+titolo + "abcdefg");
+         titolo2 = titolo+" "+dateToStr;
+        txtTitolo.setText("Titolo: "+titolo2);
 
         btnStop.setEnabled(false);
 
@@ -85,7 +105,7 @@ public class RecorderActivity extends AppCompatActivity {
                 if(checkPermission()) {
 
                     AudioSavePathInDevice =
-                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +""  + "AudioRecording.3gp";
+                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +""  + titolo2+".3gp";
                     MediaRecorderReady();
 
                     try {

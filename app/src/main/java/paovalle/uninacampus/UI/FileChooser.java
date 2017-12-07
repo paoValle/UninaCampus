@@ -3,6 +3,7 @@ package paovalle.uninacampus.UI;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
@@ -23,7 +24,7 @@ public class FileChooser {
     private File currentPath;
 
     // filter on file extension
-    private String extension = null;
+    private String extension = ".3gp";
     public void setExtension(String extension) {
         this.extension = (extension == null) ? null :
                 extension.toLowerCase();
@@ -73,11 +74,11 @@ public class FileChooser {
     private void refresh(File path) {
         this.currentPath = path;
         if (path.exists()) {
-            File[] dirs = path.listFiles(new FileFilter() {
+            /*File[] dirs = path.listFiles(new FileFilter() {
                 @Override public boolean accept(File file) {
-                    return (file.isDirectory() && file.canRead());
+                    return (!file.isDirectory() && file.canRead());
                 }
-            });
+            });*/
             File[] files = path.listFiles(new FileFilter() {
                 @Override public boolean accept(File file) {
                     if (!file.isDirectory()) {
@@ -98,14 +99,14 @@ public class FileChooser {
             int i = 0;
             String[] fileList;
             if (path.getParentFile() == null) {
-                fileList = new String[dirs.length + files.length];
+                fileList = new String[ files.length];
             } else {
-                fileList = new String[dirs.length + files.length + 1];
-                fileList[i++] = PARENT_DIR;
+                fileList = new String[ files.length ];
+                //fileList[i++] = PARENT_DIR;
             }
-            Arrays.sort(dirs);
+            //Arrays.sort(dirs);
             Arrays.sort(files);
-            for (File dir : dirs) { fileList[i++] = dir.getName(); }
+            //for (File dir : dirs) {  fileList[i++] = dir.getName(); }
             for (File file : files ) { fileList[i++] = file.getName(); }
 
             // refresh the user interface
