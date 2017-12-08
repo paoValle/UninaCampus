@@ -1,6 +1,5 @@
 package paovalle.uninacampus.UI;
 
-
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -25,6 +24,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -50,6 +50,8 @@ public class MapsMarkerActivity extends AppCompatActivity
     private String idAula;
     private ControllerUtente cUser;
 
+    private LatLng locationAula;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class MapsMarkerActivity extends AppCompatActivity
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
+
         mapFragment.getMapAsync(this);
 
         cUser = new ControllerUtente();
@@ -71,6 +74,8 @@ public class MapsMarkerActivity extends AppCompatActivity
         LNG = getIntent().getExtras().getString("LNG");
         String piano = getIntent().getExtras().getString("PIANO");
         ((TextView)findViewById(R.id.idPianoAula)).setText("Piano: "+piano);
+
+        locationAula = new LatLng(Double.parseDouble(LAT), Double.parseDouble(LNG));
 
         //pulsante di uscita
         findViewById(R.id.closeMap).setOnClickListener(new View.OnClickListener() {
@@ -132,10 +137,16 @@ public class MapsMarkerActivity extends AppCompatActivity
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
 
-        LatLng sydney = new LatLng(Double.parseDouble(LAT), Double.parseDouble(LNG));
-        googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        googleMap.addMarker(new MarkerOptions().position(locationAula)
+                .title("Marker aula"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(locationAula));
+
+
+        googleMap.setMyLocationEnabled(true);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(locationAula).zoom(18).build();
+        googleMap.animateCamera(CameraUpdateFactory
+                .newCameraPosition(cameraPosition));
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -153,14 +164,6 @@ public class MapsMarkerActivity extends AppCompatActivity
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        try {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-            }
-        } catch (Exception ex) {}
     }
 
     @Override
@@ -176,14 +179,6 @@ public class MapsMarkerActivity extends AppCompatActivity
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
-        //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        //mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;

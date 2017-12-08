@@ -176,8 +176,14 @@ public class HomePage extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, esaminomi);
         lvSceltaCorsi.setAdapter(adapter);
-
         lvSceltaCorsi.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        //scopro quali checkare poiche attualmente seguiti
+        for (int j=0;j<idSceltaCorsi.length;j++) {
+            if (cUser.getListIdCorsiSeguitiCurrentUser().contains(idSceltaCorsi[j])) {
+                lvSceltaCorsi.setItemChecked(j, true);
+                posIdCorsiScelti.add(j);
+            }
+        }
         lvSceltaCorsi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View arg1, int arg2, long arg3)
             {
