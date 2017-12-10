@@ -1,21 +1,31 @@
 package paovalle.uninacampus.UI;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -23,13 +33,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -41,6 +61,7 @@ import business.ControllerAule;
 import business.ControllerLibretto;
 import business.ControllerUtente;
 import entity.Corso;
+import paovalle.uninacampus.BuildConfig;
 import paovalle.uninacampus.R;
 
 public class HomePage extends AppCompatActivity {
@@ -59,6 +80,12 @@ public class HomePage extends AppCompatActivity {
     private ControllerLibretto cLibretto;
     private ControllerAule cAule;
     int item_selected = -1;
+
+    private File pickedProfileImageFile;
+    private Uri imageUri;
+    private Bitmap pictureBitmap = null;
+
+    private final int SINGLE_SELECT_GALLERY = 2, RESULT_CROP = 400;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +128,14 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        //cambio immagine profilo
+        ((ImageView)findViewById(R.id.profileImage)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SingleGetImageFromGallery();
+            }
+        });
+
         Button mailBtn = findViewById(R.id.mailBtn);
         mailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +149,36 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showDialogSceltaCorsiSeguiti();
+            }
+        });
+
+        //setto immagine se presente online
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = database.getReference();
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressWarnings("ConstantConditions")
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object imgURL = dataSnapshot.child("utente").child(cUser.getCurrentUser().getUID()).child("profileImage").getValue();
+                if (imgURL!=null) {//non presente
+                    imageUri = Uri.parse(imgURL.toString());
+                    try {
+                        InputStream is = HomePage.this.getContentResolver().openInputStream(imageUri);
+                        if (is != null) {
+                            pictureBitmap = BitmapFactory.decodeStream(is);
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    if (pictureBitmap!=null) {
+                        ImageView myImage = findViewById(R.id.profileImage);
+                        myImage.setImageBitmap(pictureBitmap);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
@@ -482,6 +547,51 @@ public class HomePage extends AppCompatActivity {
                 dialogGoToAule.dismiss();
             }
         });
+    }
+
+    // single image pick function
+    private void SingleGetImageFromGallery() {
+        pickedProfileImageFile = new File(Environment.getExternalStorageDirectory(), "file" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+        if (android.os.Build.VERSION.SDK_INT > 23) {
+            imageUri = FileProvider.getUriForFile(HomePage.this, BuildConfig.APPLICATION_ID + ".provider", pickedProfileImageFile);
+        } else {
+            imageUri = Uri.fromFile(pickedProfileImageFile);
+        }
+        Intent GalIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(GalIntent, "Select Image From Gallery"), SINGLE_SELECT_GALLERY);
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SINGLE_SELECT_GALLERY) {// One Image result
+                imageUri = data.getData();
+                try {
+                    InputStream is = this.getContentResolver().openInputStream(imageUri);
+                    if (is != null) {
+                        pictureBitmap = BitmapFactory.decodeStream(is);
+                        imageUri = getImageUri(this, pictureBitmap);
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                ImageView myImage = findViewById(R.id.profileImage);
+                myImage.setImageBitmap(pictureBitmap);
+
+                FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference dbRef = mDatabase.getReference();
+                dbRef.child("utente").child(cUser.getCurrentUser().getUID()).child("profileImage").setValue(imageUri.toString());
+            }
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
 
