@@ -39,8 +39,6 @@
         <activity android:name=".UI.RecorderActivity"/>
         <activity android:name=".UI.QRScannerActivity" />
         <activity android:name=".UI.MapsMarkerActivity" />
-        <activity android:name=".UI.LibrettoActivity" />
-        <activity android:name=".UI.RecorderActivity" />
         <activity android:name=".UI.RecorderManager" />
         <meta-data
             android:name="com.google.android.gms.version"

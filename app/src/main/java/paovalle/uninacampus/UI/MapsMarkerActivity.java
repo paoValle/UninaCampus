@@ -66,7 +66,7 @@ public class MapsMarkerActivity extends AppCompatActivity
 
         mapFragment.getMapAsync(this);
 
-        cUser = new ControllerUtente();
+        cUser = ControllerUtente.getInstance();
 
         //prendo lat e lang passate per parametro
         idAula = getIntent().getExtras().getString("IDAULA");

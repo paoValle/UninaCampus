@@ -219,10 +219,16 @@ public class HomePage extends AppCompatActivity {
         okDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //aggiungo corsi al calendario
-                //TODO: trovare selezionati e metterli in calendario
-                for (Integer pos : posIdCorsiScelti) {
-                    cUser.addCorsoToCalend(HomePage.this, idSceltaCorsi[pos]);
+                if (posIdCorsiScelti.size()>0) {
+                    //aggiungo corsi al calendario
+                    //TODO: trovare selezionati e metterli in calendario
+                    for (Integer pos : posIdCorsiScelti) {
+                        cUser.addCorsoToCalend(HomePage.this, idSceltaCorsi[pos]);
+                    }
+                    dialogCorsiSeguiti.dismiss();
+                    Toast.makeText(getBaseContext(), "Eventi aggiunti al calendario!" , Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Nessun corso selezionato!" , Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -379,7 +385,7 @@ public class HomePage extends AppCompatActivity {
             intent.putExtra("IDCORSO", (String) idCorsiSeguiti.get(item_selected));
             startActivity(intent);
         }else{
-            Toast.makeText(getBaseContext(), "Seleziona un corso" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Nessun corso selezionato!" , Toast.LENGTH_SHORT).show();
 
         }
 
