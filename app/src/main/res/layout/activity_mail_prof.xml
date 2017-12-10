@@ -13,15 +13,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/id_to_const"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/to"
-            android:textColor="@android:color/black"
-            android:textStyle="bold|italic"
-            android:visibility="visible" />
-
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -30,24 +21,14 @@
                 android:id="@+id/IdTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/to"
                 android:inputType="text"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
-                android:typeface="serif"
-                tools:text="To:" />
+                android:typeface="serif" />
         </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:id="@+id/id_subject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/subject"
-            android:textColor="@android:color/black"
-            android:textStyle="bold|italic"
-            android:visibility="visible"
-            tools:text="Subject:" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -57,13 +38,13 @@
                 android:id="@+id/idsubject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/subject"
                 android:inputType="text"
                 android:singleLine="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@android:color/black"
                 android:textStyle="bold|italic"
-                android:visibility="visible"
-                tools:text="Subject:" />
+                android:visibility="visible" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -86,6 +67,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:hint="@string/body"
                         android:inputType="text|textMultiLine" />
                 </android.support.design.widget.TextInputLayout>
 

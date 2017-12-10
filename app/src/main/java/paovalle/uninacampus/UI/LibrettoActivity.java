@@ -52,7 +52,7 @@ public class LibrettoActivity extends AppCompatActivity {
     private CheckBox check;
     private int posizioneEsameselezionata;
     private boolean vuoto; //serve per capire se ci sono o meno esami da mostrare. Se è vuoto io non posso abilitare l'eliminazione
-
+    private Button btnelimina;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,40 +81,36 @@ public class LibrettoActivity extends AppCompatActivity {
             }
         });
 
-        Button btnelimina = findViewById(R.id.idElimina);
+         btnelimina = findViewById(R.id.idElimina);
 
         btnelimina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("prova","sono nella delete");
-                if(vuoto){
-                    Toast.makeText(getBaseContext(), "Non hai esami " , Toast.LENGTH_SHORT).show();
-                }else{
-                    if(posizioneEsameselezionata==-1){
-                        Toast.makeText(getBaseContext(), "Per eliminare, seleziona un esame " , Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        DeleteEsame();
-                    }
-                }
 
+                        DeleteEsame();
             }
         });
 
+        lvlistaesami.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if(vuoto){
+                    Toast.makeText(getBaseContext(), "CAPRA! NON HAI ESAMI " , Toast.LENGTH_SHORT).show();
+                    return false;
+                }else{
+                    btnelimina.setVisibility(View.VISIBLE);
+                   // Toast.makeText(getBaseContext(), "funziona il toast", Toast.LENGTH_SHORT).show();
+                    posizioneEsameselezionata=(position/4);
+                    String esame=esami[posizioneEsameselezionata*4];
+                    Toast.makeText(getBaseContext(), "Esame Selezionato " + esame, Toast.LENGTH_SHORT).show();
+                    return true;
+                }
 
-        lvlistaesami.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-               if(vuoto){
-                   Toast.makeText(getBaseContext(), "CAPRA! NON HAI ESAMI " , Toast.LENGTH_SHORT).show();
-               }else{
-                   posizioneEsameselezionata=(position/4);
-                   String esame=esami[position];
-                   Toast.makeText(getBaseContext(), "Esame Selezionato " + esame, Toast.LENGTH_SHORT).show();
-               }
 
             }
         });
     }
+
 
     private void goToHome() {
         super.onBackPressed();
@@ -122,7 +118,7 @@ public class LibrettoActivity extends AppCompatActivity {
 
     private void DeleteEsame() {
         //TODO: PAOLO DEVE FARE LA LOGICA!!!!
-
+        btnelimina.setVisibility(View.INVISIBLE);
         deliminazione=new Dialog(this);
 
         deliminazione.setCancelable(true);
@@ -154,7 +150,7 @@ public class LibrettoActivity extends AppCompatActivity {
 
 
     private void mostraElementi(){
-
+       // btnelimina.setVisibility(View.INVISIBLE);
         posizioneEsameselezionata=-1;
         HashMap<String,Esame> hashappoggio=new HashMap<String, Esame>(cLibretto.getEsamiSvolti());
         es = new ArrayList<Esame>(hashappoggio.values());

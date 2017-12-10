@@ -2,12 +2,15 @@ package paovalle.uninacampus.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import business.ControllerMail;
 import paovalle.uninacampus.R;
@@ -16,7 +19,9 @@ public class MailProf extends AppCompatActivity {
 
     Button btnsend;
     Button btnback;
-
+    TextInputEditText destinatario;
+    TextInputEditText soggetto;
+    EditText testoMail;
     ControllerMail cMail;
 
     @Override
@@ -42,6 +47,10 @@ public class MailProf extends AppCompatActivity {
             }
         });
 
+        soggetto=findViewById(R.id.idsubject);
+        destinatario=findViewById(R.id.IdTo);
+        testoMail=findViewById(R.id.idCorpoMail);
+
         //vedo se mi è stato passato un id corso
         Intent i = getIntent();
         String idCorso = i.getExtras().getString("IDCORSO");
@@ -56,16 +65,29 @@ public class MailProf extends AppCompatActivity {
 
     private void attemptSendMail(){
         //TODO: PAOLO DEVE FARE LA LOGICA!!!!
-        Log.w("prova","Sto clickando conferma" );
-        Intent intent = new Intent(this,HomePage.class);
-        startActivity(intent);
+
+        if (destinatario.getText().toString()==null || destinatario.getText().toString().equals("") ){
+            Toast.makeText(this, "Destinatario obbligatorio.", Toast.LENGTH_SHORT).show();
+        }else {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL, new String[]{destinatario.getText().toString()});
+            i.putExtra(Intent.EXTRA_SUBJECT, soggetto.getText().toString());
+            i.putExtra(Intent.EXTRA_TEXT, testoMail.getText().toString());
+            try {
+                startActivity(Intent.createChooser(i, "Scegli un client"));
+            } catch (android.content.ActivityNotFoundException ex) {
+
+                Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            }
+
+            super.onBackPressed();
+        }
+
     }
 
 
     private void goToHome(){
-        //TODO: PAOLO DEVE FARE LA LOGICA!!!!
-        Log.w("prova","Sto clickando conferma" );
-        Intent intent = new Intent(this,HomePage.class);
-        startActivity(intent);
+        super.onBackPressed();
     }
 }

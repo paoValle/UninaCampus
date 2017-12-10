@@ -31,8 +31,12 @@
             android:id="@+id/idListaEsami"
             android:layout_width="match_parent"
             android:layout_height="480dp"
+            android:animateLayoutChanges="false"
+            android:clickable="true"
+            android:listSelector="@color/black_overlay"
             android:nestedScrollingEnabled="false"
             android:numColumns="4"
+            android:textAlignment="center"
             android:textFilterEnabled="true">
 
         </GridView>
@@ -60,10 +64,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@android:color/holo_blue_dark"
+                android:background="@android:color/holo_green_dark"
                 android:text="@string/aggiorna"
                 android:textColor="@android:color/background_light"
                 android:textSize="24sp"
+                android:textStyle="bold"
                 tools:text="+" />
 
             <Button
@@ -71,8 +76,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/holo_blue_dark"
+                android:background="@android:color/holo_red_dark"
                 android:text="@string/elimina"
+                android:textColor="@color/black_overlay"
+                android:textStyle="bold"
+                android:visibility="invisible"
                 tools:text="-" />
         </LinearLayout>
 

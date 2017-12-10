@@ -30,8 +30,6 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_sign_up">Registrati</string>
-    <string name="subject">Subject:</string>
-    <string name="to">TO:</string>
     <string name="send">Send</string>
     <string name="back">Back</string>
     <string name="aggiorna">+</string>
@@ -41,6 +39,9 @@
     <string name="button">Button</string>
     <string name="sicuro_di_eliminare_esame_selezionato">Sicuro di eliminare esame selezionato?</string>
     <string name="cancel">Cancel</string>
+    <string name="to">To:</string>
+    <string name="subject">Subject:</string>
+    <string name="body">Body</string>
 
 
 </resources>
