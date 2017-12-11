@@ -84,7 +84,7 @@ public class ControllerCalendario {
                     if (dayRepeated==null) {
                         Toast.makeText(context, "ERRORE: Giorno della settimana non riconosciuto!", Toast.LENGTH_LONG).show();
                     } else {
-                        SyncEvent(calID, c.getNome(), startTime, descrizione, dayRepeated, context);
+                        addEvents(calID, c.getNome(), startTime, descrizione, dayRepeated, context);
                     }
                 }
             } else {
@@ -135,7 +135,7 @@ public class ControllerCalendario {
     }
 
 
-    public void SyncEvent(int calID, String EventName, String Stime, String Description, String dayRepeated, Context cnt) {
+    public void addEvents(int calID, String EventName, String Stime, String Description, String dayRepeated, Context cnt) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeZone(TimeZone.getTimeZone("GMT+2"));
         Date dt = null;
@@ -151,7 +151,7 @@ public class ControllerCalendario {
 
             //fine semestre
             Calendar endTime = Calendar.getInstance();
-            endTime.set(2017, 12, 22, 23, 0, 0);
+            endTime.set(2017, 11, 22, 23, 0, 0);
 
             ContentResolver cr = cnt.getContentResolver();
             ContentValues values = new ContentValues();

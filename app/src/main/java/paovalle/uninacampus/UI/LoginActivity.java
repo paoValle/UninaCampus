@@ -9,7 +9,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -84,9 +83,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-        View mLoginFormView = findViewById(R.id.login_form);
-        View mProgressView = findViewById(R.id.login_progress);
     }
 
     private void goToSignUp() {

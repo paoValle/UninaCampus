@@ -1,24 +1,16 @@
 package business;
 
-import android.util.Log;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import entity.Corso;
 import entity.Esame;
-import entity.UtenteRegistrato;
-import paovalle.uninacampus.R;
 
 /**
  * Created by paolo on 01/12/2017.
@@ -45,7 +37,7 @@ public class ControllerLibretto {
         return ControllerUtente.getInstance().getCurrentUser().getLibretto();
     }
 
-    public HashMap<String, Corso> getNomeEsamiDaSvolgere() {
+    public HashMap<String, Corso> getEsamiDaSvolgere() {
 
         HashMap<String, Corso> rimanenti = cUser.getCurrentUser().getCorso().getCorsi();
         HashMap<String, Esame> esamih=cUser.getCurrentUser().getLibretto();
@@ -54,36 +46,35 @@ public class ControllerLibretto {
         for(Esame e: esame){
             rimanenti.remove(e.getCorso().getCodice());
         }
-   /*
-        for(Map.Entry<String, Esame> entry: esamih.entrySet()){
-
-            rimanenti.remove(entry.getKey());
-        }
-
-
-        Collection<Esame> esami = cUser.getCurrentUser().getLibretto().values();
-
-
-        String[] out = new String[rimanenti.size()];
-        int i = 0;
-        for (Corso e : rimanenti.values()) {
-            out[i++] = e.getNome();
-        }*/
         return rimanenti;
     }
 
-    public void addEsame(int Voto, String Data,HashMap<String,Corso> esaminonfatti, int indiceSelezionato,String[]codici){
+    public List<String> getNomeEsamiDaSvolgere() {
+        HashMap<String, Corso> exam = getEsamiDaSvolgere();
+        List<String> nomeEsamiDaSvolgere = new LinkedList<>();
+        for (Map.Entry<String, Corso> entry: exam.entrySet()) {
+            nomeEsamiDaSvolgere.add(entry.getValue().getNome());
+        }
+        return nomeEsamiDaSvolgere;
+    }
+
+    public List<String> getIdEsamiDaSvolgere() {
+
+        HashMap<String, Corso> exam = getEsamiDaSvolgere();
+        List<String> idEsamiDaSvolgere = new LinkedList<>();
+        for (Map.Entry<String, Corso> entry: exam.entrySet()) {
+            idEsamiDaSvolgere.add(entry.getKey());
+        }
+        return idEsamiDaSvolgere;
+    }
+
+    public void addEsame(int Voto, String Data,HashMap<String,Corso> esaminonfatti, int indiceSelezionato,List<String> codici){
 
 
         Esame e= new Esame();
-        Log.d("addesame", "Devo inserire la data "+ Data );
         e.setData(Data);
-        Log.d("addesame", "data settata "+ e.getData() );
         e.setVoto(Voto);
-        e.setCorso(esaminonfatti.get(codici[indiceSelezionato]));
-
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        e.setCorso(esaminonfatti.get(codici.get(indiceSelezionato)));
 
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = mDatabase.getReference();
@@ -96,19 +87,16 @@ public class ControllerLibretto {
         dbRef.child("utente").child(UID).child("libretto").child(element).child("data").setValue(e.getData());
         dbRef.child("utente").child(UID).child("libretto").child(element).child("codice").setValue(element);
         e.setUID(element);
-        Log.d("addesame", "esameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: data "+ e.getData()+ " codice "+ e.getUID() +" corso " + e.getCorso().getCodice());
         cUser.getCurrentUser().getLibretto().put(element,e); //esame creato in locale
         cUser.calcolaMedia();
     }
 
-    public void deleteExam(int pos,String codice ){
+    public void deleteExam(String codice ){
         cUser.getCurrentUser().getLibretto().remove(codice);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference dbRef = mDatabase.getReference();
 
         String UID = cUser.getCurrentUser().getUID();
-        Log.d("prova", UID + " "+ codice);
 
         dbRef.child("utente").child(UID).child("libretto").child(codice).child("data").removeValue();
         dbRef.child("utente").child(UID).child("libretto").child(codice).child("corso").removeValue();

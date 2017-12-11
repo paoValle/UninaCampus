@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -54,8 +53,6 @@ public class MailProf extends AppCompatActivity {
         //vedo se mi è stato passato un id corso
         Intent i = getIntent();
         String idCorso = i.getExtras().getString("IDCORSO");
-        Log.w("IDCORSO", idCorso);
-        System.out.println("IDCORSO=>"+idCorso);
         if (idCorso!=null && idCorso!="") {//ho un id corso, cerco mail prof associato
             String mail = cMail.getMailByIdCorso(idCorso);
             ((TextView)findViewById(R.id.IdTo)).setText(mail);
@@ -64,9 +61,8 @@ public class MailProf extends AppCompatActivity {
 
 
     private void attemptSendMail(){
-        //TODO: PAOLO DEVE FARE LA LOGICA!!!!
 
-        if (destinatario.getText().toString()==null || destinatario.getText().toString().equals("") ){
+        if (destinatario.getText().toString().equals("") ){
             Toast.makeText(this, "Destinatario obbligatorio.", Toast.LENGTH_SHORT).show();
         }else {
             Intent i = new Intent(Intent.ACTION_SEND);

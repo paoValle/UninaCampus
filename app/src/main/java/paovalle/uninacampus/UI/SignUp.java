@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
@@ -22,14 +21,11 @@ import paovalle.uninacampus.R;
 
 public class SignUp extends AppCompatActivity {
 
-    private Button confBtn;
-    private Button indietroBtn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        confBtn=(Button)findViewById(R.id.confirmButton);
+        Button confBtn = findViewById(R.id.confirmButton);
 
         confBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -38,7 +34,7 @@ public class SignUp extends AppCompatActivity {
             }
         });
 
-        indietroBtn=(Button) findViewById(R.id.buttomBack);
+        Button indietroBtn = findViewById(R.id.buttomBack);
 
         indietroBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -72,12 +68,11 @@ public class SignUp extends AppCompatActivity {
                             .addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Log.w("AUTHRESULT", task.getException().getMessage());
                                     if (!task.isSuccessful()) {
-                                        Toast.makeText(SignUp.this, "Registrazione fallita!" + task.getException(),
+                                        Toast.makeText(SignUp.this, "Registrazione fallita!",
                                                 Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(SignUp.this, "Utente registrato!" + task.getException(),
+                                        Toast.makeText(SignUp.this, "Utente registrato!",
                                                 Toast.LENGTH_SHORT).show();
                                         //creo record in db
                                         String UID = task.getResult().getUser().getUid();

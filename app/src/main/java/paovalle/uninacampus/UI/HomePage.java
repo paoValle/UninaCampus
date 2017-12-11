@@ -1,25 +1,18 @@
 package paovalle.uninacampus.UI;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,8 +20,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.Toolbar;
-import android.text.method.HideReturnsTransformationMethod;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,16 +44,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import business.ControllerAule;
 import business.ControllerLibretto;
 import business.ControllerUtente;
-import entity.Corso;
 import paovalle.uninacampus.BuildConfig;
 import paovalle.uninacampus.R;
 
@@ -75,7 +62,7 @@ public class HomePage extends AppCompatActivity {
     private Dialog dialogGoToAule;
     //la usero per ricavare l'id del corso selezionato
     private List idCorsiSeguiti = new LinkedList<>();
-    private String[] idSceltaCorsi;
+    private List idSceltaCorsi = new LinkedList<>();
     private List<Integer> posIdCorsiScelti;
 
     private ControllerUtente cUser;
@@ -131,7 +118,7 @@ public class HomePage extends AppCompatActivity {
         });
 
         //cambio immagine profilo
-        ((ImageView)findViewById(R.id.profileImage)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.profileImage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SingleGetImageFromGallery();
@@ -222,9 +209,8 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View view) {
                 //rimuovo attuali corsi seguiti
                 cUser.deleteTuttiCorsiSeguiti();
-                System.out.println("Corsi da salvare come scelti:");
                 for (Integer pos : posIdCorsiScelti) {
-                    cUser.addCorsoSeguitoById(idSceltaCorsi[pos]);
+                    cUser.addCorsoSeguitoById((String)idSceltaCorsi.get(pos));
                 }
                 dialogCorsiSeguiti.dismiss();
                 showCorsiSeguiti();
@@ -234,14 +220,8 @@ public class HomePage extends AppCompatActivity {
         //GridView headerGridView = d.findViewById(R.id.dialogOrariGridHeader);
         ListView lvSceltaCorsi = dialogCorsiSeguiti.findViewById(R.id.listaSceltaCorsi);
         //preparo contenuto tabella
-        HashMap<String, Corso> exam = cLibretto.getNomeEsamiDaSvolgere();
-        String[] esaminomi=new String[exam.size()];
-        idSceltaCorsi = new String[exam.size()];
-        int i = 0;
-        for (Map.Entry<String, Corso> entry: exam.entrySet()) {
-            esaminomi[i] = entry.getValue().getNome();
-            idSceltaCorsi[i++]=entry.getKey();
-        }
+        List<String> esaminomi = cLibretto.getNomeEsamiDaSvolgere();
+        idSceltaCorsi = cLibretto.getIdEsamiDaSvolgere();
         //resetto corsi scelti
         posIdCorsiScelti = new ArrayList<>();
 
@@ -249,8 +229,8 @@ public class HomePage extends AppCompatActivity {
         lvSceltaCorsi.setAdapter(adapter);
         lvSceltaCorsi.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         //scopro quali checkare poiche attualmente seguiti
-        for (int j=0;j<idSceltaCorsi.length;j++) {
-            if (cUser.getListIdCorsiSeguitiCurrentUser().contains(idSceltaCorsi[j])) {
+        for (int j=0;j<idSceltaCorsi.size();j++) {
+            if (cUser.getListIdCorsiSeguitiCurrentUser().contains(idSceltaCorsi.get(j))) {
                 lvSceltaCorsi.setItemChecked(j, true);
                 posIdCorsiScelti.add(j);
             }
@@ -259,7 +239,6 @@ public class HomePage extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapter, View arg1, int arg2, long arg3)
             {
                 AppCompatCheckedTextView checkBox = (AppCompatCheckedTextView) arg1;
-                Log.i("CHECK",checkBox.isChecked()+""+checkBox.getText().toString()+ " (pos:"+arg2+")");
                 if (checkBox.isChecked()) {
                     posIdCorsiScelti.add(Integer.valueOf(arg2));
                 } else {
@@ -276,7 +255,7 @@ public class HomePage extends AppCompatActivity {
     private void showDialogAulaCalend() {
         //mostro dialog con possibili corsi da scegliere
         dialogCorsiSeguiti = new Dialog(this);
-        dialogCorsiSeguiti.setTitle("Quali corsi segui?");
+        dialogCorsiSeguiti.setTitle("Aggiungi al calendario:");
         dialogCorsiSeguiti.setContentView(R.layout.dialog_sceltacorsiseguiti);
 
         Button dismissDialog = dialogCorsiSeguiti.findViewById(R.id.sceltaCorsiSeguitiCancel);
@@ -294,33 +273,25 @@ public class HomePage extends AppCompatActivity {
                     //aggiungo corsi al calendario
                     //TODO: trovare selezionati e metterli in calendario
                     for (Integer pos : posIdCorsiScelti) {
-                        cUser.addCorsoToCalend(HomePage.this, idSceltaCorsi[pos]);
+                        cUser.addCorsoToCalend(HomePage.this, (String)idSceltaCorsi.get(pos));
                     }
                     dialogCorsiSeguiti.dismiss();
                     Toast.makeText(getBaseContext(), "Eventi aggiunti al calendario!" , Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getBaseContext(), "Nessun corso selezionato!" , Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
         //GridView headerGridView = d.findViewById(R.id.dialogOrariGridHeader);
         ListView lvSceltaCorsi = dialogCorsiSeguiti.findViewById(R.id.listaSceltaCorsi);
         //preparo contenuto tabella
-        HashMap<String, Corso> exam = cLibretto.getNomeEsamiDaSvolgere();
-        String[] esaminomi=new String[exam.size()];
-        idSceltaCorsi = new String[exam.size()];
-        int i = 0;
-        for (Map.Entry<String, Corso> entry: exam.entrySet()) {
-            esaminomi[i] = entry.getValue().getNome();
-            idSceltaCorsi[i++]=entry.getKey();
-        }
+        List<String> corsiSeguiti=cUser.getListCorsiSeguitiCurrentUser();
+        idSceltaCorsi = cUser.getListIdCorsiSeguitiCurrentUser();
         //resetto corsi scelti
         posIdCorsiScelti = new ArrayList<>();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, esaminomi);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, corsiSeguiti);
         lvSceltaCorsi.setAdapter(adapter);
 
         lvSceltaCorsi.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -328,7 +299,6 @@ public class HomePage extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapter, View arg1, int arg2, long arg3)
             {
                 AppCompatCheckedTextView checkBox = (AppCompatCheckedTextView) arg1;
-                Log.i("CHECK",checkBox.isChecked()+""+checkBox.getText().toString()+ " (pos:"+arg2+")");
                 if (checkBox.isChecked()) {
                     posIdCorsiScelti.add(Integer.valueOf(arg2));
                 } else {
@@ -360,7 +330,6 @@ public class HomePage extends AppCompatActivity {
         lv.setAdapter(null);
         List<String> corsi = cUser.getListCorsiSeguitiCurrentUser();
         idCorsiSeguiti = cUser.getListIdCorsiSeguitiCurrentUser();
-
         ArrayAdapter<String> adapter= new ArrayAdapter<>(this, R.layout.row, corsi);
         lv.setAdapter(adapter);
 
@@ -418,10 +387,7 @@ public class HomePage extends AppCompatActivity {
             case R.id.nav_sixth_fragment:
                 goToLibretto();
                 break;
-
             default:
-
-
         }
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
@@ -530,25 +496,16 @@ public class HomePage extends AppCompatActivity {
         dialogGoToAule = new Dialog(this);
         dialogGoToAule.setContentView(R.layout.dialogo_aula_gps);
         dialogGoToAule.setTitle("A quale aula vuoi andare?");
-
         String[] elencoAule = cAule.getElencoAule();
         Spinner s= dialogGoToAule.findViewById(R.id.elencoAule);
-
-        for (String es : elencoAule) {
-            System.out.println(es);
-        }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row, elencoAule);
-
         s.setAdapter(adapter);
-
         dialogGoToAule.show();
-
         //mappa aule
         Button btnGoToAula = dialogGoToAule.findViewById(R.id.idGoToAula);
         btnGoToAula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 goToMaps(((Spinner)dialogGoToAule.findViewById(R.id.elencoAule)).getSelectedItem().toString());
                 dialogGoToAule.dismiss();
             }
@@ -617,7 +574,4 @@ public class HomePage extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(pickedProfileImageFile));
         startActivityForResult(intent, RESULT_CROP);
     }
-
-
-
 }

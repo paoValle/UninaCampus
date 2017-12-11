@@ -1,12 +1,9 @@
 package business;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +21,6 @@ public class ControllerUtente {
 
     private UtenteRegistrato user;
     private static ControllerUtente instance;
-    private static final int MY_PERMISSIONS_REQUEST_CALENDAR = 364;
 
     public static synchronized ControllerUtente getInstance() {
         if (instance == null) {
@@ -42,19 +38,10 @@ public class ControllerUtente {
         return this.user;
     }
 
-    public HashMap getCurrentUserCorsi() {
-        return user.getCorso().getCorsi();
-    }
-
-    public HashMap getCurrentUserEsami() {
-        return user.getLibretto();
-    }
-
     public List getListCorsiSeguitiCurrentUser() {
         List<String> corsi = new LinkedList<>();
-        Iterator it = user.getCorsiScelti().entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
+        for (Object o : user.getCorsiScelti().entrySet()) {
+            Map.Entry pair = (Map.Entry) o;
             corsi.add(((Corso) pair.getValue()).getNome());
         }
         return corsi;
@@ -62,9 +49,8 @@ public class ControllerUtente {
 
     public List getListIdCorsiSeguitiCurrentUser() {
         List<String> idCorsi = new LinkedList<>();
-        Iterator it = user.getCorsiScelti().entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
+        for (Object o : user.getCorsiScelti().entrySet()) {
+            Map.Entry pair = (Map.Entry) o;
             idCorsi.add(pair.getKey().toString());
         }
         return idCorsi;
