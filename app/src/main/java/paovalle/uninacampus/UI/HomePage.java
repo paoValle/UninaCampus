@@ -3,11 +3,13 @@ package paovalle.uninacampus.UI;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -160,20 +162,24 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Object imgURL = dataSnapshot.child("utente").child(cUser.getCurrentUser().getUID()).child("profileImage").getValue();
-                if (imgURL!=null) {//non presente
-                    imageUri = Uri.parse(imgURL.toString());
-                    try {
-                        InputStream is = HomePage.this.getContentResolver().openInputStream(imageUri);
-                        if (is != null) {
-                            pictureBitmap = BitmapFactory.decodeStream(is);
+                try {
+                    if (imgURL != null) {//non presente
+                        imageUri = Uri.parse(imgURL.toString());
+                        try {
+                            InputStream is = HomePage.this.getContentResolver().openInputStream(imageUri);
+                            if (is != null) {
+                                pictureBitmap = BitmapFactory.decodeStream(is);
+                            }
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
                         }
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                        if (pictureBitmap != null) {
+                            ImageView myImage = findViewById(R.id.profileImage);
+                            myImage.setImageBitmap(pictureBitmap);
+                        }
                     }
-                    if (pictureBitmap!=null) {
-                        ImageView myImage = findViewById(R.id.profileImage);
-                        myImage.setImageBitmap(pictureBitmap);
-                    }
+                } catch (SecurityException sE) {
+                    //imposterà l'immagine di default
                 }
             }
 
@@ -574,7 +580,7 @@ public class HomePage extends AppCompatActivity {
                         pictureBitmap = BitmapFactory.decodeStream(is);
                         imageUri = getImageUri(this, pictureBitmap);
                     }
-                } catch (FileNotFoundException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 ImageView myImage = findViewById(R.id.profileImage);
@@ -592,6 +598,24 @@ public class HomePage extends AppCompatActivity {
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
+    }
+
+    //Scrop function for max SDK 23
+    private void ImageCrop() {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(imageUri, "image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 3);
+        intent.putExtra("aspectY", 3);
+        intent.putExtra("outputX", 400);
+        intent.putExtra("outputY", 400);
+        intent.putExtra("outputFormat", "JPEG");
+        intent.putExtra("noFaceDetection", true);
+        intent.putExtra("return-data", true);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(pickedProfileImageFile));
+        startActivityForResult(intent, RESULT_CROP);
     }
 
 
