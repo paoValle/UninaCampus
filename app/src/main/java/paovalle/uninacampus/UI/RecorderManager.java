@@ -84,6 +84,8 @@ public class RecorderManager extends AppCompatActivity {
                 }else{
                     StorageReference riversRef = storageRef.child("reg/"+file.getLastPathSegment());
                     uploadTask = riversRef.putFile(file);
+                    String element= dbRef.child("Registrazioni").push().getKey();
+                    dbRef.child("Registrazioni").child(element).setValue(fileSelected.getName());
                     Toast.makeText(getApplicationContext(), "File caricato", Toast.LENGTH_LONG).show();
                 }
 
