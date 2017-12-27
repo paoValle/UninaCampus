@@ -14,12 +14,20 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import paovalle.uninacampus.R;
 
@@ -32,6 +40,9 @@ public class RecorderManager extends AppCompatActivity {
     UploadTask uploadTask ;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
+
+    ArrayList<String> registrazioni = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +63,29 @@ public class RecorderManager extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference dbRef = database.getReference();
+                dbRef.addValueEventListener(new ValueEventListener() {
+                    @SuppressWarnings("ConstantConditions")
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //DataSnapshot userDB = dataSnapshot.child("utente").child(UID);
+                        for(DataSnapshot registrazione : dataSnapshot.child("Registrazioni").getChildren())
+                            registrazioni.add(registrazione.getValue().toString());
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) { }
+                });
+
                 Uri file = Uri.fromFile(fileSelected);
-                StorageReference riversRef = storageRef.child("reg/"+file.getLastPathSegment());
-                uploadTask = riversRef.putFile(file);
+                if(registrazioni.contains(fileSelected.getName())){
+                    Toast.makeText(getApplicationContext(), "File già presente", Toast.LENGTH_LONG).show();
+                }else{
+                    StorageReference riversRef = storageRef.child("reg/"+file.getLastPathSegment());
+                    uploadTask = riversRef.putFile(file);
+                    Toast.makeText(getApplicationContext(), "File caricato", Toast.LENGTH_LONG).show();
+                }
 
                 // Register observers to listen for when the download is done or if it fails
                 uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -69,6 +100,7 @@ public class RecorderManager extends AppCompatActivity {
                         Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     }
                 });
+
             }
         });
     }
@@ -78,18 +110,11 @@ public class RecorderManager extends AppCompatActivity {
         f.setFileListener(new FileChooser.FileSelectedListener() {
             @Override public void fileSelected(final File file) {
                 //  something with the file
-                Log.d("TESTT1", file.getName());
                 if(file != null){
                     txtFile.setText(file.getName());
                     fileSelected = file;
                 }
             }
         }).showDialog();
-
-
-
     }
-
-
-
 }
