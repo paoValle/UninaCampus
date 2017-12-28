@@ -24,8 +24,9 @@
             android:id="@+id/idhead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numColumns="4" >
-        </GridView>
+            android:clickable="false"
+            android:contextClickable="false"
+            android:numColumns="4"></GridView>
 
         <GridView
             android:id="@+id/idListaEsami"

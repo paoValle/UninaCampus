@@ -21,7 +21,7 @@
             android:id="@+id/nav_forth_fragment"
             android:checkable="true"
             android:icon="@drawable/notes"
-            android:title="Condiv. Appunti e Registrazioni" />
+            android:title="Registrazioni" />
         <item
             android:id="@+id/nav_sixth_fragment"
             android:checkable="true"

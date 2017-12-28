@@ -209,6 +209,15 @@ public class LibrettoActivity extends AppCompatActivity {
         datePicker = d.findViewById(R.id.idprendidata);
         check= d.findViewById(R.id.idcheckLode);
         Button donebtn= d.findViewById(R.id.idDoneEsame);
+        Button backbtn= d.findViewById(R.id.idBackFromEsame);
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              d.cancel();
+            }
+        });
+
         donebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
