@@ -189,7 +189,6 @@ public class RecorderManager extends AppCompatActivity {
                         @Override
                         public void onSuccess(byte[] bytes) {
                             // Use the bytes to display the image
-                            Log.d("PROVOLA", Integer.toString(bytes.length));
                             File sd = Environment.getExternalStorageDirectory();
 
                             try {
