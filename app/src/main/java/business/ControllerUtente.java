@@ -59,6 +59,7 @@ public class ControllerUtente {
     public void calcolaMedia() {
         ArrayList<Esame> appoggio = new ArrayList<>(user.getLibretto().values());
         int somma = 0;
+        double media=0.0;
         if (appoggio.size() != 0) { //nel caso di una eliminazione che elimina tutti gli esami non devo calcolare la media, la devo solo azzerare
             for (Esame e : appoggio) {
                 somma = somma + e.getVoto();
@@ -66,16 +67,16 @@ public class ControllerUtente {
                     somma = somma - 1; //devo togliere il +1 del 31. la lode non fa media
                 }
             }
-            double media = (double) (somma / appoggio.size());
+            media = (double) (somma / appoggio.size());
             user.setMedia(media);
             //aggiorna la media su database
-            FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-            DatabaseReference dbRef = mDatabase.getReference();
-            String UID = getCurrentUser().getUID();
-            dbRef.child("utente").child(UID).child("mean").setValue(Double.toString(media));
         } else {
             user.setMedia(0);
         }
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = mDatabase.getReference();
+        String UID = getCurrentUser().getUID();
+        dbRef.child("utente").child(UID).child("mean").setValue(Double.toString(media));
     }
 
     public void deleteTuttiCorsiSeguiti() {

@@ -3,43 +3,55 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_margin="15dp">
-
-            <ListView
-                android:id="@+id/listaSceltaCorsi"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:choiceMode="singleChoice" />
-
-        </RelativeLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/sceltaCorsiSeguitiCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Annulla" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp">
 
-            <Button
-                android:id="@+id/sceltaCorsiSeguitiOk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Salva" />
+                <ListView
+                    android:id="@+id/listaSceltaCorsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:choiceMode="singleChoice" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/sceltaCorsiSeguitiCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_dark"
+                    android:text="Annulla"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/sceltaCorsiSeguitiOk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_dark"
+                    android:text="Salva"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
         </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

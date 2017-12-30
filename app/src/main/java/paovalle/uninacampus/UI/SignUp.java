@@ -39,7 +39,7 @@ public class SignUp extends AppCompatActivity {
         indietroBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptSignUp();
+                goToLogin();
             }
         });
 

@@ -3,23 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Spinner
-            android:id="@+id/elencoAule"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textAlignment="center" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/idGoToAula"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Andiamo!"
-            android:textSize="24sp" />
-    </LinearLayout>
+            <Spinner
+                android:id="@+id/elencoAule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/idGoToAula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_green_light"
+                android:text="Andiamo!"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

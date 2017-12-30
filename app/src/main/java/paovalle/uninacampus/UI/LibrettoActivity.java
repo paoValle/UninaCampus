@@ -1,8 +1,10 @@
 package paovalle.uninacampus.UI;
 
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,7 +47,9 @@ public class LibrettoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_libretto);
+
         cLibretto = ControllerLibretto.getInstance();
         lvlistaesami = findViewById(R.id.idListaEsami);
         lv2 = findViewById(R.id.idhead);
@@ -87,7 +91,6 @@ public class LibrettoActivity extends AppCompatActivity {
                     return false;
                 }else{
                     btnelimina.setVisibility(View.VISIBLE);
-                   // Toast.makeText(getBaseContext(), "funziona il toast", Toast.LENGTH_SHORT).show();
                     posizioneEsameselezionata=(position/4);
                     String esame=esami[posizioneEsameselezionata*4];
                     Toast.makeText(getBaseContext(), "Esame Selezionato " + esame, Toast.LENGTH_SHORT).show();
@@ -183,6 +186,11 @@ public class LibrettoActivity extends AppCompatActivity {
         d.setContentView(R.layout.dialogo_inserimentoesame);
 
         exam = cLibretto.getEsamiDaSvolgere();
+        if(exam.size()==0){
+            Toast.makeText(getBaseContext(), "Hai terminato gli esami del corso di laurea", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         List<String> esaminomi=cLibretto.getNomeEsamiDaSvolgere();
         codici=cLibretto.getIdEsamiDaSvolgere();
 

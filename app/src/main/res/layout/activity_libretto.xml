@@ -7,84 +7,90 @@
     android:layout_height="match_parent"
     tools:context="paovalle.uninacampus.UI.LibrettoActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/idLatuaCarriera"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/la_tua_carriera"
-            android:textColor="@android:color/black"
-            android:textSize="26sp" />
-
-        <GridView
-            android:id="@+id/idhead"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:contextClickable="false"
-            android:numColumns="4"></GridView>
-
-        <GridView
-            android:id="@+id/idListaEsami"
-            android:layout_width="match_parent"
-            android:layout_height="480dp"
-            android:animateLayoutChanges="false"
-            android:clickable="true"
-            android:listSelector="@color/black_overlay"
-            android:nestedScrollingEnabled="false"
-            android:numColumns="4"
-            android:textAlignment="center"
-            android:textFilterEnabled="true">
-
-        </GridView>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/indietrofromLibretto"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/indietrofromLibretto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_dark"
+                    android:text="@string/back"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="24sp"
+                    tools:text="Back" />
+
+                <Button
+                    android:id="@+id/idaggiorna"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_green_dark"
+                    android:text="@string/aggiorna"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="+" />
+
+                <Button
+                    android:id="@+id/idElimina"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_red_dark"
+                    android:text="@string/elimina"
+                    android:textColor="@color/black_overlay"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    tools:text="-" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/idLatuaCarriera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_blue_dark"
-                android:text="@string/back"
-                android:textColor="@android:color/background_light"
-                android:textSize="24sp"
-                tools:text="Back" />
+                android:text="@string/la_tua_carriera"
+                android:textColor="@android:color/black"
+                android:textSize="26sp" />
 
-            <Button
-                android:id="@+id/idaggiorna"
+            <GridView
+                android:id="@+id/idhead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_green_dark"
-                android:text="@string/aggiorna"
-                android:textColor="@android:color/background_light"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                tools:text="+" />
+                android:clickable="false"
+                android:contextClickable="false"
+                android:numColumns="4"></GridView>
 
-            <Button
-                android:id="@+id/idElimina"
+            <GridView
+                android:id="@+id/idListaEsami"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/holo_red_dark"
-                android:text="@string/elimina"
-                android:textColor="@color/black_overlay"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                tools:text="-" />
+                android:layout_height="400dp"
+                android:animateLayoutChanges="false"
+                android:clickable="true"
+                android:listSelector="@color/black_overlay"
+                android:nestedScrollingEnabled="false"
+                android:numColumns="4"
+                android:textAlignment="center"
+                android:textFilterEnabled="true">
+
+            </GridView>
+
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

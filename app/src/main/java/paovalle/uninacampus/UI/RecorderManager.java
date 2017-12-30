@@ -44,20 +44,21 @@ import paovalle.uninacampus.R;
 
 public class RecorderManager extends AppCompatActivity {
 
-    Button btnChoose;
-    Button btnUpload;
-    Button btnLista;
-    Button btnDownload;
-    ListView lstReg;
-    String listSelected = null;
-    File fileSelected = null;
-    TextView txtFile;
-    UploadTask uploadTask;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
-    DatabaseReference dbRef;
+    private  Button btnChoose;
+    private Button btnUpload;
+    private Button  btnBack;
+    private Button btnLista;
+    private Button btnDownload;
+    private  ListView lstReg;
+    private  String listSelected = null;
+    private File fileSelected = null;
+    private TextView txtFile;
+    private UploadTask uploadTask;
+    private  FirebaseStorage storage = FirebaseStorage.getInstance();
+    private  StorageReference storageRef = storage.getReference();
+    private DatabaseReference dbRef;
 
-    ArrayList<String> registrazioni = new ArrayList<>();
+    private ArrayList<String> registrazioni = new ArrayList<>();
 
 
     @Override
@@ -67,6 +68,7 @@ public class RecorderManager extends AppCompatActivity {
 
         btnChoose = (Button) findViewById(R.id.btnChoose);
         btnUpload = (Button) findViewById(R.id.btnUpload);
+        btnBack= (Button)findViewById(R.id.idBackFromRecorderManager);
         btnLista = (Button) findViewById(R.id.btnLista);
         btnDownload = (Button) findViewById(R.id.btnDownload);
         lstReg = (ListView) findViewById(R.id.lstReg);
@@ -79,7 +81,12 @@ public class RecorderManager extends AppCompatActivity {
             }
         });
 
-
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoHome();
+            }
+        });
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -232,5 +239,10 @@ public class RecorderManager extends AppCompatActivity {
                 }
             }
         }).showDialog();
+    }
+
+
+    private void gotoHome(){
+        super.onBackPressed();
     }
 }

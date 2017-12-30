@@ -39,7 +39,7 @@ public class ControllerLibretto {
 
     public HashMap<String, Corso> getEsamiDaSvolgere() {
 
-        HashMap<String, Corso> rimanenti = cUser.getCurrentUser().getCorso().getCorsi();
+        HashMap<String, Corso> rimanenti = new HashMap<>(cUser.getCurrentUser().getCorso().getCorsi()); //mi serve per copia!!!
         HashMap<String, Esame> esamih=cUser.getCurrentUser().getLibretto();
 
         Collection<Esame> esame= esamih.values();
@@ -88,6 +88,7 @@ public class ControllerLibretto {
         dbRef.child("utente").child(UID).child("libretto").child(element).child("codice").setValue(element);
         e.setUID(element);
         cUser.getCurrentUser().getLibretto().put(element,e); //esame creato in locale
+        cUser.getCurrentUser().getCorsiScelti().remove(e.getCorso().getCodice());
         cUser.calcolaMedia();
     }
 
