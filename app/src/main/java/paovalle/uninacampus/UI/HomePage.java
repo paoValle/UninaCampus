@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +23,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +57,10 @@ import business.ControllerUtente;
 import paovalle.uninacampus.BuildConfig;
 import paovalle.uninacampus.R;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 public class HomePage extends AppCompatActivity {
+    public static final int RequestPermissionCode = 1;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
@@ -501,10 +508,43 @@ public class HomePage extends AppCompatActivity {
         btnGoToAula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToMaps(((Spinner)dialogGoToAule.findViewById(R.id.elencoAule)).getSelectedItem().toString());
-                dialogGoToAule.dismiss();
+                if(checkPermission()) {
+                    goToMaps(((Spinner)dialogGoToAule.findViewById(R.id.elencoAule)).getSelectedItem().toString());
+                    dialogGoToAule.dismiss();
+                }else{
+                    requestPermission();
+                }
             }
         });
+    }
+
+    public boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(),
+                ACCESS_FINE_LOCATION);
+        return result == PackageManager.PERMISSION_GRANTED ;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case RequestPermissionCode:
+                if (grantResults.length> 0) {
+                    boolean StoragePermission = grantResults[0] ==
+                            PackageManager.PERMISSION_GRANTED;
+
+                    if (StoragePermission ) {
+                        Toast.makeText(getApplicationContext(), "Permission Granted",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Permission Denied",Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+        }
+    }
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(HomePage.this, new
+                String[]{ACCESS_FINE_LOCATION}, RequestPermissionCode);
     }
 
     // single image pick function

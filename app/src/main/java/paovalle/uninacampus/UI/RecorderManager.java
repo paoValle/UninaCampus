@@ -3,9 +3,12 @@ package paovalle.uninacampus.UI;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -42,23 +45,26 @@ import java.util.List;
 
 import paovalle.uninacampus.R;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static paovalle.uninacampus.UI.RecorderActivity.RequestPermissionCode;
+
 public class RecorderManager extends AppCompatActivity {
 
-    private  Button btnChoose;
-    private Button btnUpload;
-    private Button  btnBack;
-    private Button btnLista;
-    private Button btnDownload;
-    private  ListView lstReg;
-    private  String listSelected = null;
-    private File fileSelected = null;
-    private TextView txtFile;
-    private UploadTask uploadTask;
-    private  FirebaseStorage storage = FirebaseStorage.getInstance();
-    private  StorageReference storageRef = storage.getReference();
-    private DatabaseReference dbRef;
+    Button btnChoose;
+    Button btnUpload;
+    Button btnLista;
+    Button btnDownload;
+    ListView lstReg;
+    String listSelected = null;
+    File fileSelected = null;
+    TextView txtFile;
+    UploadTask uploadTask;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+    DatabaseReference dbRef;
 
-    private ArrayList<String> registrazioni = new ArrayList<>();
+    ArrayList<String> registrazioni = new ArrayList<>();
+    public static final int RequestPermissionCode = 1;
 
 
     @Override
@@ -68,7 +74,6 @@ public class RecorderManager extends AppCompatActivity {
 
         btnChoose = (Button) findViewById(R.id.btnChoose);
         btnUpload = (Button) findViewById(R.id.btnUpload);
-        btnBack= (Button)findViewById(R.id.idBackFromRecorderManager);
         btnLista = (Button) findViewById(R.id.btnLista);
         btnDownload = (Button) findViewById(R.id.btnDownload);
         lstReg = (ListView) findViewById(R.id.lstReg);
@@ -77,16 +82,15 @@ public class RecorderManager extends AppCompatActivity {
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fileChooser();
+                if(checkPermission()) {
+                    fileChooser();
+                }else{
+                    requestPermission();
+                }
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gotoHome();
-            }
-        });
+
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,6 +226,36 @@ public class RecorderManager extends AppCompatActivity {
         });
     }
 
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(RecorderManager.this, new
+                String[]{WRITE_EXTERNAL_STORAGE}, RequestPermissionCode);
+    }
+
+    public boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(),
+                WRITE_EXTERNAL_STORAGE);
+        return result == PackageManager.PERMISSION_GRANTED ;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case RequestPermissionCode:
+                if (grantResults.length> 0) {
+                    boolean StoragePermission = grantResults[0] ==
+                            PackageManager.PERMISSION_GRANTED;
+
+                    if (StoragePermission ) {
+                        Toast.makeText(getApplicationContext(), "Permission Granted",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Permission Denied",Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+        }
+    }
+
 
     private void showList(){
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row, registrazioni);
@@ -239,10 +273,5 @@ public class RecorderManager extends AppCompatActivity {
                 }
             }
         }).showDialog();
-    }
-
-
-    private void gotoHome(){
-        super.onBackPressed();
     }
 }

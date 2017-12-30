@@ -105,7 +105,7 @@ public class RecorderActivity extends AppCompatActivity {
                 if(checkPermission()) {
 
                     AudioSavePathInDevice =
-                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +""  + titolo2+".3gp";
+                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +""  + titolo2+".aac";
                     MediaRecorderReady();
 
                     try {
@@ -163,7 +163,7 @@ public class RecorderActivity extends AppCompatActivity {
     public void MediaRecorderReady(){
         mediaRecorder=new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
         mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         mediaRecorder.setOutputFile(AudioSavePathInDevice);
     }

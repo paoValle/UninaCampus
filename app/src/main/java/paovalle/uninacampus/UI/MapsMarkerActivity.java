@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import business.ControllerUtente;
 import paovalle.uninacampus.R;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 public class MapsMarkerActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -50,6 +53,8 @@ public class MapsMarkerActivity extends AppCompatActivity
     private ControllerUtente cUser;
 
     private LatLng locationAula;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public static final int RequestPermissionCode = 1;
 
 
     @Override
@@ -115,7 +120,7 @@ public class MapsMarkerActivity extends AppCompatActivity
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         //Initialize Google Play Services
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+       /* if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
@@ -130,22 +135,32 @@ public class MapsMarkerActivity extends AppCompatActivity
         else {
             buildGoogleApiClient();
             mGoogleMap.setMyLocationEnabled(true);
-        }
+        }*/
 
         //mostro segnaposto aula
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
+        if(checkPermission()) {
+
+        }else{
+            requestPermission();
+
+        }
+
+        buildGoogleApiClient();
+        mGoogleMap.setMyLocationEnabled(true);
 
         googleMap.addMarker(new MarkerOptions().position(locationAula)
                 .title("Marker aula"));
+
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(locationAula));
-
-
         googleMap.setMyLocationEnabled(true);
+
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(locationAula).zoom(18).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
+
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -156,6 +171,36 @@ public class MapsMarkerActivity extends AppCompatActivity
                 .build();
         mGoogleApiClient.connect();
     }
+
+    public boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(),
+                ACCESS_FINE_LOCATION);
+        return result == PackageManager.PERMISSION_GRANTED ;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case RequestPermissionCode:
+                if (grantResults.length> 0) {
+                    boolean StoragePermission = grantResults[0] ==
+                            PackageManager.PERMISSION_GRANTED;
+
+                    if (StoragePermission ) {
+                        Toast.makeText(getApplicationContext(), "Permission Granted",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Permission Denied",Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+        }
+    }
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(MapsMarkerActivity.this, new
+                String[]{ACCESS_FINE_LOCATION}, RequestPermissionCode);
+    }
+
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -180,8 +225,8 @@ public class MapsMarkerActivity extends AppCompatActivity
         }
     }
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private void checkLocationPermission() {
+
+    /*private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
@@ -250,6 +295,6 @@ public class MapsMarkerActivity extends AppCompatActivity
             // other 'case' lines to check for other
             // permissions this app might request
         }
-    }
+    }*/
 
 }

@@ -24,7 +24,7 @@ public class FileChooser {
     private File currentPath;
 
     // filter on file extension
-    private String extension = ".3gp";
+    private String extension = ".aac";
     public void setExtension(String extension) {
         this.extension = (extension == null) ? null :
                 extension.toLowerCase();
@@ -94,6 +94,7 @@ public class FileChooser {
                     }
                 }
             });
+
 
             // convert to an array
             int i = 0;
