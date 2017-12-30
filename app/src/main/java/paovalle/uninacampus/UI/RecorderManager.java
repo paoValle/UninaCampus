@@ -50,20 +50,21 @@ import static paovalle.uninacampus.UI.RecorderActivity.RequestPermissionCode;
 
 public class RecorderManager extends AppCompatActivity {
 
-    Button btnChoose;
-    Button btnUpload;
-    Button btnLista;
-    Button btnDownload;
-    ListView lstReg;
-    String listSelected = null;
-    File fileSelected = null;
-    TextView txtFile;
-    UploadTask uploadTask;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
-    DatabaseReference dbRef;
+    private Button btnChoose;
+    private Button btnBack;
+    private Button btnUpload;
+    private Button btnLista;
+    private Button btnDownload;
+    private ListView lstReg;
+    private String listSelected = null;
+    private File fileSelected = null;
+    private TextView txtFile;
+    private UploadTask uploadTask;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReference();
+    private  DatabaseReference dbRef;
 
-    ArrayList<String> registrazioni = new ArrayList<>();
+    private ArrayList<String> registrazioni = new ArrayList<>();
     public static final int RequestPermissionCode = 1;
 
 
@@ -73,11 +74,19 @@ public class RecorderManager extends AppCompatActivity {
         setContentView(R.layout.activity_recorder_manager);
 
         btnChoose = (Button) findViewById(R.id.btnChoose);
+        btnBack= (Button) findViewById(R.id.idBackFromRecorderManager);
         btnUpload = (Button) findViewById(R.id.btnUpload);
         btnLista = (Button) findViewById(R.id.btnLista);
         btnDownload = (Button) findViewById(R.id.btnDownload);
         lstReg = (ListView) findViewById(R.id.lstReg);
         txtFile = (TextView) findViewById(R.id.txtFile);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToHome();
+            }
+         });
 
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,5 +282,10 @@ public class RecorderManager extends AppCompatActivity {
                 }
             }
         }).showDialog();
+    }
+
+
+    private void goToHome(){
+        super.onBackPressed();
     }
 }
