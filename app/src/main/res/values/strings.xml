@@ -44,6 +44,26 @@
     <string name="body">Body</string>
     <string name="utenteutente">utenteutente</string>
     <string name="password">Password</string>
+    <string name="corsi_che_segui">Corsi che segui:</string>
+    <string name="modifica">Modifica</string>
+    <string name="mail">Mail</string>
+    <string name="piano">Piano :</string>
+    <string name="marker_blu_pos_tua">Marker blu: pos. TUA</string>
+    <string name="marker_rosso_pos_aula">Marker rosso: pos. AULA</string>
+    <string name="inquadra_un_qr_code_fuori_un_aula_per_vederne_l_orario_odierno">Inquadra un QR Code fuori un\'aula per vederne l\'orario odierno!</string>
+    <string name="registra">Registra</string>
+    <string name="stop">Stop</string>
+    <string name="upload">Upload</string>
+    <string name="choosefile">ChooseFile</string>
+    <string name="lista_registrazioni">Lista Registrazioni</string>
+    <string name="download">Download</string>
+    <string name="conferma">Conferma</string>
+    <string name="indietro">Indietro</string>
+    <string name="nome">Nome</string>
+    <string name="annulla">Annulla</string>
+    <string name="salva">Salva</string>
+    <string name="andiamo">Andiamo!</string>
+    <string name="chiudi">Chiudi</string>
 
 
 </resources>

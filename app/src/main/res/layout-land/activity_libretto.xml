@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/libretto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="paovalle.uninacampus.UI.LibrettoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/indietrofromLibretto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_blue_dark"
+                android:text="@string/back"
+                android:textColor="@android:color/background_light"
+                android:textSize="24sp"
+                tools:text="Back" />
+
+            <Button
+                android:id="@+id/idaggiorna"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_green_dark"
+                android:text="@string/aggiorna"
+                android:textColor="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="+" />
+
+            <Button
+                android:id="@+id/idElimina"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_dark"
+                android:text="@string/elimina"
+                android:textColor="@color/black_overlay"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:text="-" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/idLatuaCarriera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/la_tua_carriera"
+            android:textColor="@android:color/black"
+            android:textSize="26sp" />
+
+        <GridView
+            android:id="@+id/idhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:contextClickable="false"
+            android:numColumns="4"></GridView>
+
+        <GridView
+            android:id="@+id/idListaEsami"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:animateLayoutChanges="false"
+            android:clickable="true"
+            android:listSelector="@color/black_overlay"
+            android:nestedScrollingEnabled="false"
+            android:numColumns="4"
+            android:textAlignment="center"
+            android:textFilterEnabled="true">
+
+        </GridView>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
