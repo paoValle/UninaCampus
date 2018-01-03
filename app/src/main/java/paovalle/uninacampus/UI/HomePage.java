@@ -279,8 +279,7 @@ public class HomePage extends AppCompatActivity {
                         (ContextCompat.checkSelfPermission(HomePage.this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED)) {
                     if (posIdCorsiScelti.size() > 0) {
                         //aggiungo corsi al calendario
-                        //TODO: trovare selezionati e metterli in calendario
-                        boolean done = false;
+                        boolean done = true;
                         for (Integer pos : posIdCorsiScelti) {
                             done = done && cUser.addCorsoToCalend(HomePage.this, (String) idSceltaCorsi.get(pos));
                         }

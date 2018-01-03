@@ -103,12 +103,14 @@ public class ControllerCalendario {
     public void checkCalendarPermission(final HomePage context) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR)
+                || ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(context,
-                    Manifest.permission.WRITE_CALENDAR)) {
+                    Manifest.permission.WRITE_CALENDAR) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(context,
+                            Manifest.permission.READ_CALENDAR) ) {
 
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
