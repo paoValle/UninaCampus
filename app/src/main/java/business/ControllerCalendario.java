@@ -40,7 +40,7 @@ public class ControllerCalendario {
     HashMap<String, String> primoGiornoSettimanaSemestre = new HashMap<>();
 
     public static synchronized ControllerCalendario getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new ControllerCalendario();
         }
         return instance;
@@ -60,43 +60,47 @@ public class ControllerCalendario {
         primoGiornoSettimanaSemestre.put("ven", "2017-09-01");
     }
 
-    public void addCorsoToCalend(HomePage context, Corso c) {
-        //vedo se vi sono calendari presenti sul dispositivo
-        String projection[] = {"_id", "calendar_displayName"};
-        Uri calendars;
-        calendars = Uri.parse("content://com.android.calendar/calendars");
-        ContentResolver contentResolver = context.getContentResolver();
-        Cursor managedCursor = contentResolver.query(calendars, projection, null, null, null);
-        int calID;
-        if (managedCursor.moveToFirst()){
-            int idCol = managedCursor.getColumnIndex(projection[0]);
-            calID = Integer.parseInt(managedCursor.getString(idCol));
-            managedCursor.close();
-            /* calendar local */
-            if (ContextCompat.checkSelfPermission(context,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
+    public boolean addCorsoToCalend(HomePage context, Corso c) {
+        //permessi
+        if ((ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED)) {
+            //vedo se vi sono calendari presenti sul dispositivo
+            String projection[] = {"_id", "calendar_displayName"};
+            Uri calendars;
+            calendars = Uri.parse("content://com.android.calendar/calendars");
+            ContentResolver contentResolver = context.getContentResolver();
+            Cursor managedCursor = contentResolver.query(calendars, projection, null, null, null);
+            int calID;
+            if (managedCursor.moveToFirst()) {
+                int idCol = managedCursor.getColumnIndex(projection[0]);
+                calID = Integer.parseInt(managedCursor.getString(idCol));
+                managedCursor.close();
+                /* calendar local */
                 for (Dettagli d : ((Corso) cUser.getCurrentUser().getCorso().getCorsi().get(c.getCodice())).getDettagli()) {
-                    String descrizione = "Prof: "+c.getProfessore().getCognome()+" "+c.getProfessore().getNome()+"\nAula:"+d.getAula().getId()+" [Edificio "+d.getAula().getEd().getId()+"]";
+                    String descrizione = "Prof: " + c.getProfessore().getCognome() + " " + c.getProfessore().getNome() + "\nAula:" + d.getAula().getId() + " [Edificio " + d.getAula().getEd().getId() + "]";
                     //starttime e endtime format: yyyy-MM-dd HH:mm
-                    String startTime = getPrimoGiornoSettimanaSemestre(d.getGiorno())+" "+d.getOraInizio();
+                    String startTime = getPrimoGiornoSettimanaSemestre(d.getGiorno()) + " " + d.getOraInizio();
                     String dayRepeated = getGiornoSettimanaInglese(d.getGiorno());
-                    if (dayRepeated==null) {
+                    if (dayRepeated == null) {
                         Toast.makeText(context, "ERRORE: Giorno della settimana non riconosciuto!", Toast.LENGTH_LONG).show();
+                        return false;
                     } else {
                         addEvents(calID, c.getNome(), startTime, descrizione, dayRepeated, context);
                     }
                 }
             } else {
-                //Request Location Permission
-                checkCalendarPermission(context);
+                Toast.makeText(context, "ERRORE: Nessun calendario disponibile sul dispositivo!", Toast.LENGTH_LONG).show();
+                return false;
             }
         } else {
-            Toast.makeText(context, "ERRORE: Nessun calendario disponibile sul dispositivo!", Toast.LENGTH_LONG).show();
+            //Request calendar Permission
+            checkCalendarPermission(context);
+            return false;
         }
-    }
+    return true;
+}
 
-    private void checkCalendarPermission(final HomePage context) {
+    public void checkCalendarPermission(final HomePage context) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR)
@@ -128,7 +132,7 @@ public class ControllerCalendario {
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(context,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        new String[]{Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR},
                         MY_PERMISSIONS_REQUEST_CALENDAR);
             }
         }
@@ -145,9 +149,11 @@ public class ControllerCalendario {
             Calendar beginTime = Calendar.getInstance();
             cal.setTime(dt);
 
-            beginTime.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+            /*beginTime.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
                     cal.get(Calendar.DATE), cal.get(Calendar.HOUR_OF_DAY),
-                    cal.get(Calendar.MINUTE));
+                    cal.get(Calendar.MINUTE));*/
+
+            beginTime.set(2017, 8, 1, 8, 0, 0);
 
             //fine semestre
             Calendar endTime = Calendar.getInstance();

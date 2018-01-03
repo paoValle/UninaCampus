@@ -1,5 +1,6 @@
 package paovalle.uninacampus.UI;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -52,6 +53,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import business.ControllerAule;
+import business.ControllerCalendario;
 import business.ControllerLibretto;
 import business.ControllerUtente;
 import paovalle.uninacampus.BuildConfig;
@@ -273,16 +275,23 @@ public class HomePage extends AppCompatActivity {
         okDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (posIdCorsiScelti.size()>0) {
-                    //aggiungo corsi al calendario
-                    //TODO: trovare selezionati e metterli in calendario
-                    for (Integer pos : posIdCorsiScelti) {
-                        cUser.addCorsoToCalend(HomePage.this, (String)idSceltaCorsi.get(pos));
+                if ((ContextCompat.checkSelfPermission(HomePage.this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) &&
+                        (ContextCompat.checkSelfPermission(HomePage.this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED)) {
+                    if (posIdCorsiScelti.size() > 0) {
+                        //aggiungo corsi al calendario
+                        //TODO: trovare selezionati e metterli in calendario
+                        boolean done = false;
+                        for (Integer pos : posIdCorsiScelti) {
+                            done = done && cUser.addCorsoToCalend(HomePage.this, (String) idSceltaCorsi.get(pos));
+                        }
+                        dialogCorsiSeguiti.dismiss();
+                        if (done)
+                            Toast.makeText(getBaseContext(), "Eventi aggiunti al calendario!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getBaseContext(), "Nessun corso selezionato!", Toast.LENGTH_SHORT).show();
                     }
-                    dialogCorsiSeguiti.dismiss();
-                    Toast.makeText(getBaseContext(), "Eventi aggiunti al calendario!" , Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getBaseContext(), "Nessun corso selezionato!" , Toast.LENGTH_SHORT).show();
+                    ControllerCalendario.getInstance().checkCalendarPermission(HomePage.this);
                 }
             }
         });

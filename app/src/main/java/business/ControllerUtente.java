@@ -98,8 +98,8 @@ public class ControllerUtente {
         dbRef.child("utente").child(user.getUID()).child("corsiScelti").child(key).setValue(s);
     }
 
-    public void addCorsoToCalend(HomePage context, String idCorsi) {
+    public boolean addCorsoToCalend(HomePage context, String idCorsi) {
         Corso c = (Corso) user.getCorso().getCorsi().get(idCorsi);
-        ControllerCalendario.getInstance().addCorsoToCalend(context, c);
+        return ControllerCalendario.getInstance().addCorsoToCalend(context, c);
     }
 }
