@@ -28,8 +28,10 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.fakes.RoboMenuItem;
+import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowDialog;
@@ -53,12 +55,6 @@ public class ExampleUnitTest {
         assertNotNull(shadowOf(RuntimeEnvironment.application));
         assertTrue(Robolectric.setupActivity(Prova.class) != null);
         activity = Robolectric.setupActivity(Prova.class);
-
-        MenuItem menuItem = new RoboMenuItem(R.id.nvView);
-        activity.onOptionsItemSelected(menuItem);
-        activity.findViewById(R.id.nav_first_fragment).performClick();
-        System.out.println("text=>"+ShadowToast.getTextOfLatestToast());
-        assertEquals("Cliccato su ItemMenu1", ShadowToast.getTextOfLatestToast());
 
 
         //checkbox
