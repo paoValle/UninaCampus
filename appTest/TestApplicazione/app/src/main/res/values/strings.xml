@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TestApplicazione</string>
+    <string name="button">Button</string>
+    <string name="apri_dialog">Apri Dialog</string>
+    <string name="textview">TextView</string>
+    <string name="prova_check">Prova Check</string>
+    <string name="title_activity_seconda">SecondaActivity</string>
+    <string name="back">Back</string>
+    <string name="change_activity_robolectric">ChangeActivityRobolectric</string>
+    <string name="writeyourname">WriteYourName</string>
+    <string name="ciao">Ciao</string>
+    <string name="cambia_activity">Cambia Activity</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+</resources>
