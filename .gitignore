@@ -7,3 +7,12 @@
 /captures
 .externalNativeBuild
 *.iml
+TestApplicazione/.gradle
+TestApplicazione/local.properties
+TestApplicazione/.idea/workspace.xml
+TestApplicazione/.idea/libraries
+TestApplicazione/.DS_Store
+TestApplicazione/build
+TestApplicazione/captures
+TestApplicazione/.externalNativeBuild
+TestApplicazione/*.iml
