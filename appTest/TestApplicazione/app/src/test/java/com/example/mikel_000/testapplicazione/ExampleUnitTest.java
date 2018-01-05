@@ -4,6 +4,7 @@ import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputEditText;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,7 +56,6 @@ public class ExampleUnitTest {
         assertNotNull(shadowOf(RuntimeEnvironment.application));
         assertTrue(Robolectric.setupActivity(Prova.class) != null);
         activity = Robolectric.setupActivity(Prova.class);
-
 
         //checkbox
         activity.findViewById(R.id.idcheckBox).performClick();

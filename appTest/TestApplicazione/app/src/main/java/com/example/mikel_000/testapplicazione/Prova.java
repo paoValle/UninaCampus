@@ -37,13 +37,13 @@ public class Prova extends AppCompatActivity {
     private TextView tw;
     private Dialog d;
 
-    private DrawerLayout mDrawer;
+/*    private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     // Make sure to be using android.support.v7.app.ActionBarDrawerToggle version.
     // The android.support.v4.app.ActionBarDrawerToggle has been deprecated.
     private ActionBarDrawerToggle drawerToggle;
-
+*/
 
 
 
@@ -132,7 +132,7 @@ public class Prova extends AppCompatActivity {
         });
 
 
-        // Set a Toolbar to replace the ActionBar.
+  /*      // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -145,7 +145,7 @@ public class Prova extends AppCompatActivity {
         drawerToggle = setupDrawerToggle();
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
-
+*/
 
 
 
@@ -179,7 +179,7 @@ public class Prova extends AppCompatActivity {
         Intent intent = new Intent(this, SecondActivity.class);
         startActivity(intent);
     }
-
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item)) {
@@ -261,5 +261,5 @@ public class Prova extends AppCompatActivity {
     }
 
 
-
+*/
 }
