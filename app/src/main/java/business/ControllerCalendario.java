@@ -151,10 +151,6 @@ public class ControllerCalendario {
             Calendar beginTime = Calendar.getInstance();
             cal.setTime(dt);
 
-            /*beginTime.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DATE), cal.get(Calendar.HOUR_OF_DAY),
-                    cal.get(Calendar.MINUTE));*/
-
             beginTime.set(2017, 8, 1, 8, 0, 0);
 
             //fine semestre

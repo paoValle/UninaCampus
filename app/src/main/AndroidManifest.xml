@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -35,18 +35,22 @@
         <activity android:name=".UI.HomePage" />
         <activity android:name=".UI.SignUp" />
         <activity android:name=".UI.MailProf" />
-        <activity android:name=".UI.LibrettoActivity"/>
-        <activity android:name=".UI.RecorderActivity"/>
+        <activity android:name=".UI.LibrettoActivity" />
+        <activity android:name=".UI.RecorderActivity" />
         <activity android:name=".UI.QRScannerActivity" />
         <activity android:name=".UI.MapsMarkerActivity" />
         <activity android:name=".UI.RecorderManager" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-    </application>
 
+        <activity
+            android:name=".LoginActivity2"
+            android:label="@string/title_activity_login2"></activity>
+    </application>
 
 </manifest>

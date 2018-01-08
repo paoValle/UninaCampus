@@ -43,6 +43,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Util;
 import paovalle.uninacampus.R;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -103,53 +104,43 @@ public class RecorderManager extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                dbRef = database.getReference();
-                dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @SuppressWarnings("ConstantConditions")
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //DataSnapshot userDB = dataSnapshot.child("utente").child(UID);
-                      //  registrazioni.clear();
-                        for (DataSnapshot registrazione : dataSnapshot.child("Registrazioni").getChildren())
-                            registrazioni.add(registrazione.getValue().toString());
+                if (!Util.isNetworkAvailable(RecorderManager.this)) {
+                    Toast.makeText(getApplicationContext(), "Connessione internet assente!", Toast.LENGTH_LONG).show();
+                    RecorderManager.this.onBackPressed();
+                } else {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    dbRef = database.getReference();
+                    dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @SuppressWarnings("ConstantConditions")
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //DataSnapshot userDB = dataSnapshot.child("utente").child(UID);
+                            //  registrazioni.clear();
+                            for (DataSnapshot registrazione : dataSnapshot.child("Registrazioni").getChildren())
+                                registrazioni.add(registrazione.getValue().toString());
 
 
-                        if (fileSelected == null) {
-                            Toast.makeText(getApplicationContext(), "Selezionare un file", Toast.LENGTH_LONG).show();
-                        } else {
-                            Uri file = Uri.fromFile(fileSelected);
-                            if (registrazioni.contains(fileSelected.getName())) {
-                                Toast.makeText(getApplicationContext(), "File già presente", Toast.LENGTH_LONG).show();
+                            if (fileSelected == null) {
+                                Toast.makeText(getApplicationContext(), "Selezionare un file", Toast.LENGTH_LONG).show();
                             } else {
-                                StorageReference riversRef = storageRef.child("reg/" + file.getLastPathSegment());
-                                uploadTask = riversRef.putFile(file);
-                                String element = dbRef.child("Registrazioni").push().getKey();
-                                dbRef.child("Registrazioni").child(element).setValue(fileSelected.getName());
-                                Toast.makeText(getApplicationContext(), "File caricato", Toast.LENGTH_LONG).show();
+                                Uri file = Uri.fromFile(fileSelected);
+                                if (registrazioni.contains(fileSelected.getName())) {
+                                    Toast.makeText(getApplicationContext(), "File già presente", Toast.LENGTH_LONG).show();
+                                } else {
+                                    StorageReference riversRef = storageRef.child("reg/" + file.getLastPathSegment());
+                                    uploadTask = riversRef.putFile(file);
+                                    String element = dbRef.child("Registrazioni").push().getKey();
+                                    dbRef.child("Registrazioni").child(element).setValue(fileSelected.getName());
+                                    Toast.makeText(getApplicationContext(), "File caricato", Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
-                /*
-                // Register observers to listen for when the download is done or if it fails
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    }
-                });*/
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                }
 
             }
         });
@@ -181,54 +172,42 @@ public class RecorderManager extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-
-                /*
-                // Register observers to listen for when the download is done or if it fails
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    }
-                });*/
-
             }
         });
 
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Util.isNetworkAvailable(RecorderManager.this)) {
+                    Toast.makeText(getApplicationContext(), "Connessione internet assente!", Toast.LENGTH_LONG).show();
+                    RecorderManager.this.onBackPressed();
+                } else {
+                    if (listSelected != null)
+                        storageRef.child("reg/" + listSelected).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                // Use the bytes to display the image
+                                File sd = Environment.getExternalStorageDirectory();
 
-                if(listSelected != null)
-                    storageRef.child("reg/" + listSelected).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                        @Override
-                        public void onSuccess(byte[] bytes) {
-                            // Use the bytes to display the image
-                            File sd = Environment.getExternalStorageDirectory();
+                                try {
+                                    FileOutputStream fos = new FileOutputStream(sd.getAbsolutePath() + "/" + listSelected);
+                                    fos.write(bytes);
+                                    fos.close();
 
-                            try {
-                                FileOutputStream fos = new FileOutputStream(sd.getAbsolutePath()+ "/" + listSelected);
-                                fos.write(bytes);
-                                fos.close();
+                                } catch (IOException e) {
 
-                            } catch (IOException e) {
-
+                                }
+                                Toast.makeText(getBaseContext(), "Download completato", Toast.LENGTH_SHORT).show();
                             }
-                            Toast.makeText(getBaseContext(), "Download completato" , Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle any errors
-                        }
-                    });
-                else{
-                   Toast.makeText(getBaseContext(), "Selezionare un file" , Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                            }
+                        });
+                    else {
+                        Toast.makeText(getBaseContext(), "Selezionare un file", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }

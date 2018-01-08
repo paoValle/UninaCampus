@@ -64,6 +64,7 @@
     <string name="salva">Salva</string>
     <string name="andiamo">Andiamo!</string>
     <string name="chiudi">Chiudi</string>
+    <string name="title_activity_login2">Sign in</string>
 
 
 </resources>

@@ -126,7 +126,6 @@ public class QRScannerActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             final String scanned = qrcodes.valueAt(0).displayValue;
-                            System.out.println("AULA=>"+scanned);
                             //cerco in db se è presente aula
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference dbRef = database.getReference();
@@ -139,8 +138,6 @@ public class QRScannerActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "Aula sconosciuta!", Toast.LENGTH_LONG).show();
                                     } else {
                                         String weekDay = Util.getWeekDay();
-                                        //weekend turnaround
-                                        weekDay = "lun";
                                         if (!isValidUnivDay(weekDay)) {
                                             Toast.makeText(getApplicationContext(), "E' il weekend, cosa ci fai all'unina?", Toast.LENGTH_LONG).show();
                                         } else {

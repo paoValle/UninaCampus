@@ -56,6 +56,7 @@ import business.ControllerAule;
 import business.ControllerCalendario;
 import business.ControllerLibretto;
 import business.ControllerUtente;
+import business.Util;
 import paovalle.uninacampus.BuildConfig;
 import paovalle.uninacampus.R;
 
@@ -388,15 +389,26 @@ public class HomePage extends AppCompatActivity {
                 showDialogAulaCalend();
                 break;
             case R.id.nav_third_fragment:
-                showGoToAule();
+                if (!Util.isNetworkAvailable(this)) {
+                    Toast.makeText(getApplicationContext(), "Connessione internet assente!", Toast.LENGTH_LONG).show();
+                } else {
+                    showGoToAule();
+                }
                 break;
             case R.id.nav_forth_fragment:
-                goToUpload();
+                if (!Util.isNetworkAvailable(this)) {
+                    Toast.makeText(getApplicationContext(), "Connessione internet assente!", Toast.LENGTH_LONG).show();
+                } else {
+                    goToUpload();
+                }
                 break;
             case R.id.nav_fifth_fragment:
                 goToMail();
                 break;
             case R.id.nav_sixth_fragment:
+                if (!Util.isNetworkAvailable(this)) {
+                    Toast.makeText(getApplicationContext(), "Connessione internet assente, i dati potrebbero essere non aggiornati!", Toast.LENGTH_LONG).show();
+                }
                 goToLibretto();
                 break;
             default:
