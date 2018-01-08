@@ -55,9 +55,10 @@ public class TestEspresso {
 		boolean idTrovato = false;
 		String id = null;
 		String pos = null;
+		String rif = null;
 		List<Evento> eventi = new ArrayList<Evento>();
 		File file = new File("C:/Users/antonio/Desktop/ProvaFinaleTraduzioneRobolectric.java");
-		String lineaActivity = null;
+		String lineaActivity = null;		
 		try(FileWriter fw = new FileWriter(file);){
 
 			List<String> allLines = Files.readAllLines(Paths.get("C:/Users/antonio/Desktop/ProvaFinaleTraduzione.java"));
@@ -87,12 +88,13 @@ public class TestEspresso {
 						if(line.contains(";")){
 							id = searchId(righeId);
 							pos = searchPos(righeId);
+							rif = searchRif(righeId);
 							righeId.clear();
 							idTrovato = true;
 						}
 					}else{
 						if(line.contains(";")){
-							searchAction(line,eventi,id,pos);
+							searchAction(line,eventi,id,pos,rif);
 							idTrovato = false;
 						}
 					}
@@ -100,7 +102,7 @@ public class TestEspresso {
 			
 			}		
 			//Eventi trovati
-			//printEventi(eventi);
+			printEventi(eventi);
 				
 		
 		//Scrivo il nuovo file robolectric
@@ -114,27 +116,27 @@ public class TestEspresso {
 					allLines2.add(indiceInserimento,activity.replace("NewActivity", lineaActivity));
 					indiceInserimento = indiceInserimento + 1 ;
 					for(Evento e : eventi){
-						int scelta = -1;
-						System.out.println( e);
-						System.out.println("Premere: 0 Activity - 1 Dialog - 2 AlertDialog");
-						scelta = chiediScelta();
+						//int scelta = -1;
+						//System.out.println( e);
+						//System.out.println("Premere: 0 Activity - 1 Dialog - 2 AlertDialog");
+						//scelta = chiediScelta();
 						if(e.idElemento != null){
 						
 						if(e.action.contains("click")){
-							switch(scelta){
-							case 0:
+							switch(e.rif){
+							case "Activity":
 								if(e.pos== null)
 									allLines2.add(indiceInserimento,clickActivity.replace("idBottone", e.idElemento));
 								else
 									allLines2.add(indiceInserimento,clickItemListaActivity.replace("IdLista", e.idElemento).replace("Posizione", e.pos));
 								break;
-							case 1:
+							case "Dialog":
 								if(e.pos == null)
 									allLines2.add(indiceInserimento,clickDialog.replace("idBottone", e.idElemento));
 								else
 									allLines2.add(indiceInserimento,clickItemListaDialog.replace("IdLista", e.idElemento).replace("Posizione", e.pos));
 								break;
-							case 2:
+							case "AlertDialog":
 								if(e.pos == null)
 									allLines2.add(indiceInserimento,clickAlertDialog.replace("idBottone", e.idElemento));
 								else
@@ -143,14 +145,14 @@ public class TestEspresso {
 							}	
 						}
 						if(e.action.contains("longClick")){
-							switch(scelta){
-							case 0:
+							switch(e.rif){
+							case "Activity":
 								allLines2.add(indiceInserimento,longClickActivity.replace("idBottone", e.idElemento));
 								break;
-							case 1:
+							case "Dialog":
 								allLines2.add(indiceInserimento,longClickDialog.replace("idBottone", e.idElemento));
 								break;
-							case 2:
+							case "AlertDialog":
 								allLines2.add(indiceInserimento,longClickAlertDialog.replace("idBottone", e.idElemento));
 								break;
 							}
@@ -158,54 +160,54 @@ public class TestEspresso {
 						if(e.action.contains("matches(withText(")){
 							String text = e.action.substring(e.action.indexOf("Text(")+5);
 							
-							switch(scelta){
-							case 0:
+							switch(e.rif){
+							case "Activity":
 								allLines2.add(indiceInserimento,testoActivity.replace("CTextView", e.idElemento).replace("TestoDaTestare",text));
 								break;
-							case 1:
+							case "Dialog":
 								allLines2.add(indiceInserimento,testoDialog.replace("CTextView", e.idElemento).replace("TestoDaTestare",text));
 								break;
-							case 2:
+							case "AlertDialog":
 								allLines2.add(indiceInserimento,testoAlertDialog.replace("CTextView", e.idElemento).replace("TestoDaTestare",text));
 								break;
 							}
 						}
 						if(e.action.contains("isChecked")){
-							switch(scelta){
-							case 0:
+							switch(e.rif){
+							case "Activity":
 								allLines2.add(indiceInserimento,isCheckedActivity.replace("checkBox", e.idElemento));
 								break;
-							case 1:
+							case "Dialog":
 								allLines2.add(indiceInserimento,isCheckedDialog.replace("checkBox", e.idElemento));
 								break;
-							case 2:
+							case "AlertDialog":
 								allLines2.add(indiceInserimento,isCheckedAlertDialog.replace("checkBox", e.idElemento));
 								break;
 							}
 						}
 						if(e.action.contains("isDisplayed")){
-							switch(scelta){
-							case 0:
+							switch(e.rif){
+							case "Activity":
 								allLines2.add(indiceInserimento,isDisplayedActivity.replace("BottoneOElemento", e.idElemento));
 								break;
-							case 1:
+							case "Dialog":
 								allLines2.add(indiceInserimento,isDisplayedDialog.replace("BottoneOElemento", e.idElemento));
 								break;
-							case 2:
+							case "AlertDialog":
 								allLines2.add(indiceInserimento,isDisplayedAlertDialog.replace("BottoneOElemento", e.idElemento));
 								break;
 							}
 						}
 						if(e.action.contains("replaceText(")){
 							String text = e.action.substring(e.action.indexOf("Text(")+5);
-							switch(scelta){
-							case 0:
+							switch(e.rif){
+							case "Activity":
 								allLines2.add(indiceInserimento,inputTextActivity.replace("InputText", e.idElemento).replace("TestoDaTestare",""+text+""));
 								break;
-							case 1:
+							case "Dialog":
 								allLines2.add(indiceInserimento,inputTextDialog.replace("InputText", e.idElemento).replace("TestoDaTestare",text));
 								break;
-							case 2:
+							case "AlertDialog":
 								allLines2.add(indiceInserimento,inputTextAlertDialog.replace("InputText", e.idElemento).replace("TestoDaTestare",text));
 								break;
 							}
@@ -213,14 +215,14 @@ public class TestEspresso {
 						}else{
 							//Caso selezione elemento di uno spinner
 							if(e.action.contains("click")){
-								switch(scelta){
-								case 0:
+								switch(e.rif){
+								case "Activity":
 									allLines2.add(indiceInserimento,selectItemSpinnerActivity.replace("IdSpinner", eventi.get(eventi.indexOf(e)-1).idElemento).replace("Posizione", e.pos));
 									break;
-								case 1:
+								case "Dialog":
 									allLines2.add(indiceInserimento,selectItemSpinnerDialog.replace("IdSpinner", eventi.get(eventi.indexOf(e)-1).idElemento).replace("Posizione", e.pos));
 									break;
-								case 2:
+								case "AlertDialog":
 									allLines2.add(indiceInserimento,selectItemSpinnerAlertDialog.replace("IdSpinner", eventi.get(eventi.indexOf(e)-1).idElemento).replace("Posizione", e.pos));
 									break;
 								}
@@ -236,7 +238,6 @@ public class TestEspresso {
 	        
 	        
 			for(String s : allLines2){
-				
 				fw.write(s + "\n");
 			}
 			
@@ -266,23 +267,25 @@ public class TestEspresso {
 		}
 		return pos;
 	}
+	
+	public static String searchRif(List<String> righeId){
+		String rif = null;
+		for(String line : righeId){
+			if(line.contains("//")){
+				rif = line.substring(line.indexOf("//")+2);
+			}
+		}
+		return rif;
+	}
 
-	public static void searchAction(String line, List<Evento> eventi , String id, String pos){
+	public static void searchAction(String line, List<Evento> eventi , String id, String pos, String rif){
 		String item = null;
 		String action = null;
 		
 		item = line.substring(0,line.indexOf("."));
 	//	action = line.substring(line.indexOf("(")+1,line.indexOf(")")-1);
 		action = line.substring(line.indexOf("(")+1,line.indexOf(")"));
-		/*if(line.contains("perform")){
-			action = line.substring(line.indexOf("(")+1,line.indexOf(")")-1);
-		}else{
-			if(line.contains("withText")){
-				action = "assertEqual";
-				text = line.substring(line.indexOf("xt(")+4,line.indexOf(")")-1);
-			}
-		}*/
-		eventi.add(new Evento(id,item,action,pos));
+		eventi.add(new Evento(id,item,action,pos,rif));
 	}
 	
 	public static void printEventi(List<Evento> eventi){
@@ -290,7 +293,7 @@ public class TestEspresso {
 			System.out.println(e);
 	}
 	
-	public static int chiediScelta() throws IOException{
+	/*public static int chiediScelta() throws IOException{
 		int scelta=-1;
 		do{
 			System.out.println("Scelta: ");
@@ -303,5 +306,5 @@ public class TestEspresso {
 			}
 		} while(!(scelta==0 || scelta ==1 || scelta==2));
 		return scelta;
-	}
+	}*/
 }

@@ -6,13 +6,15 @@ public class Evento {
 	String item = null;
 	String action = null;
 	String pos = null;
+	String rif = null;
 	
-	public Evento(String idElemento, String item, String action, String pos) {
+	public Evento(String idElemento, String item, String action, String pos , String rif) {
 		super();
 		this.idElemento = idElemento;
 		this.item = item;
 		this.action = action;
 		this.pos = pos;
+		this.rif = rif;
 	}
 
 	public Evento() {
@@ -46,11 +48,20 @@ public class Evento {
 	public void setAction(String action) {
 		this.action = action;
 	}
+	
+
+	public String getRif() {
+		return rif;
+	}
+
+	public void setRif(String rif) {
+		this.rif = rif;
+	}
 
 	@Override
 	public String toString() {
 		return "Evento:	" + "id: "+idElemento + "		item: " + item
-				+ "		action: " + action + "		pos: "+ pos ;
+				+ "		action: " + action + "		pos: "+ pos + "		rif: "+rif ;
 	}
 	
 	
