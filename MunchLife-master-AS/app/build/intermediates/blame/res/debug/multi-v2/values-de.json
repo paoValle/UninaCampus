@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\antonio\\Desktop\\IS2\\MunchLife-master-AS\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-de\\values-de.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\antonio\\Desktop\\IS2\\MunchLife-master-AS\\app\\src\\main\\res\\values-de\\strings.xml",
+                    "from": {
+                        "startLines": "2,9,6,4,21,23,22,13,16,8,10,17,18,5,3,19,20,12",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "51,340,241,138,879,1016,927,477,544,297,383,602,657,186,94,722,766,431",
+                        "endColumns": "42,42,54,47,47,73,88,36,57,42,46,54,64,54,43,43,112,45",
+                        "endOffsets": "93,382,295,185,926,1089,1015,513,601,339,429,656,721,240,137,765,878,476"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,102,149,208,260,312,390,483,524,586,633,684,743,812,871,919,967,1084",
+                        "endColumns": "46,46,58,51,51,77,92,40,61,46,50,58,68,58,47,47,116,49",
+                        "endOffsets": "97,144,203,255,307,385,478,519,581,628,679,738,807,866,914,962,1079,1129"
+                    }
+                }
+            ]
+        }
+    ]
+}

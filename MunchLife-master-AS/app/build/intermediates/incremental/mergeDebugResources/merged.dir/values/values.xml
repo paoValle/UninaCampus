@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gamemode">
+		<item>std</item>
+		<item>epic</item>
+	</string-array>
+    <string-array name="gamemodeDisplay">
+		<item>Standard Munchkin</item>
+		<item>Epic Munchkin</item>
+	</string-array>
+    <color name="darkgray">#531b02</color>
+    <color name="tan">#FADA98</color>
+    <string name="app_name">MunchLife</string>
+    <string name="diceroller">Roll Dice</string>
+    <string name="down_gear_level">Remove Gear</string>
+    <string name="down_level">Down a Level</string>
+    <string name="maxlevel">Max Level</string>
+    <string name="maxlevelError">Please enter a number between 2 and 100</string>
+    <string name="maxlevelSummary">The level at which you win.</string>
+    <string name="ok">Okay</string>
+    <string name="prefTitle">MunchLife Settings</string>
+    <string name="reset">Reset</string>
+    <string name="settings">Change Settings</string>
+    <string name="sleep">Keep Screen Awake</string>
+    <string name="sleepSummary">Keep screen from sleeping</string>
+    <string name="up_gear_level">Add Gear</string>
+    <string name="up_level">Up a Level</string>
+    <string name="victory">Victory Dialog</string>
+    <string name="victorySummary">Select whether to display a dialog on reaching the level cap</string>
+    <string name="win">You have won!</string>
+</resources>
