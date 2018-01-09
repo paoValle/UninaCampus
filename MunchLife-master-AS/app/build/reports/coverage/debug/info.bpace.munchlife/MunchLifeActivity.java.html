@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MunchLifeActivity.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">info.bpace.munchlife</a> &gt; <span class="el_source">MunchLifeActivity.java</span></div><h1>MunchLifeActivity.java</h1><pre class="source lang-java linenums">/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+
+package info.bpace.munchlife;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.PowerManager;
+
+import android.view.Display;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.ImageView;
+
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View.OnClickListener;
+
+import android.app.Dialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.Intent;
+
+import android.preference.PreferenceManager;
+
+import android.graphics.Typeface;
+import java.util.Random;
+
+import android.util.Log;
+
+<span class="fc" id="L47">public class MunchLifeActivity extends Activity</span>
+{
+	public static final int DIALOG_GAMEWIN = 0;
+	public static final int DIALOG_DICEROLLER = 1;
+	
+	public static final String TAG = &quot;MunchLife&quot;;
+	public static final String KEY_LEVEL = &quot;savedLevel&quot;;
+	public static final String KEY_GEAR_LEVEL = &quot;savedGearLevel&quot;;
+    public static final String KEY_GENDER_FEMALE = &quot;savedGenderFemale&quot;;
+	
+	public TextView current_level;
+	public TextView current_gear_level;
+	public TextView total_level;
+    public ImageView gender;
+    public boolean gender_female;
+	
+	PowerManager pm;
+	PowerManager.WakeLock wl;
+
+    public Display devDisplay;
+	
+<span class="fc" id="L68">	public int level = 1;</span>
+<span class="fc" id="L69">	public int max_level = 10;</span>
+<span class="fc" id="L70">	public int gear_level = 0;</span>
+	public boolean sleepPref;
+	public boolean victoryPref;
+	public String maxlevelPref;
+	
+	/**
+	 * Pulls preferences and makes sure current application state matches 
+	 * what is expected from preferences
+	 */
+	@Override
+	protected void onStart()
+	{
+<span class="fc" id="L82">		super.onStart();</span>
+<span class="fc" id="L83">		pm = (PowerManager) getSystemService(POWER_SERVICE);</span>
+<span class="fc" id="L84">		wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);</span>
+		SharedPreferences prefs;
+<span class="fc" id="L86">        prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());</span>
+<span class="fc" id="L87">		sleepPref = prefs.getBoolean(&quot;sleepPref&quot;, false);</span>
+<span class="fc" id="L88">		victoryPref = prefs.getBoolean(&quot;victoryPref&quot;, true);</span>
+<span class="fc" id="L89">		maxlevelPref = prefs.getString(&quot;maxlevelPref&quot;, &quot;10&quot;);</span>
+		
+		try
+		{
+<span class="fc" id="L93">			max_level = Integer.parseInt(maxlevelPref);</span>
+		}
+<span class="nc" id="L95">		catch(NumberFormatException error)</span>
+		{
+<span class="nc" id="L97">			Log.e(TAG, &quot;NumberFormatException: &quot; + error.getMessage());</span>
+<span class="nc" id="L98">			max_level = 10;</span>
+<span class="fc" id="L99">		}</span>
+		
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if(level &gt; max_level)</span>
+		{
+<span class="nc" id="L103">			level = max_level;</span>
+<span class="nc" id="L104">			current_level.setText(Integer.toString(level));</span>
+<span class="nc" id="L105">			total_level.setText(Integer.toString(level + gear_level));</span>
+		}
+<span class="fc" id="L107">	}</span>
+	
+	/**
+	 * Restores level from saved instance and gamemode setting from preferences
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+<span class="fc" id="L115">		super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L116">		setContentView(R.layout.main);</span>
+
+<span class="fc" id="L118">		Button up_button = (Button)findViewById(R.id.up_button);</span>
+<span class="fc" id="L119">		up_button.setOnClickListener(levelUpClickListener);</span>
+		
+<span class="fc" id="L121">		Button down_button = (Button)findViewById(R.id.down_button);</span>
+<span class="fc" id="L122">		down_button.setOnClickListener(levelDownClickListener);</span>
+		
+<span class="fc" id="L124">		Button up_gear_button = (Button)findViewById(R.id.up_gear_button);</span>
+<span class="fc" id="L125">		up_gear_button.setOnClickListener(gearUpClickListener);</span>
+		
+<span class="fc" id="L127">		Button down_gear_button = (Button)findViewById(R.id.down_gear_button);</span>
+<span class="fc" id="L128">		down_gear_button.setOnClickListener(gearDownClickListener);</span>
+
+<span class="fc" id="L130">		current_level = (TextView)findViewById(R.id.current_level);</span>
+<span class="fc" id="L131">		current_gear_level = (TextView)findViewById(R.id.current_gear_level);</span>
+<span class="fc" id="L132">		total_level = (TextView)findViewById(R.id.total_level);</span>
+
+<span class="fc" id="L134">        gender = (ImageView)findViewById(R.id.gender);</span>
+<span class="fc" id="L135">        gender.setOnClickListener(genderClickListener);</span>
+
+        // override font
+<span class="fc" id="L138">		Typeface tf = Typeface.createFromAsset(getAssets(), &quot;fonts/windlass.ttf&quot;);</span>
+<span class="fc" id="L139">		current_level.setTypeface(tf);</span>
+<span class="fc" id="L140">		current_gear_level.setTypeface(tf);</span>
+<span class="fc" id="L141">		total_level.setTypeface(tf);</span>
+		
+		// pull old level from savedInstanceState, or default it to 1
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		level = savedInstanceState != null ? savedInstanceState.getInt(KEY_LEVEL)</span>
+		                                   : 1;
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		gear_level = savedInstanceState != null ? savedInstanceState.getInt(KEY_GEAR_LEVEL)</span>
+		                                        : 0;
+<span class="pc bpc" id="L148" title="3 of 4 branches missed.">        gender_female = savedInstanceState != null &amp;&amp; savedInstanceState.getBoolean(KEY_GENDER_FEMALE);</span>
+
+<span class="fc" id="L150">		current_level.setText(Integer.toString(level));</span>
+<span class="fc" id="L151">		current_gear_level.setText(Integer.toString(gear_level));</span>
+<span class="fc" id="L152">		total_level.setText(Integer.toString(level + gear_level));</span>
+
+        // Set gender up
+<span class="fc" id="L155">        WindowManager winManager = (WindowManager) getSystemService(WINDOW_SERVICE);</span>
+<span class="fc" id="L156">        devDisplay = winManager.getDefaultDisplay();</span>
+
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        if(devDisplay.getRotation() == 0) {</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">            if(gender_female) {</span>
+<span class="nc" id="L160">                gender.setImageResource(R.drawable.female_portrait);</span>
+            } else {
+<span class="fc" id="L162">                gender.setImageResource(R.drawable.male_portrait);</span>
+            }
+        } else {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">            if(gender_female) {</span>
+<span class="nc" id="L166">                gender.setImageResource(R.drawable.female_landscape);</span>
+            } else {
+<span class="nc" id="L168">                gender.setImageResource(R.drawable.male_landscape);</span>
+            }
+        }
+<span class="fc" id="L171">	}</span>
+	
+	/**
+	 * Save the currently displayed level
+	 */
+	@Override
+	public void onSaveInstanceState(Bundle outState)
+	{
+<span class="fc" id="L179">		super.onSaveInstanceState(outState);</span>
+<span class="fc" id="L180">		outState.putInt(KEY_LEVEL, level);</span>
+<span class="fc" id="L181">		outState.putInt(KEY_GEAR_LEVEL, gear_level);</span>
+<span class="fc" id="L182">        outState.putBoolean(KEY_GENDER_FEMALE, gender_female);</span>
+<span class="fc" id="L183">	}</span>
+	
+	/**
+	 * Save the current settings option for game mode into simple preferences
+	 */
+	@Override
+	protected void onPause()
+	{
+<span class="fc" id="L191">		super.onPause();</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if(sleepPref == true)</span>
+		{
+<span class="nc" id="L194">			 wl.release();</span>
+		}
+<span class="fc" id="L196">	}</span>
+
+  @Override
+  protected void onResume()
+  {
+<span class="fc" id="L201">      super.onResume();</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">      if(sleepPref == true)</span>
+      {
+<span class="nc" id="L204">        wl.acquire();</span>
+      }
+<span class="fc" id="L206">  }</span>
+	
+	/**
+	 * Create options menu from XML
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+<span class="fc" id="L214">		MenuInflater inflater = getMenuInflater();</span>
+<span class="fc" id="L215">		inflater.inflate(R.menu.options_menu, menu);</span>
+<span class="fc" id="L216">		return super.onCreateOptionsMenu(menu);</span>
+	}
+	
+	/**
+	 * Logic for options menu
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+<span class="pc bpc" id="L225" title="3 of 4 branches missed.">		switch(item.getItemId())</span>
+		{
+			case R.id.reset:
+<span class="nc" id="L228">				level = 1;</span>
+<span class="nc" id="L229">				gear_level = 0;</span>
+<span class="nc" id="L230">				current_level.setText(Integer.toString(level));</span>
+<span class="nc" id="L231">				current_gear_level.setText(Integer.toString(gear_level));</span>
+<span class="nc" id="L232">				total_level.setText(&quot;1&quot;);</span>
+<span class="nc" id="L233">				return true;</span>
+			case R.id.diceroller:
+<span class="nc" id="L235">				showDialog(DIALOG_DICEROLLER);</span>
+<span class="nc" id="L236">				return true;</span>
+			case R.id.settings:
+<span class="fc" id="L238">				Intent i = new Intent(getApplicationContext(), SettingsActivity.class);</span>
+<span class="fc" id="L239">				startActivity(i);</span>
+<span class="fc" id="L240">				return true;</span>
+			default:
+<span class="nc" id="L242">				return super.onOptionsItemSelected(item);</span>
+		}
+	}
+	
+	/**
+	 * Controls settings dialog and dice roller
+	 */
+	ImageView rollview;
+	@Override
+	protected Dialog onCreateDialog(int id)
+	{
+<span class="pc bpc" id="L253" title="2 of 3 branches missed.">		switch(id)</span>
+		{
+			case DIALOG_GAMEWIN:
+<span class="fc" id="L256">				AlertDialog.Builder gamewinbuilder = new AlertDialog.Builder(this);</span>
+<span class="fc" id="L257">				gamewinbuilder.setMessage(R.string.win);</span>
+				DialogInterface.OnClickListener gamewinClickListener;
+<span class="fc" id="L259">        gamewinClickListener = new DialogInterface.OnClickListener()</span>
+<span class="fc" id="L260">				{</span>
+					public void onClick(DialogInterface dialog, int item)
+					{
+<span class="fc" id="L263">						dialog.dismiss();</span>
+<span class="fc" id="L264">					}</span>
+				};
+<span class="fc" id="L266">				gamewinbuilder.setNeutralButton(R.string.ok, gamewinClickListener);</span>
+<span class="fc" id="L267">				return gamewinbuilder.create();</span>
+			case DIALOG_DICEROLLER:
+<span class="nc" id="L269">				AlertDialog.Builder rollerbuilder = new AlertDialog.Builder(this);</span>
+<span class="nc" id="L270">				rollview = new ImageView(getApplicationContext());</span>
+<span class="nc" id="L271">				rollview.setImageResource(R.drawable.one);</span>
+<span class="nc" id="L272">				rollview.setAdjustViewBounds(true);</span>
+<span class="nc" id="L273">				rollview.setMaxHeight(256);</span>
+<span class="nc" id="L274">				rollview.setMaxWidth(256);</span>
+<span class="nc" id="L275">				rollerbuilder.setView(rollview);</span>
+				DialogInterface.OnClickListener rollerClickListener;
+<span class="nc" id="L277">        rollerClickListener = new DialogInterface.OnClickListener()</span>
+<span class="nc" id="L278">				{</span>
+					public void onClick(DialogInterface dialog, int item)
+					{
+<span class="nc" id="L281">						dialog.dismiss();</span>
+<span class="nc" id="L282">					}</span>
+				};
+<span class="nc" id="L284">				rollerbuilder.setNeutralButton(R.string.ok, rollerClickListener);</span>
+<span class="nc" id="L285">				return rollerbuilder.create();</span>
+			default:
+<span class="nc" id="L287">				return super.onCreateDialog(id);</span>
+		}
+	}
+	
+	/**
+	 * Updates dice roller every time it is opened
+	 */
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog)
+	{
+<span class="pc bpc" id="L297" title="2 of 3 branches missed.">		switch(id)</span>
+		{
+			case DIALOG_GAMEWIN:
+<span class="fc" id="L300">				return;</span>
+			case DIALOG_DICEROLLER:
+<span class="nc" id="L302">				Random rand = new Random();</span>
+<span class="nc" id="L303">				Integer roll = rand.nextInt(6) + 1;</span>
+<span class="nc bnc" id="L304" title="All 7 branches missed.">				switch(roll)</span>
+				{
+					case 1:
+<span class="nc" id="L307">						rollview.setImageResource(R.drawable.one);</span>
+<span class="nc" id="L308">						return;</span>
+					case 2:
+<span class="nc" id="L310">						rollview.setImageResource(R.drawable.two);</span>
+<span class="nc" id="L311">						return;</span>
+					case 3:
+<span class="nc" id="L313">						rollview.setImageResource(R.drawable.three);</span>
+<span class="nc" id="L314">						return;</span>
+					case 4:
+<span class="nc" id="L316">						rollview.setImageResource(R.drawable.four);</span>
+<span class="nc" id="L317">						return;</span>
+					case 5:
+<span class="nc" id="L319">						rollview.setImageResource(R.drawable.five);</span>
+<span class="nc" id="L320">						return;</span>
+					case 6:
+<span class="nc" id="L322">						rollview.setImageResource(R.drawable.six);</span>
+<span class="nc" id="L323">						return;</span>
+					default:
+<span class="nc" id="L325">						return;</span>
+				}
+			default:
+<span class="nc" id="L328">				return;</span>
+		}
+	} 
+
+	/**
+	 * Increases the level by one and refreshes view as long as it is below 
+   * max_level
+	 */
+<span class="fc" id="L336">	private OnClickListener levelUpClickListener = new OnClickListener()</span>
+<span class="fc" id="L337">	{</span>
+		@Override
+		public void onClick(View v)
+		{
+<span class="pc bpc" id="L341" title="1 of 2 branches missed.">			if(level &lt; max_level)</span>
+			{
+<span class="fc" id="L343">				level = level + 1;</span>
+<span class="fc" id="L344">				current_level.setText(Integer.toString(level));</span>
+<span class="fc" id="L345">				total_level.setText(Integer.toString(level + gear_level));</span>
+				// if you've won, display message
+<span class="pc bpc" id="L347" title="1 of 4 branches missed.">				if(level == max_level &amp;&amp; victoryPref == true)</span>
+				{
+<span class="fc" id="L349">					showDialog(DIALOG_GAMEWIN);</span>
+				}
+			}
+<span class="fc" id="L352">		}</span>
+	};
+
+	/**
+	 * Decreases the level by one and refreshes view as long as it is above 1
+	 */
+<span class="fc" id="L358">	private OnClickListener levelDownClickListener = new OnClickListener()</span>
+<span class="fc" id="L359">	{</span>
+		@Override
+		public void onClick(View v)
+		{
+<span class="nc bnc" id="L363" title="All 2 branches missed.">			if(level &gt; 1)</span>
+			{
+<span class="nc" id="L365">				level = level - 1;</span>
+<span class="nc" id="L366">				current_level.setText(Integer.toString(level));</span>
+<span class="nc" id="L367">				total_level.setText(Integer.toString(level + gear_level));</span>
+			}
+<span class="nc" id="L369">		}</span>
+	};
+	
+<span class="fc" id="L372">	private OnClickListener gearUpClickListener = new OnClickListener()</span>
+<span class="fc" id="L373">	{</span>
+		@Override
+		public void onClick(View v)
+		{
+<span class="nc bnc" id="L377" title="All 2 branches missed.">			if(gear_level &lt; 99)</span>
+			{
+<span class="nc" id="L379">				gear_level = gear_level + 1;</span>
+<span class="nc" id="L380">				current_gear_level.setText(Integer.toString(gear_level));</span>
+<span class="nc" id="L381">				total_level.setText(Integer.toString(level + gear_level));</span>
+			}
+<span class="nc" id="L383">		}</span>
+	};
+	
+<span class="fc" id="L386">	private OnClickListener gearDownClickListener = new OnClickListener()</span>
+<span class="fc" id="L387">	{</span>
+		@Override
+		public void onClick(View v)
+		{
+<span class="nc bnc" id="L391" title="All 2 branches missed.">			if(gear_level &gt; 0)</span>
+			{
+<span class="nc" id="L393">				gear_level = gear_level - 1;</span>
+<span class="nc" id="L394">				current_gear_level.setText(Integer.toString(gear_level));</span>
+<span class="nc" id="L395">				total_level.setText(Integer.toString(level + gear_level));</span>
+			}
+<span class="nc" id="L397">		}</span>
+	};
+
+<span class="fc" id="L400">    private OnClickListener genderClickListener = new OnClickListener() {</span>
+        @Override
+        public void onClick(View v) {
+<span class="nc bnc" id="L403" title="All 2 branches missed.">            if(devDisplay.getRotation() == 0) {</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">                if(gender_female == false) {</span>
+<span class="nc" id="L405">                    gender.setImageResource(R.drawable.female_portrait);</span>
+                } else {
+<span class="nc" id="L407">                    gender.setImageResource(R.drawable.male_portrait);</span>
+                }
+            } else {
+<span class="nc bnc" id="L410" title="All 2 branches missed.">                if(gender_female == false) {</span>
+<span class="nc" id="L411">                    gender.setImageResource(R.drawable.female_landscape);</span>
+                } else {
+<span class="nc" id="L413">                    gender.setImageResource(R.drawable.male_landscape);</span>
+                }
+            }
+<span class="nc bnc" id="L416" title="All 2 branches missed.">            gender_female = gender_female == true ? false : true;</span>
+<span class="nc" id="L417">        }</span>
+    };
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span>Generated by the Android Gradle plugin 3.0.1</div></body></html>

@@ -42,26 +42,26 @@ public class ProvaTest {
 
     @Test
     public void provaTest() {
-
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(5000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
-
         ViewInteraction appCompatCheckBox = onView(
                 allOf(withId(R.id.idcheckBox), withText("Prova Check"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.support.constraint.ConstraintLayout")),
+                                        withId(R.id.drawer_layout),
                                         0),
                                 0),
                         isDisplayed()));
         appCompatCheckBox.perform(click());
 
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
@@ -69,34 +69,20 @@ public class ProvaTest {
                 allOf(withId(R.id.idcheckBox), withText("Prova Check"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.support.constraint.ConstraintLayout")),
+                                        withId(R.id.drawer_layout),
                                         0),
                                 0),
                         isDisplayed()));
         appCompatCheckBox2.perform(click());
 
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
         ViewInteraction textInputEditText = onView(
-                allOf(childAtPosition(
-                        childAtPosition(
-                                withClassName(is("android.support.design.widget.TextInputLayout")),
-                                0),
-                        0),
-                        isDisplayed()));
-        textInputEditText.perform(click());
-
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        ViewInteraction textInputEditText26 = onView(
                 allOf(withId(R.id.testoInput),
                         childAtPosition(
                                 childAtPosition(
@@ -104,14 +90,29 @@ public class ProvaTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText26.perform(replaceText("ciao"), closeSoftKeyboard());
-
+        textInputEditText.perform(click());
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
+        ViewInteraction textInputEditText2 = onView(
+                allOf(withId(R.id.testoInput),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.support.design.widget.TextInputLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText2.perform(replaceText("ciao"), closeSoftKeyboard());
+        try{
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
 
         DataInteraction appCompatTextView = onData(anything())
                 .inAdapterView(allOf(withId(R.id.idLista),
@@ -120,10 +121,10 @@ public class ProvaTest {
                                 6)))
                 .atPosition(0);
         appCompatTextView.perform(click());
-
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
@@ -133,71 +134,38 @@ public class ProvaTest {
                                 withClassName(is("android.widget.LinearLayout")),
                                 6)))
                 .atPosition(3);
-        appCompatTextView2.perform(click());
-
+        appCompatTextView2.perform(longClick());
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
-
-
-        DataInteraction appCompatTextView52 = onData(anything())
-                .inAdapterView(allOf(withId(R.id.idLista),
-                        childAtPosition(
-                                withClassName(is("android.widget.LinearLayout")),
-                                6)))
-                .atPosition(3);
-        appCompatTextView52.perform(longClick());
-
-
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        ViewInteraction appCompatButton0 = onView(
-                allOf(withId(R.id.dialogoButton), withText("Apri Dialog"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.support.constraint.ConstraintLayout")),
-                                        0),
-                                4),
-                        isDisplayed()));
-        appCompatButton0.perform(longClick());
-
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
 
         ViewInteraction appCompatSpinner = onView(
                 allOf(withId(R.id.idspinner),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.support.constraint.ConstraintLayout")),
+                                        withId(R.id.drawer_layout),
                                         0),
                                 1),
                         isDisplayed()));
         appCompatSpinner.perform(click());
-
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
-        DataInteraction appCompatTextView22 = onData(anything())
+        DataInteraction appCompatTextView3 = onData(anything())
                 .inAdapterView(withClassName(is("android.support.v7.widget.DropDownListView")))
                 .atPosition(1);
-        appCompatTextView22.perform(click());
-
+        appCompatTextView3.perform(click());
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
@@ -211,10 +179,10 @@ public class ProvaTest {
                                 0),
                         isDisplayed()));
         textView.check(matches(withText("Ingegneria")));
-
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
@@ -222,15 +190,15 @@ public class ProvaTest {
                 allOf(withId(R.id.idtextView), withText("Ingegneria"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.view.View.class),
+                                        withId(R.id.drawer_layout),
                                         0),
                                 2),
                         isDisplayed()));
         textView2.check(matches(withText("Ingegneria")));
-
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
@@ -238,42 +206,76 @@ public class ProvaTest {
                 allOf(withId(R.id.idspinner),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.support.constraint.ConstraintLayout")),
+                                        withId(R.id.drawer_layout),
                                         0),
                                 1),
                         isDisplayed()));
         appCompatSpinner2.perform(click());
-
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
-        DataInteraction appCompatTextView23 = onData(anything())
+        DataInteraction appCompatTextView4 = onData(anything())
                 .inAdapterView(withClassName(is("android.support.v7.widget.DropDownListView")))
                 .atPosition(4);
-        appCompatTextView23.perform(click());
-
+        appCompatTextView4.perform(click());
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
         ViewInteraction textView3 = onView(
+                allOf(withText("Test"),
+                        childAtPosition(
+                                allOf(withId(R.id.idspinner),
+                                        childAtPosition(
+                                                IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                                1)),
+                                0),
+                        isDisplayed()));
+        textView3.check(matches(withText("Test")));
+        try{
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
+
+        ViewInteraction textView4 = onView(
                 allOf(withId(R.id.idtextView), withText("Test"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.view.View.class),
+                                        withId(R.id.drawer_layout),
                                         0),
                                 2),
                         isDisplayed()));
-        textView3.check(matches(withText("Test")));
+        textView4.check(matches(withText("Test")));
+        try{
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
+
+        ViewInteraction appCompatButton0 = onView(
+                allOf(withId(R.id.dialogoButton), withText("Apri Dialog"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.drawer_layout),
+                                        0),
+                                4),
+                        isDisplayed()));
+        appCompatButton0.perform(longClick());
 
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
@@ -281,65 +283,18 @@ public class ProvaTest {
                 allOf(withId(R.id.dialogoButton), withText("Apri Dialog"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.support.constraint.ConstraintLayout")),
+                                        withId(R.id.drawer_layout),
                                         0),
                                 4),
                         isDisplayed()));
         appCompatButton.perform(click());
-
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
-        ViewInteraction textView4 = onView(
-                allOf(withId(android.R.id.title), withText("Dialog prova"),
-                        childAtPosition(
-                                childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textView4.check(matches(withText("Dialog prova")));
-
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        ViewInteraction textInputEditText12 = onView(
-                allOf(withId(R.id.idinputText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.support.design.widget.TextInputLayout")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText12.perform(click());
-
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        ViewInteraction textInputEditText22 = onView(
-                allOf(withId(R.id.idinputText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.support.design.widget.TextInputLayout")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText22.perform(click());
-
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
 
         ViewInteraction textInputEditText3 = onView(
                 allOf(withId(R.id.idinputText),
@@ -349,61 +304,31 @@ public class ProvaTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText3.perform(replaceText("Mic"), closeSoftKeyboard());
-
+        textInputEditText3.perform(click());
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
+
 
         ViewInteraction textInputEditText4 = onView(
-                allOf(withId(R.id.idinputText), withText("Mic"),
+                allOf(withId(R.id.idinputText),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.support.design.widget.TextInputLayout")),
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText4.perform(click());
-
+        textInputEditText4.perform(replaceText("michela"), closeSoftKeyboard());
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
 
-        ViewInteraction textInputEditText5 = onView(
-                allOf(withId(R.id.idinputText), withText("Mic"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.support.design.widget.TextInputLayout")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText5.perform(replaceText("Michela"));
-
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        ViewInteraction textInputEditText6 = onView(
-                allOf(withId(R.id.idinputText), withText("Michela"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.support.design.widget.TextInputLayout")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText6.perform(closeSoftKeyboard());
-
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.idBottoneIndietro), withText("Ciao"),
@@ -414,28 +339,30 @@ public class ProvaTest {
                                 1),
                         isDisplayed()));
         appCompatButton2.perform(click());
-
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
+
 
         ViewInteraction appCompatButton3 = onView(
                 allOf(withId(R.id.changeActivity), withText("Cambia Activity"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.support.constraint.ConstraintLayout")),
+                                        withId(R.id.drawer_layout),
                                         0),
                                 5),
                         isDisplayed()));
         appCompatButton3.perform(click());
-
         try{
-            Thread.sleep(3000);
-        }catch (InterruptedException e){
+            Thread.sleep(2000);
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
+
 
         ViewInteraction textView5 = onView(
                 allOf(withId(R.id.textView), withText("ChangeActivityRobolectric"),
