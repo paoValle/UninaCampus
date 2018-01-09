@@ -33,7 +33,7 @@ public class ProvaTest {
 
     @Test
     public void provaTest() {
-//Dialog
+//Activity
         ViewInteraction button = onView(
                 allOf(withId(R.id.up_button), withText("Up a Level"),
                         childAtPosition(
@@ -41,9 +41,10 @@ public class ProvaTest {
                                         withId(R.id.level_table),
                                         0),
                                 0),
+                        isDisplayed()));
         button.perform(click());
 
-//Activity
+//Dialog
         ViewInteraction button2 = onView(
                 allOf(withId(R.id.up_button), withText("Up a Level"),
                         childAtPosition(
@@ -51,6 +52,7 @@ public class ProvaTest {
                                         withId(R.id.level_table),
                                         0),
                                 0),
+                        isDisplayed()));
         button2.perform(click());
 
 //AlertDialog
@@ -61,9 +63,10 @@ public class ProvaTest {
                                         withId(R.id.level_table),
                                         0),
                                 0),
+                        isDisplayed()));
         button3.perform(click());
 
-//Dialog
+//Activity
         ViewInteraction button4 = onView(
                 allOf(withId(R.id.up_gear_button), withText("Add Gear"),
                         childAtPosition(
@@ -71,6 +74,7 @@ public class ProvaTest {
                                         withId(R.id.level_table),
                                         0),
                                 1),
+                        isDisplayed()));
         button4.perform(click());
 
 //Activity
@@ -81,9 +85,10 @@ public class ProvaTest {
                                         withId(R.id.level_table),
                                         0),
                                 1),
+                        isDisplayed()));
         button5.perform(click());
 
-//Dialog
+//Activity
         ViewInteraction button6 = onView(
                 allOf(withId(R.id.up_gear_button), withText("Add Gear"),
                         childAtPosition(
@@ -91,9 +96,10 @@ public class ProvaTest {
                                         withId(R.id.level_table),
                                         0),
                                 1),
+                        isDisplayed()));
         button6.perform(click());
 
-//AlertDialog
+//Dialog
         ViewInteraction button7 = onView(
                 allOf(withId(R.id.down_gear_button), withText("Remove Gear"),
                         childAtPosition(
@@ -101,9 +107,10 @@ public class ProvaTest {
                                         withId(R.id.level_table),
                                         2),
                                 1),
+                        isDisplayed()));
         button7.perform(click());
 
-//Activity
+//AlertDialog
         ViewInteraction textView = onView(
                 allOf(withId(R.id.total_level), withText("6"),
                         childAtPosition(
@@ -111,9 +118,10 @@ public class ProvaTest {
                                         withId(android.R.id.content),
                                         0),
                                 1),
+                        isDisplayed()));
         textView.check(matches(withText("6")));
 
-//AlertDialog
+//Dialog
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.current_level), withText("4"),
                         childAtPosition(
@@ -121,9 +129,10 @@ public class ProvaTest {
                                         withId(R.id.level_table),
                                         1),
                                 0),
+                        isDisplayed()));
         textView2.check(matches(withText("4")));
 
-//Dialog
+//Activity
         ViewInteraction imageView = onView(
                 allOf(withId(R.id.gender),
                         childAtPosition(
@@ -131,6 +140,7 @@ public class ProvaTest {
                                         withId(android.R.id.content),
                                         0),
                                 2),
+                        isDisplayed()));
         imageView.perform(click());
 
     }

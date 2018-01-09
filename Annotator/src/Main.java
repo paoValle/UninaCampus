@@ -41,6 +41,8 @@ public class Main {
 		 * 		robolectric, torno indietro fino a inizio istruzione e chiedo all'utente di
 		 * 		cosa si tratta. In base alla risposta inserisco una riga con l'annotazione in
 		 * 		"output". Dopo di che salto fino al primo ; e continuo dal punto 2.
+		 *  NOTA: l'annotazione la inserisco con un "offset" in output, che sarebbe la differenza
+		 *  di righe tra output e il file originale, dovuto alle annotazioni inserite!
 		 * 
 		 */
 		int j = 0;
@@ -53,6 +55,7 @@ public class Main {
 			System.out.println("Il file di input non contiene alcun metodo di test.");
 			System.exit(-2);				
 		}
+		int offset = 0;
 		//inizio con la strategia
 		while (j < allLines.size()) {
 			String line = allLines.get(j);
@@ -75,13 +78,16 @@ public class Main {
 				while (!allLines.get(j).contains(";") && j<allLines.size()) {
 					output.add(allLines.get(j++));					
 				}
+				//l'ultima riga non l'ha inserita perche esce dal while, quindi la inserisco ora
+				output.add(allLines.get(j));	
+				System.out.println("Aggiungo finale="+allLines.get(j));
 				//stampo l'istruzione all utente e chiedo come annotarla
 				System.out.println("Istruzione trovata: (start="+start+",end="+j+")");
 				printLines(allLines, start, j);
 				System.out.println("Premere: 0 Activity - 1 Dialog - 2 AlertDialog");
 				int scelta = chiediScelta();
 				//inserisco annotazione in "output" in posizione start
-				output.add(start, annotations[scelta]);
+				output.add(start+(offset++), annotations[scelta]);
 				
 			}
 			j++;			
