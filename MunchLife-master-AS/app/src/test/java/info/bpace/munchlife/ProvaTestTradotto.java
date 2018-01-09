@@ -53,29 +53,29 @@ import info.bpace.munchlife.R;
 public class ProvaTestTradotto {
 	    @Test
     public void addition_isCorrect() throws Exception {
-MunchLifeActivity activity;
-assertNotNull(shadowOf(RuntimeEnvironment.application));
-assertTrue(Robolectric.setupActivity(MunchLifeActivity.class) != null);
-activity = Robolectric.setupActivity(MunchLifeActivity.class);
-(activity.findViewById(R.id.up_button)).performClick();
-assertNotNull(activity.findViewById(R.id.up_button));
-assertEquals("2",((TextView)activity.findViewById(R.id.current_level)).getText().toString());
-assertNotNull(activity.findViewById(R.id.down_button));
-(activity.findViewById(R.id.up_gear_button)).performClick();
-(activity.findViewById(R.id.down_gear_button)).performClick();
-(activity.findViewById(R.id.down_button)).performClick();
-(activity.findViewById(R.id.up_button)).performClick();
-(activity.findViewById(R.id.up_button)).performClick();
-(activity.findViewById(R.id.up_button)).performClick();
-(activity.findViewById(R.id.up_button)).performClick();
-(activity.findViewById(R.id.up_button)).performClick();
-(activity.findViewById(R.id.up_button)).performClick();
-(activity.findViewById(R.id.up_button)).performClick();
-(activity.findViewById(R.id.up_button)).performClick();
-(activity.findViewById(R.id.up_button)).performClick();
-assertNotNull(ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.button3));
- assertEquals("You have won!",((TextView)ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.message)).getText());
-(ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.button3)).performClick();
+            MunchLifeActivity activity;
+            assertNotNull(shadowOf(RuntimeEnvironment.application));
+            assertTrue(Robolectric.setupActivity(MunchLifeActivity.class) != null);
+            activity = Robolectric.setupActivity(MunchLifeActivity.class);
+            (activity.findViewById(R.id.up_button)).performClick();
+            assertNotNull(activity.findViewById(R.id.up_button));
+            assertEquals("2",((TextView)activity.findViewById(R.id.current_level)).getText().toString());
+            assertNotNull(activity.findViewById(R.id.down_button));
+            (activity.findViewById(R.id.up_gear_button)).performClick();
+            (activity.findViewById(R.id.down_gear_button)).performClick();
+            (activity.findViewById(R.id.down_button)).performClick();
+            (activity.findViewById(R.id.up_button)).performClick();
+            (activity.findViewById(R.id.up_button)).performClick();
+            (activity.findViewById(R.id.up_button)).performClick();
+            (activity.findViewById(R.id.up_button)).performClick();
+            (activity.findViewById(R.id.up_button)).performClick();
+            (activity.findViewById(R.id.up_button)).performClick();
+            (activity.findViewById(R.id.up_button)).performClick();
+            (activity.findViewById(R.id.up_button)).performClick();
+            (activity.findViewById(R.id.up_button)).performClick();
+            assertNotNull(ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.button3));
+            assertEquals("You have won!",((TextView)ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.message)).getText());
+            (ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.button3)).performClick();
 		
 		    }
 }
