@@ -1,0 +1,120 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\mikel_000\\Desktop\\Trolly1\\app\\build\\intermediates\\res\\merged\\debug\\values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\mikel_000\\Desktop\\Trolly1\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "7,8,2,9,23,24,13,11,10,14,5,19,20,4,17,16,15,22,25,26,3",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "258,294,55,343,917,967,484,430,389,531,203,734,797,152,674,623,574,865,1040,1090,99",
+                        "endColumns": "35,48,43,45,49,72,46,48,40,42,49,62,62,50,54,50,48,51,49,84,52",
+                        "endOffsets": "289,338,94,384,962,1035,526,474,425,569,248,792,855,198,724,669,618,912,1085,1170,147"
+                    },
+                    "to": {
+                        "startLines": "16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "509,545,594,638,684,734,807,854,903,944,987,1037,1100,1163,1214,1269,1320,1369,1421,1471,1556",
+                        "endColumns": "35,48,43,45,49,72,46,48,40,42,49,62,62,50,54,50,48,51,49,84,52",
+                        "endOffsets": "540,589,633,679,729,802,849,898,939,982,1032,1095,1158,1209,1264,1315,1364,1416,1466,1551,1604"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\mikel_000\\Desktop\\Trolly1\\app\\src\\main\\res\\values\\arrays.xml",
+                    "from": {
+                        "startLines": "2,8",
+                        "startColumns": "1,1",
+                        "startOffsets": "52,249",
+                        "endLines": "7,13",
+                        "endColumns": "16,16",
+                        "endOffsets": "247,411"
+                    },
+                    "to": {
+                        "startLines": "2,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,255",
+                        "endLines": "7,13",
+                        "endColumns": "16,16",
+                        "endOffsets": "250,417"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\mikel_000\\Desktop\\Trolly1\\app\\src\\main\\res\\values\\colors.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,99",
+                        "endColumns": "43,42",
+                        "endOffsets": "94,137"
+                    },
+                    "to": {
+                        "startLines": "14,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "422,466",
+                        "endColumns": "43,42",
+                        "endOffsets": "461,504"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\paolo\\Desktop\\Trolly1\\app\\build\\intermediates\\res\\merged\\debug\\values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\paolo\\Desktop\\Trolly1\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "7,8,2,9,23,24,13,11,10,14,5,19,20,4,17,16,15,22,25,26,3",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "258,294,55,343,917,967,484,430,389,531,203,734,797,152,674,623,574,865,1040,1090,99",
+                        "endColumns": "35,48,43,45,49,72,46,48,40,42,49,62,62,50,54,50,48,51,49,84,52",
+                        "endOffsets": "289,338,94,384,962,1035,526,474,425,569,248,792,855,198,724,669,618,912,1085,1170,147"
+                    },
+                    "to": {
+                        "startLines": "16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "509,545,594,638,684,734,807,854,903,944,987,1037,1100,1163,1214,1269,1320,1369,1421,1471,1556",
+                        "endColumns": "35,48,43,45,49,72,46,48,40,42,49,62,62,50,54,50,48,51,49,84,52",
+                        "endOffsets": "540,589,633,679,729,802,849,898,939,982,1032,1095,1158,1209,1264,1315,1364,1416,1466,1551,1604"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\paolo\\Desktop\\Trolly1\\app\\src\\main\\res\\values\\colors.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,99",
+                        "endColumns": "43,42",
+                        "endOffsets": "94,137"
+                    },
+                    "to": {
+                        "startLines": "14,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "422,466",
+                        "endColumns": "43,42",
+                        "endOffsets": "461,504"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\paolo\\Desktop\\Trolly1\\app\\src\\main\\res\\values\\arrays.xml",
+                    "from": {
+                        "startLines": "2,8",
+                        "startColumns": "1,1",
+                        "startOffsets": "52,249",
+                        "endLines": "7,13",
+                        "endColumns": "16,16",
+                        "endOffsets": "247,411"
+                    },
+                    "to": {
+                        "startLines": "2,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,255",
+                        "endLines": "7,13",
+                        "endColumns": "16,16",
+                        "endOffsets": "250,417"
+                    }
+                }
+            ]
+        }
+    ]
+}
