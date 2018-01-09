@@ -61,7 +61,7 @@ public class TestEspresso {
 		String lineaActivity = null;		
 		try(FileWriter fw = new FileWriter(file);){
 
-			List<String> allLines = Files.readAllLines(Paths.get("C:/Users/antonio/Desktop/ProvaPerTraduttore_annotato.java"));
+			List<String> allLines = Files.readAllLines(Paths.get("C:/Users/antonio/Desktop/ProvaTest_annotato.java"));
 			List<String> righeId = new ArrayList<String>();
 			 
 			for (String line : allLines) {
@@ -215,7 +215,7 @@ public class TestEspresso {
 						}else{
 							//Caso selezione elemento di uno spinner
 							if(e.action.contains("click")){
-								switch(e.rif){
+								switch(eventi.get(eventi.indexOf(e)-1).rif){
 								case "Activity":
 									allLines2.add(indiceInserimento,selectItemSpinnerActivity.replace("ID", eventi.get(eventi.indexOf(e)-1).idElemento).replace("Posizione", e.pos));
 									break;
