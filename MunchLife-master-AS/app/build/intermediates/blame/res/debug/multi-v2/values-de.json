@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\antonio\\Desktop\\IS2\\MunchLife-master-AS\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-de\\values-de.xml",
+            "outputFile": "C:\\Users\\mikel_000\\Desktop\\ProgettoIS2\\UninaCampus\\UninaCampus\\MunchLife-master-AS\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-de\\values-de.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\antonio\\Desktop\\IS2\\MunchLife-master-AS\\app\\src\\main\\res\\values-de\\strings.xml",
+                    "source": "C:\\Users\\mikel_000\\Desktop\\ProgettoIS2\\UninaCampus\\UninaCampus\\MunchLife-master-AS\\app\\src\\main\\res\\values-de\\strings.xml",
                     "from": {
                         "startLines": "2,9,6,4,21,23,22,13,16,8,10,17,18,5,3,19,20,12",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",

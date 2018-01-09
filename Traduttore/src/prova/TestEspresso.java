@@ -21,11 +21,11 @@ public class TestEspresso {
 		
 		String clickActivity = "(activity.findViewById(R.id.idBottone)).performClick();";
 		String clickDialog = "(ShadowDialog.getLatestDialog().findViewById(R.id.idBottone)).performClick();";
-		String clickAlertDialog = "(ShadowAlertDialog.getLatestAlertDialog().findViewById(R.id.idBottone)).performClick();";
+		String clickAlertDialog = "(ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.idBottone)).performClick();";
 		
 		String longClickActivity = "(activity.findViewById(R.id.idBottone)).performLongClick();";
 		String longClickDialog = "(ShadowDialog.getLatestDialog().findViewById(R.id.idBottone)).performLongClick();";
-		String longClickAlertDialog =  "(ShadowAlertDialog.getLatestAlertDialog().findViewById(R.id.idBottone)).performLongClick();";
+		String longClickAlertDialog =  "(ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.idBottone)).performLongClick();";
 		
 		String testoDialog = "assertEquals(TestoDaTestare,((TextView)ShadowDialog.getLatestDialog().findViewById(android.R.id.CTextView)).getText());";
 		String testoActivity = "assertEquals(TestoDaTestare,((TextView)activity.findViewById(R.id.CTextView)).getText().toString());";
@@ -33,11 +33,11 @@ public class TestEspresso {
 		
 		String isCheckedActivity = "assertTrue(((CheckBox) activity.findViewById(R.id.checkBox)).isChecked());";
 		String isCheckedDialog = "assertTrue(((CheckBox) ShadowDialog.getLatestDialog().findViewById(R.id.checkBox)).isChecked());";
-		String isCheckedAlertDialog = "assertTrue(((CheckBox) ShadowAlertDialog.getLatestAlertDialog().findViewById(R.id.checkBox)).isChecked());";
+		String isCheckedAlertDialog = "assertTrue(((CheckBox) ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.checkBox)).isChecked());";
 		
 		String isDisplayedActivity = "assertNotNull(activity.findViewById(R.id.BottoneOElemento));";
 		String isDisplayedDialog = "assertNotNull(ShadowDialog.getLatestDialog().findViewById(R.id.BottoneOElemento));";
-		String isDisplayedAlertDialog = "assertNotNull(ShadowAlertDialog.getLatestAlertDialog().findViewById(R.id.BottoneOElemento));";
+		String isDisplayedAlertDialog = "assertNotNull(ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.BottoneOElemento));";
 		
 		String inputTextActivity = "((TextView) activity.findViewById(R.id.InputText)).setText(TestoDaTestare);";
 		String inputTextDialog = "((TextInputEditText)ShadowDialog.getLatestDialog().findViewById(R.id.InputText)).setText(TestoDaTestare);";
@@ -45,11 +45,11 @@ public class TestEspresso {
 		
 		String selectItemSpinnerActivity = "((Spinner) activity.findViewById(R.id.IdSpinner)).setSelection(Posizione);";
 		String selectItemSpinnerDialog = "((Spinner) ShadowDialog.getLatestDialog().findViewById(R.id.IdSpinner)).setSelection(Posizione);";
-		String selectItemSpinnerAlertDialog = "((Spinner) ShadowAlertDialog.getLatestAlertDialog().findViewById(R.id.IdSpinner)).setSelection(Posizione);";
+		String selectItemSpinnerAlertDialog = "((Spinner) ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.IdSpinner)).setSelection(Posizione);";
 
 		String clickItemListaActivity = "shadowOf((ListView) activity.findViewById(R.id.IdLista)).performItemClick(Posizione);";
 		String clickItemListaDialog = "shadowOf((ListView) ShadowDialog.getLatestDialog().findViewById(R.id.IdLista)).performItemClick(Posizione);";
-		String clickItemListaAlertDialog = "shadowOf((ListView) ShadowAlertDialog.getLatestAlertDialog().findViewById(R.id.IdLista)).performItemClick(Posizione);";
+		String clickItemListaAlertDialog = "shadowOf((ListView) ShadowAlertDialog.getLatestAlertDialog().findViewById(android.R.id.IdLista)).performItemClick(Posizione);";
 
 		boolean inizioTest = false;
 		boolean idTrovato = false;
@@ -57,11 +57,11 @@ public class TestEspresso {
 		String pos = null;
 		String rif = null;
 		List<Evento> eventi = new ArrayList<Evento>();
-		File file = new File("C:/Users/antonio/Desktop/ProvaFinaleTraduzioneRobolectric.java");
+		File file = new File("C:/Users/mikel_000/Desktop/ProvaTestTradotto.java");
 		String lineaActivity = null;		
 		try(FileWriter fw = new FileWriter(file);){
 
-			List<String> allLines = Files.readAllLines(Paths.get("C:/Users/antonio/Desktop/ProvaFinaleTraduzione.java"));
+			List<String> allLines = Files.readAllLines(Paths.get("C:/Users/mikel_000/Desktop/ProvaTest_annotato.java"));
 			List<String> righeId = new ArrayList<String>();
 			 
 			for (String line : allLines) {
@@ -107,7 +107,7 @@ public class TestEspresso {
 		
 		//Scrivo il nuovo file robolectric
 			
-	        List<String> allLines2 = Files.readAllLines(Paths.get("C:/Users/antonio/Desktop/RobolectricTest.java"));
+	        List<String> allLines2 = Files.readAllLines(Paths.get("C:/Users/mikel_000/Desktop/RobolectricTest.java"));
 			
 			for (String line2 : allLines2) {
 				
@@ -250,7 +250,7 @@ public class TestEspresso {
 	public static String searchId(List<String> righeId){
 		String id = null;
 		for(String line : righeId){
-			if(line.contains("allOf(withId(R.id.")){
+			if(line.contains("allOf(withId(R.id.")||line.contains("allOf(withId(android.R.id.")){
 				line = line.substring(line.indexOf("R.id."));
 				id= line.substring(5,line.indexOf(")"));
 			}

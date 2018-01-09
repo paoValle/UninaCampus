@@ -12,6 +12,7 @@ import android.view.ViewParent;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,9 +21,11 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -44,24 +47,34 @@ public class ProvaTest {
         button.perform(click());
 
         ViewInteraction button2 = onView(
-                allOf(withId(R.id.up_button), withText("Up a Level"),
+                allOf(withId(R.id.up_button),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.level_table),
                                         0),
                                 0),
                         isDisplayed()));
-        button2.perform(click());
+        button2.check(matches(isDisplayed()));
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.current_level), withText("2"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.level_table),
+                                        1),
+                                0),
+                        isDisplayed()));
+        textView.check(matches(withText("2")));
 
         ViewInteraction button3 = onView(
-                allOf(withId(R.id.up_button), withText("Up a Level"),
+                allOf(withId(R.id.down_button),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.level_table),
-                                        0),
+                                        2),
                                 0),
                         isDisplayed()));
-        button3.perform(click());
+        button3.check(matches(isDisplayed()));
 
         ViewInteraction button4 = onView(
                 allOf(withId(R.id.up_gear_button), withText("Add Gear"),
@@ -74,26 +87,6 @@ public class ProvaTest {
         button4.perform(click());
 
         ViewInteraction button5 = onView(
-                allOf(withId(R.id.up_gear_button), withText("Add Gear"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.level_table),
-                                        0),
-                                1),
-                        isDisplayed()));
-        button5.perform(click());
-
-        ViewInteraction button6 = onView(
-                allOf(withId(R.id.up_gear_button), withText("Add Gear"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.level_table),
-                                        0),
-                                1),
-                        isDisplayed()));
-        button6.perform(click());
-
-        ViewInteraction button7 = onView(
                 allOf(withId(R.id.down_gear_button), withText("Remove Gear"),
                         childAtPosition(
                                 childAtPosition(
@@ -101,37 +94,139 @@ public class ProvaTest {
                                         2),
                                 1),
                         isDisplayed()));
-        button7.perform(click());
+        button5.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.total_level), withText("6"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        textView.check(matches(withText("6")));
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.current_level), withText("4"),
+        ViewInteraction button6 = onView(
+                allOf(withId(R.id.down_button), withText("Down a Level"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.level_table),
-                                        1),
+                                        2),
                                 0),
                         isDisplayed()));
-        textView2.check(matches(withText("4")));
+        button6.perform(click());
 
-        ViewInteraction imageView = onView(
-                allOf(withId(R.id.gender),
+        ViewInteraction button7 = onView(
+                allOf(withId(R.id.up_button), withText("Up a Level"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(android.R.id.content),
+                                        withId(R.id.level_table),
                                         0),
-                                2),
+                                0),
                         isDisplayed()));
-        imageView.perform(click());
+        button7.perform(click());
+
+        ViewInteraction button8 = onView(
+                allOf(withId(R.id.up_button), withText("Up a Level"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.level_table),
+                                        0),
+                                0),
+                        isDisplayed()));
+        button8.perform(click());
+
+        ViewInteraction button9 = onView(
+                allOf(withId(R.id.up_button), withText("Up a Level"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.level_table),
+                                        0),
+                                0),
+                        isDisplayed()));
+        button9.perform(click());
+
+        ViewInteraction button10 = onView(
+                allOf(withId(R.id.up_button), withText("Up a Level"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.level_table),
+                                        0),
+                                0),
+                        isDisplayed()));
+        button10.perform(click());
+
+        ViewInteraction button11 = onView(
+                allOf(withId(R.id.up_button), withText("Up a Level"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.level_table),
+                                        0),
+                                0),
+                        isDisplayed()));
+        button11.perform(click());
+
+        ViewInteraction button12 = onView(
+                allOf(withId(R.id.up_button), withText("Up a Level"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.level_table),
+                                        0),
+                                0),
+                        isDisplayed()));
+        button12.perform(click());
+
+        ViewInteraction button13 = onView(
+                allOf(withId(R.id.up_button), withText("Up a Level"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.level_table),
+                                        0),
+                                0),
+                        isDisplayed()));
+        button13.perform(click());
+
+        ViewInteraction button14 = onView(
+                allOf(withId(R.id.up_button), withText("Up a Level"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.level_table),
+                                        0),
+                                0),
+                        isDisplayed()));
+        button14.perform(click());
+
+        ViewInteraction button15 = onView(
+                allOf(withId(R.id.up_button), withText("Up a Level"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.level_table),
+                                        0),
+                                0),
+                        isDisplayed()));
+        button15.perform(click());
+
+        ViewInteraction button16 = onView(
+                allOf(withId(android.R.id.button3),
+                        childAtPosition(
+                                allOf(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        childAtPosition(
+                                                IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                                1)),
+                                0),
+                        isDisplayed()));
+        button16.check(matches(isDisplayed()));
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(android.R.id.message), withText("You have won!"),
+                        childAtPosition(
+                                childAtPosition(
+                                        IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textView2.check(matches(withText("You have won!")));
+
+        ViewInteraction button17 = onView(
+                allOf(withId(android.R.id.button3), withText("Okay"),
+                        childAtPosition(
+                                allOf(withClassName(is("android.widget.LinearLayout")),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.LinearLayout")),
+                                                3)),
+                                0),
+                        isDisplayed()));
+        button17.perform(click());
 
     }
 
