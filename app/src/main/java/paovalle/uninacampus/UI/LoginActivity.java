@@ -33,7 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        //solo la prima volta va eseguito!
+        try {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        } catch (Exception ex) { }
 
         cLogin = new ControllerLogin();
 

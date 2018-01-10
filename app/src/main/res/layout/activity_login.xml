@@ -49,7 +49,6 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="utente@studenti.unina.it"
                     android:textSize="30sp" />
 
             </android.support.design.widget.TextInputLayout>
@@ -69,7 +68,7 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="@string/utenteutente"
+                    android:text=""
                     android:textSize="30sp" />
 
             </android.support.design.widget.TextInputLayout>

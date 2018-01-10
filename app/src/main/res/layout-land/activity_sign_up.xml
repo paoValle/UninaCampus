@@ -94,7 +94,7 @@
                                 android:inputType="textEmailAddress"
                                 android:maxLines="1"
                                 android:singleLine="true"
-                                android:text="user@studenti.unina.it"
+                                android:text=""
                                 android:textSize="30sp" />
 
                         </android.support.design.widget.TextInputLayout>
