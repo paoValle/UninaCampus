@@ -109,7 +109,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToLogin() {
+        this.finish();
         Intent intent = new Intent(this, HomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 

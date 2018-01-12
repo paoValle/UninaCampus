@@ -510,7 +510,9 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void goToLogin() {
+        this.finish();
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(i);
     }
 
